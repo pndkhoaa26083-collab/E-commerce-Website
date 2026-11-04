@@ -1,16 +1,180 @@
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E-commerce Website</title>
+
+    <title>Fashion Store</title>
+
+    <!-- LINK KẾT NỐI CSS -->
     <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
 
-    <h1>Welcome to E-commerce Website</h1>
-    <p>Chào mừng bạn đến với cửa hàng của chúng tôi!</p>
+    <!-- ========== HEADER ========== -->
+    <header class="header">
 
+        <h1 class="logo">FASHION STORE</h1>
+
+        <nav class="navbar">
+            <a href="index.html">Trang chủ</a>
+            <a href="products.html">Sản phẩm</a>
+            <a href="cart.html">Giỏ hàng</a>
+            <a href="#about">Giới thiệu</a>
+            <a href="#contact">Liên hệ</a>
+        </nav>
+
+    </header>
+
+
+    <!-- ========== BANNER ========== -->
+    <section class="banner">
+
+        <div class="banner-content">
+
+            <h2>NEW COLLECTION 2026</h2>
+
+            <p>Khám phá phong cách thời trang của bạn</p>
+
+            <!-- LINK: Chuyển đến trang sản phẩm -->
+            <a href="products.html" class="btn">
+                MUA SẮM NGAY
+            </a>
+
+        </div>
+
+        <!-- ẢNH BANNER:
+             Bạn sẽ thêm ảnh trong CSS bằng background-image
+             Đường dẫn dự kiến: images/banner.jpg -->
+
+    </section>
+
+
+    <!-- ========== CATEGORIES ========== -->
+    <section class="categories">
+
+        <h2>Danh mục sản phẩm</h2>
+
+        <div class="category-list">
+
+            <div class="category-item">
+                <!-- ẢNH DANH MỤC ÁO: images/ao.jpg -->
+                <img src="images/ao.jpg" alt="Áo">
+                <h3>Áo</h3>
+                <a href="products.html">Xem sản phẩm</a>
+            </div>
+
+            <div class="category-item">
+                <!-- ẢNH DANH MỤC QUẦN: images/quan.jpg -->
+                <img src="images/quan.jpg" alt="Quần">
+                <h3>Quần</h3>
+                <a href="products.html">Xem sản phẩm</a>
+            </div>
+
+            <div class="category-item">
+                <!-- ẢNH DANH MỤC GIÀY: images/giay.jpg -->
+                <img src="images/giay.jpg" alt="Giày">
+                <h3>Giày</h3>
+                <a href="products.html">Xem sản phẩm</a>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ========== FEATURED PRODUCTS ========== -->
+    <section class="featured-products">
+
+        <h2>Sản phẩm nổi bật</h2>
+
+        <div class="product-list">
+
+            <div class="product-card">
+
+                <!-- ẢNH SẢN PHẨM 1: images/product1.jpg -->
+                <img src="images/product1.jpg" alt="Áo thun">
+
+                <h3>Áo thun basic</h3>
+
+                <p>150.000 VNĐ</p>
+
+                <!-- LINK XEM SẢN PHẨM -->
+                <a href="products.html" class="btn">
+                    Xem sản phẩm
+                </a>
+
+            </div>
+
+
+            <div class="product-card">
+
+                <!-- ẢNH SẢN PHẨM 2: images/product2.jpg -->
+                <img src="images/product2.jpg" alt="Quần jeans">
+
+                <h3>Quần jeans</h3>
+
+                <p>250.000 VNĐ</p>
+
+                <a href="products.html" class="btn">
+                    Xem sản phẩm
+                </a>
+
+            </div>
+
+
+            <div class="product-card">
+
+                <!-- ẢNH SẢN PHẨM 3: images/product3.jpg -->
+                <img src="images/product3.jpg" alt="Áo sơ mi">
+
+                <h3>Áo sơ mi</h3>
+
+                <p>200.000 VNĐ</p>
+
+                <a href="products.html" class="btn">
+                    Xem sản phẩm
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ========== ABOUT ========== -->
+    <section class="about" id="about">
+
+        <h2>Về chúng tôi</h2>
+
+        <p>
+            Fashion Store mang đến những sản phẩm thời trang
+            chất lượng, hiện đại và phù hợp với phong cách
+            của mọi người.
+        </p>
+
+    </section>
+
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="footer" id="contact">
+
+        <h2>FASHION STORE</h2>
+
+        <p>Email: fashionstore@gmail.com</p>
+
+        <p>Điện thoại: 0123456789</p>
+
+        <p>© 2026 Fashion Store. All rights reserved.</p>
+
+    </footer>
+
+
+    <!-- LINK KẾT NỐI JAVASCRIPT -->
     <script src="js/script.js"></script>
+
 </body>
 </html>
