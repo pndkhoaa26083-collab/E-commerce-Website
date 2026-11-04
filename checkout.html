@@ -1,1 +1,158 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thanh toán | Wang Fashion</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="container">
+            <h1>Wang Fashion</h1>
+
+            <nav>
+                <a href="index.html">Trang chủ</a>
+                <a href="products.html">Sản phẩm</a>
+                <a href="cart.html">Giỏ hàng</a>
+                <a href="index.html#about">Giới thiệu</a>
+                <a href="index.html#contact">Liên hệ</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- CHECKOUT -->
+    <main class="container">
+
+        <section class="page-title">
+            <h2>THANH TOÁN</h2>
+            <p>Hoàn tất đơn hàng của bạn tại Wang Fashion</p>
+        </section>
+
+        <div class="checkout-container">
+
+            <!-- CUSTOMER INFORMATION -->
+            <section class="customer-info">
+
+                <h3>Thông tin nhận hàng</h3>
+
+                <form id="checkoutForm">
+
+                    <label for="fullname">Họ và tên:</label>
+                    <input
+                        type="text"
+                        id="fullname"
+                        name="fullname"
+                        placeholder="Nhập họ và tên"
+                        required
+                    >
+
+                    <label for="phone">Số điện thoại:</label>
+                    <input
+                        type="tel"
+                        id="phone"
+                        name="phone"
+                        placeholder="Nhập số điện thoại"
+                        required
+                    >
+
+                    <label for="email">Email:</label>
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Nhập email"
+                    >
+
+                    <label for="address">Địa chỉ nhận hàng:</label>
+                    <input
+                        type="text"
+                        id="address"
+                        name="address"
+                        placeholder="Số nhà, đường, phường/xã..."
+                        required
+                    >
+
+                    <label for="note">Ghi chú đơn hàng:</label>
+                    <textarea
+                        id="note"
+                        name="note"
+                        placeholder="Ghi chú thêm cho đơn hàng..."
+                    ></textarea>
+
+                    <h3>Phương thức thanh toán</h3>
+
+                    <label>
+                        <input
+                            type="radio"
+                            name="payment"
+                            value="cod"
+                            checked
+                        >
+                        Thanh toán khi nhận hàng (COD)
+                    </label>
+
+                    <label>
+                        <input
+                            type="radio"
+                            name="payment"
+                            value="bank"
+                        >
+                        Chuyển khoản ngân hàng
+                    </label>
+
+                </form>
+
+            </section>
+
+            <!-- ORDER SUMMARY -->
+            <section class="order-summary">
+
+                <h3>Đơn hàng của bạn</h3>
+
+                <div id="checkoutItems">
+                    <p>Chưa có sản phẩm trong đơn hàng.</p>
+                </div>
+
+                <div class="total-price">
+                    <p>Tạm tính: <span id="subtotal">0đ</span></p>
+
+                    <p>Phí vận chuyển: <span id="shipping">0đ</span></p>
+
+                    <h3>
+                        Tổng cộng:
+                        <span id="total">0đ</span>
+                    </h3>
+                </div>
+
+                <button
+                    type="submit"
+                    form="checkoutForm"
+                    class="btn"
+                >
+                    XÁC NHẬN ĐẶT HÀNG
+                </button>
+
+                <p>
+                    <a href="cart.html">Quay lại giỏ hàng</a>
+                </p>
+
+            </section>
+
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2026 Wang Fashion. All rights reserved.</p>
+    </footer>
+
+    <script src="js/checkout.js"></script>
+
+</body>
+</html>
 

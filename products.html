@@ -1,1 +1,119 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sản phẩm | Wang Fashion</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="container">
+            <h1>Wang Fashion</h1>
+
+            <nav>
+                <a href="index.html">Trang chủ</a>
+                <a href="products.html">Sản phẩm</a>
+                <a href="cart.html">Giỏ hàng</a>
+                <a href="index.html#about">Giới thiệu</a>
+                <a href="index.html#contact">Liên hệ</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="container">
+
+        <section class="page-title">
+            <h2>TẤT CẢ SẢN PHẨM</h2>
+            <p>Khám phá phong cách thời trang của bạn</p>
+        </section>
+
+        <!-- SEARCH -->
+        <section class="search-section">
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Tìm kiếm sản phẩm..."
+            >
+            <button type="button" id="searchButton">
+                Tìm kiếm
+            </button>
+        </section>
+
+        <!-- CATEGORY -->
+        <section class="categories">
+            <h3>Danh mục sản phẩm</h3>
+
+            <button class="category-btn" data-category="all">Tất cả</button>
+            <button class="category-btn" data-category="ao">Áo</button>
+            <button class="category-btn" data-category="quan">Quần</button>
+            <button class="category-btn" data-category="giay">Giày</button>
+            <button class="category-btn" data-category="phukien">Phụ kiện</button>
+        </section>
+
+        <!-- PRODUCT LIST -->
+        <section class="products-section">
+            <h3>Sản phẩm của chúng tôi</h3>
+
+            <div class="product-list" id="productList">
+
+                <div class="product-card" data-category="ao">
+                    <div class="product-image">Ảnh sản phẩm</div>
+                    <h4>Áo thun basic</h4>
+                    <p class="price">150.000đ</p>
+                    <button class="btn add-cart">Thêm vào giỏ hàng</button>
+                </div>
+
+                <div class="product-card" data-category="ao">
+                    <div class="product-image">Ảnh sản phẩm</div>
+                    <h4>Áo hoodie</h4>
+                    <p class="price">320.000đ</p>
+                    <button class="btn add-cart">Thêm vào giỏ hàng</button>
+                </div>
+
+                <div class="product-card" data-category="quan">
+                    <div class="product-image">Ảnh sản phẩm</div>
+                    <h4>Quần jean</h4>
+                    <p class="price">280.000đ</p>
+                    <button class="btn add-cart">Thêm vào giỏ hàng</button>
+                </div>
+
+                <div class="product-card" data-category="quan">
+                    <div class="product-image">Ảnh sản phẩm</div>
+                    <h4>Quần short</h4>
+                    <p class="price">180.000đ</p>
+                    <button class="btn add-cart">Thêm vào giỏ hàng</button>
+                </div>
+
+                <div class="product-card" data-category="giay">
+                    <div class="product-image">Ảnh sản phẩm</div>
+                    <h4>Giày sneaker</h4>
+                    <p class="price">450.000đ</p>
+                    <button class="btn add-cart">Thêm vào giỏ hàng</button>
+                </div>
+
+                <div class="product-card" data-category="phukien">
+                    <div class="product-image">Ảnh sản phẩm</div>
+                    <h4>Túi đeo chéo</h4>
+                    <p class="price">220.000đ</p>
+                    <button class="btn add-cart">Thêm vào giỏ hàng</button>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2026 Wang Fashion. All rights reserved.</p>
+    </footer>
+
+    <script src="js/products.js"></script>
+
+</body>
+</html>
 

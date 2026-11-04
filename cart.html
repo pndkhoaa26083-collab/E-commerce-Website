@@ -1,1 +1,106 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giỏ hàng | Wang Fashion</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="container">
+            <h1>Wang Fashion</h1>
+
+            <nav>
+                <a href="index.html">Trang chủ</a>
+                <a href="products.html">Sản phẩm</a>
+                <a href="cart.html">Giỏ hàng</a>
+                <a href="index.html#about">Giới thiệu</a>
+                <a href="index.html#contact">Liên hệ</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- CART CONTENT -->
+    <main class="container">
+
+        <section class="page-title">
+            <h2>GIỎ HÀNG CỦA BẠN</h2>
+            <p>Kiểm tra sản phẩm trước khi thanh toán</p>
+        </section>
+
+        <section class="cart-section">
+
+            <div class="cart-table">
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Sản phẩm</th>
+                            <th>Đơn giá</th>
+                            <th>Số lượng</th>
+                            <th>Thành tiền</th>
+                            <th>Xóa</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="cartItems">
+                        <tr>
+                            <td colspan="5">
+                                Giỏ hàng của bạn đang trống.
+                            </td>
+                        </tr>
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            <!-- CART SUMMARY -->
+            <div class="cart-summary">
+
+                <h3>Tổng đơn hàng</h3>
+
+                <div class="summary-row">
+                    <span>Tạm tính:</span>
+                    <span id="cartSubtotal">0đ</span>
+                </div>
+
+                <div class="summary-row">
+                    <span>Phí vận chuyển:</span>
+                    <span id="cartShipping">0đ</span>
+                </div>
+
+                <div class="summary-row total">
+                    <strong>Tổng cộng:</strong>
+                    <strong id="cartTotal">0đ</strong>
+                </div>
+
+                <a href="products.html" class="btn">
+                    TIẾP TỤC MUA HÀNG
+                </a>
+
+                <a href="checkout.html" class="btn">
+                    TIẾN HÀNH THANH TOÁN
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2026 Wang Fashion. All rights reserved.</p>
+    </footer>
+
+    <script src="js/cart.js"></script>
+
+</body>
+</html>
 
