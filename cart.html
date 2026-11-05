@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Giỏ hàng | Wang Fashion</title>
-
     <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body>
+<body class="cart-page">
 
     <!-- HEADER -->
     <header>
@@ -25,70 +25,81 @@
         </div>
     </header>
 
-    <!-- CART CONTENT -->
-    <main class="container">
+    <!-- CART -->
+    <main class="container cart-main">
 
-        <section class="page-title">
+        <section class="cart-title">
+            <span>WANG FASHION COLLECTION</span>
             <h2>GIỎ HÀNG CỦA BẠN</h2>
             <p>Kiểm tra sản phẩm trước khi thanh toán</p>
         </section>
 
-        <section class="cart-section">
+        <section class="cart-layout">
 
-            <div class="cart-table">
+            <!-- PRODUCT LIST -->
+            <div class="cart-products">
 
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Sản phẩm</th>
-                            <th>Đơn giá</th>
-                            <th>Số lượng</th>
-                            <th>Thành tiền</th>
-                            <th>Xóa</th>
-                        </tr>
-                    </thead>
+                <div class="cart-heading">
+                    <h3>Sản phẩm đã chọn</h3>
+                </div>
 
-                    <tbody id="cartItems">
-                        <tr>
-                            <td colspan="5">
-                                Giỏ hàng của bạn đang trống.
-                            </td>
-                        </tr>
-                    </tbody>
+                <div class="cart-table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Sản phẩm</th>
+                                <th>Đơn giá</th>
+                                <th>Số lượng</th>
+                                <th>Thành tiền</th>
+                                <th></th>
+                            </tr>
+                        </thead>
 
-                </table>
+                        <tbody id="cartItems">
+                            <tr>
+                                <td colspan="5" class="empty-cart">
+                                    Giỏ hàng của bạn đang trống.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <a href="products.html" class="continue-shopping">
+                    ← Tiếp tục mua sắm
+                </a>
 
             </div>
 
-            <!-- CART SUMMARY -->
-            <div class="cart-summary">
+            <!-- ORDER SUMMARY -->
+            <aside class="cart-summary">
 
                 <h3>Tổng đơn hàng</h3>
 
                 <div class="summary-row">
-                    <span>Tạm tính:</span>
+                    <span>Tạm tính</span>
                     <span id="cartSubtotal">0đ</span>
                 </div>
 
                 <div class="summary-row">
-                    <span>Phí vận chuyển:</span>
+                    <span>Phí vận chuyển</span>
                     <span id="cartShipping">0đ</span>
                 </div>
 
-                <div class="summary-row total">
-                    <strong>Tổng cộng:</strong>
+                <div class="summary-total">
+                    <strong>Tổng cộng</strong>
                     <strong id="cartTotal">0đ</strong>
                 </div>
 
-                <a href="products.html" class="btn">
-                    TIẾP TỤC MUA HÀNG
-                </a>
-
-                <a href="checkout.html" class="btn">
+                <a href="checkout.html" class="cart-checkout-btn">
                     TIẾN HÀNH THANH TOÁN
                 </a>
 
-            </div>
+                <p class="cart-note">
+                    Cảm ơn bạn đã lựa chọn Wang Fashion.
+                </p>
+
+            </aside>
 
         </section>
 
@@ -99,8 +110,8 @@
         <p>&copy; 2026 Wang Fashion. All rights reserved.</p>
     </footer>
 
-    <script src="js/cart.js"></script>
+    <script src="js/script.js"></script>
 
 </body>
-</html>
 
+</html>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +8,7 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body>
+<body class="checkout-page">
 
     <!-- HEADER -->
     <header>
@@ -25,11 +26,12 @@
     </header>
 
     <!-- CHECKOUT -->
-    <main class="container">
+    <main class="container checkout-main">
 
-        <section class="page-title">
+        <section class="page-title checkout-title">
+            <p class="checkout-subtitle">WANG FASHION COLLECTION</p>
             <h2>THANH TOÁN</h2>
-            <p>Hoàn tất đơn hàng của bạn tại Wang Fashion</p>
+            <p>Hoàn tất đơn hàng của bạn</p>
         </section>
 
         <div class="checkout-container">
@@ -37,72 +39,49 @@
             <!-- CUSTOMER INFORMATION -->
             <section class="customer-info">
 
-                <h3>Thông tin nhận hàng</h3>
+                <h3>01. Thông tin nhận hàng</h3>
 
                 <form id="checkoutForm">
 
-                    <label for="fullname">Họ và tên:</label>
-                    <input
-                        type="text"
-                        id="fullname"
-                        name="fullname"
-                        placeholder="Nhập họ và tên"
-                        required
-                    >
+                    <div class="form-group">
+                        <label for="fullname">Họ và tên</label>
+                        <input type="text" id="fullname" name="fullname" placeholder="Nhập họ và tên" required>
+                    </div>
 
-                    <label for="phone">Số điện thoại:</label>
-                    <input
-                        type="tel"
-                        id="phone"
-                        name="phone"
-                        placeholder="Nhập số điện thoại"
-                        required
-                    >
+                    <div class="form-group">
+                        <label for="phone">Số điện thoại</label>
+                        <input type="tel" id="phone" name="phone" placeholder="Nhập số điện thoại" required>
+                    </div>
 
-                    <label for="email">Email:</label>
-                    <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        placeholder="Nhập email"
-                    >
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="Nhập email">
+                    </div>
 
-                    <label for="address">Địa chỉ nhận hàng:</label>
-                    <input
-                        type="text"
-                        id="address"
-                        name="address"
-                        placeholder="Số nhà, đường, phường/xã..."
-                        required
-                    >
+                    <div class="form-group">
+                        <label for="address">Địa chỉ nhận hàng</label>
+                        <input type="text" id="address" name="address" placeholder="Số nhà, đường, phường/xã..."
+                            required>
+                    </div>
 
-                    <label for="note">Ghi chú đơn hàng:</label>
-                    <textarea
-                        id="note"
-                        name="note"
-                        placeholder="Ghi chú thêm cho đơn hàng..."
-                    ></textarea>
+                    <div class="form-group">
+                        <label for="note">Ghi chú đơn hàng</label>
+                        <textarea id="note" name="note" placeholder="Ghi chú thêm cho đơn hàng..."></textarea>
+                    </div>
 
-                    <h3>Phương thức thanh toán</h3>
+                    <div class="payment-method">
+                        <h3>02. Phương thức thanh toán</h3>
 
-                    <label>
-                        <input
-                            type="radio"
-                            name="payment"
-                            value="cod"
-                            checked
-                        >
-                        Thanh toán khi nhận hàng (COD)
-                    </label>
+                        <label class="payment-option">
+                            <input type="radio" name="payment" value="cod" checked>
+                            <span>Thanh toán khi nhận hàng (COD)</span>
+                        </label>
 
-                    <label>
-                        <input
-                            type="radio"
-                            name="payment"
-                            value="bank"
-                        >
-                        Chuyển khoản ngân hàng
-                    </label>
+                        <label class="payment-option">
+                            <input type="radio" name="payment" value="bank">
+                            <span>Chuyển khoản ngân hàng</span>
+                        </label>
+                    </div>
 
                 </form>
 
@@ -111,33 +90,37 @@
             <!-- ORDER SUMMARY -->
             <section class="order-summary">
 
-                <h3>Đơn hàng của bạn</h3>
+                <h3>03. Đơn hàng của bạn</h3>
 
                 <div id="checkoutItems">
-                    <p>Chưa có sản phẩm trong đơn hàng.</p>
+                    <p>Đang tải sản phẩm...</p>
                 </div>
 
                 <div class="total-price">
-                    <p>Tạm tính: <span id="subtotal">0đ</span></p>
 
-                    <p>Phí vận chuyển: <span id="shipping">0đ</span></p>
+                    <div class="price-row">
+                        <span>Tạm tính</span>
+                        <span id="subtotal">0đ</span>
+                    </div>
 
-                    <h3>
-                        Tổng cộng:
-                        <span id="total">0đ</span>
-                    </h3>
+                    <div class="price-row">
+                        <span>Phí vận chuyển</span>
+                        <span id="shipping">0đ</span>
+                    </div>
+
+                    <div class="price-row final-total">
+                        <strong>Tổng thanh toán</strong>
+                        <strong id="total">0đ</strong>
+                    </div>
+
                 </div>
 
-                <button
-                    type="submit"
-                    form="checkoutForm"
-                    class="btn"
-                >
+                <button type="submit" form="checkoutForm" class="btn checkout-btn">
                     XÁC NHẬN ĐẶT HÀNG
                 </button>
 
-                <p>
-                    <a href="cart.html">Quay lại giỏ hàng</a>
+                <p class="back-to-cart">
+                    <a href="cart.html">← Quay lại giỏ hàng</a>
                 </p>
 
             </section>
@@ -151,8 +134,8 @@
         <p>&copy; 2026 Wang Fashion. All rights reserved.</p>
     </footer>
 
-    <script src="js/checkout.js"></script>
+    <script src="js/script.js"></script>
 
 </body>
-</html>
 
+</html>
