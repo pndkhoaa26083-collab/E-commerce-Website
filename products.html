@@ -5,20 +5,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sản phẩm | Wang Fashion</title>
-    <link rel="stylesheet" href="css/style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600&family=Noto+Serif:wght@600;800&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="css/shop.css">
 </head>
 
 <body>
 
-    <!-- HEADER -->
-    <header>
-        <div class="container">
-            <h1>Wang Fashion</h1>
+    <a class="skip-link" href="#main">Bỏ qua điều hướng</a>
 
-            <nav>
+    <!-- HEADER -->
+    <header class="site-header">
+        <div class="wrap header-inner">
+            <a class="brand" href="index.html" aria-label="Wang Fashion, về trang chủ">
+                <span class="brand-seal" aria-hidden="true">W</span>
+                <span class="brand-name">WANG FASHION</span>
+            </a>
+
+            <nav class="main-nav" aria-label="Điều hướng chính">
                 <a href="index.html">Trang chủ</a>
-                <a href="products.html">Sản phẩm</a>
-                <a href="cart.html">Giỏ hàng</a>
+                <a href="products.html" aria-current="page">Sản phẩm</a>
+                <a href="cart.html">Giỏ hàng <span class="cart-count" data-cart-count hidden>0</span></a>
                 <a href="index.html#about">Giới thiệu</a>
                 <a href="index.html#contact">Liên hệ</a>
             </nav>
@@ -26,214 +38,165 @@
     </header>
 
     <!-- MAIN CONTENT -->
-    <main class="container">
+    <main id="main">
 
-        <section class="page-title">
-            <h2>TẤT CẢ SẢN PHẨM</h2>
-            <p>Khám phá phong cách thời trang của bạn</p>
+        <section class="wrap page-head">
+            <h1>Tất cả sản phẩm</h1>
+            <p>Chọn theo danh mục hoặc tìm theo tên sản phẩm.</p>
         </section>
 
-        <!-- SEARCH -->
-        <section class="search-section">
-            <input type="text" id="searchInput" placeholder="Tìm kiếm sản phẩm...">
-            <button type="button" id="searchButton">
-                Tìm kiếm
-            </button>
-        </section>
+        <div class="wrap page-body">
 
-        <!-- CATEGORY -->
-        <section class="categories">
-            <h3>Danh mục sản phẩm</h3>
+            <!-- SEARCH + CATEGORY -->
+            <div class="filters">
 
-            <button class="category-btn" data-category="all">Tất cả</button>
-            <button class="category-btn" data-category="ao">Áo</button>
-            <button class="category-btn" data-category="quan">Quần</button>
-            <button class="category-btn" data-category="giay">Giày</button>
-            <button class="category-btn" data-category="phukien">Phụ kiện</button>
-        </section>
-
-        <!-- PRODUCT LIST -->
-        <section class="products-section">
-            <h3>Sản phẩm của chúng tôi</h3>
-
-            <div class="product-list" id="productList">
-
-                <!-- ================= ÁO ================= -->
-
-                <div class="product-card" data-category="ao">
-                    <div class="product-image">
-                        <img src="image/aothunbasic.jpg" alt="Áo thun basic">
-                    </div>
-                    <h4>Áo thun basic</h4>
-                    <p class="price">150.000đ</p>
-                    <button class="btn add-cart">Thêm vào giỏ hàng</button>
+                <div class="search-form" role="search">
+                    <label class="visually-hidden" for="searchInput">Tìm sản phẩm</label>
+                    <input type="text" id="searchInput" placeholder="Tìm theo tên, ví dụ: áo thun" autocomplete="off">
+                    <button type="button" id="searchButton" class="btn btn-primary">Tìm</button>
                 </div>
 
-                <div class="product-card" data-category="ao">
-                    <div class="product-image">
-                        <img src="image/aohoodie.jpg" alt="Áo hoodie">
-                    </div>
-                    <h4>Áo hoodie</h4>
-                    <p class="price">320.000đ</p>
-                    <button class="btn add-cart">Thêm vào giỏ hàng</button>
-                </div>
-
-                <div class="product-card" data-category="ao">
-                    <div class="product-image">
-                        <img src="image/Aosomi.jpg" alt="Áo sơ mi">
-                    </div>
-                    <h4>Áo sơ mi</h4>
-                    <p class="price">250.000đ</p>
-                    <button class="btn add-cart">Thêm vào giỏ hàng</button>
-                </div>
-
-                <div class="product-card" data-category="ao">
-                    <div class="product-image">
-                        <img src="image/aodai.jpg" alt="Áo dài nữ">
-                    </div>
-                    <h4>Áo dài nữ - đỏ thêu hoa</h4>
-                    <p class="price">599.000đ</p>
-                    <button class="btn add-cart">Thêm vào giỏ hàng</button>
-                </div>
-
-                <div class="product-card" data-category="ao">
-                    <div class="product-image">
-                        <img src="image/aodaiden.jpg" alt="Áo dài nam">
-                    </div>
-                    <h4>Áo dài nam - đen thêu hạc</h4>
-                    <p class="price">599.000đ</p>
-                    <button class="btn add-cart">Thêm vào giỏ hàng</button>
-                </div>
-
-
-                <!-- ================= QUẦN ================= -->
-
-                <div class="product-card" data-category="quan">
-                    <div class="product-image">
-                        <img src="image/quanjean1.jpg" alt="Quần jean">
-                    </div>
-                    <h4>Quần jean</h4>
-                    <p class="price">280.000đ</p>
-                    <button class="btn add-cart">Thêm vào giỏ hàng</button>
-                </div>
-
-                <div class="product-card" data-category="quan">
-                    <div class="product-image">
-                        <img src="image/quanshort.jpg" alt="Quần short">
-                    </div>
-                    <h4>Quần short</h4>
-                    <p class="price">180.000đ</p>
-                    <button class="btn add-cart">Thêm vào giỏ hàng</button>
-                </div>
-
-                <div class="product-card" data-category="quan">
-                    <div class="product-image">
-                        <img src="image/Quanau.jpg" alt="Quần âu">
-                    </div>
-                    <h4>Quần âu</h4>
-                    <p class="price">290.000đ</p>
-                    <button class="btn add-cart">Thêm vào giỏ hàng</button>
-                </div>
-
-
-                <!-- ================= GIÀY ================= -->
-
-                <div class="product-card" data-category="giay">
-                    <div class="product-image">
-                        <img src="image/giaysneaker.jpg" alt="Giày sneaker">
-                    </div>
-                    <h4>Giày sneaker</h4>
-                    <p class="price">450.000đ</p>
-                    <button class="btn add-cart">Thêm vào giỏ hàng</button>
-                </div>
-
-                <div class="product-card" data-category="giay">
-                    <div class="product-image">
-                        <img src="image/caogot.jpg" alt="Giày cao gót">
-                    </div>
-                    <h4>Giày cao gót</h4>
-                    <p class="price">390.000đ</p>
-                    <button class="btn add-cart">Thêm vào giỏ hàng</button>
-                </div>
-
-                <div class="product-card" data-category="giay">
-                    <div class="product-image">
-                        <img src="image/giay.jpg" alt="Giày da">
-                    </div>
-                    <h4>Giày da</h4>
-                    <p class="price">490.000đ</p>
-                    <button class="btn add-cart">Thêm vào giỏ hàng</button>
-                </div>
-
-
-                <!-- ================= PHỤ KIỆN ================= -->
-
-                <div class="product-card" data-category="phukien">
-                    <div class="product-image">
-                        <img src="image/tuideocheo.jpg" alt="Túi đeo chéo">
-                    </div>
-                    <h4>Túi đeo chéo</h4>
-                    <p class="price">220.000đ</p>
-                    <button class="btn add-cart">Thêm vào giỏ hàng</button>
-                </div>
-
-                <div class="product-card" data-category="phukien">
-                    <div class="product-image">
-                        <img src="image/mu.jpg" alt="Mũ thời trang">
-                    </div>
-                    <h4>Mũ thời trang</h4>
-                    <p class="price">120.000đ</p>
-                    <button class="btn add-cart">Thêm vào giỏ hàng</button>
-                </div>
-
-                <div class="product-card" data-category="phukien">
-                    <div class="product-image">
-                        <img src="image/khanlua.jpg" alt="Khăn lụa">
-                    </div>
-                    <h4>Khăn lụa</h4>
-                    <p class="price">180.000đ</p>
-                    <button class="btn add-cart">Thêm vào giỏ hàng</button>
-                </div>
-
-                <div class="product-card" data-category="phukien">
-                    <div class="product-image">
-                        <img src="image/vong.jpg" alt="Vòng tay">
-                    </div>
-                    <h4>Vòng tay</h4>
-                    <p class="price">120.000đ</p>
-                    <button class="btn add-cart">Thêm vào giỏ hàng</button>
-                </div>
-
-                <div class="product-card" data-category="phukien">
-                    <div class="product-image">
-                        <img src="image/tram.jpg" alt="Trâm cài tóc">
-                    </div>
-                    <h4>Trâm cài tóc</h4>
-                    <p class="price">150.000đ</p>
-                    <button class="btn add-cart">Thêm vào giỏ hàng</button>
-                </div>
-
-                <div class="product-card" data-category="phukien">
-                    <div class="product-image">
-                        <img src="image/quat.jpg" alt="Quạt">
-                    </div>
-                    <h4>Quạt</h4>
-                    <p class="price">90.000đ</p>
-                    <button class="btn add-cart">Thêm vào giỏ hàng</button>
+                <div class="chips" role="group" aria-label="Danh mục sản phẩm">
+                    <button type="button" class="category-btn is-active" data-category="all" aria-pressed="true">Tất
+                        cả</button>
+                    <button type="button" class="category-btn" data-category="ao" aria-pressed="false">Áo</button>
+                    <button type="button" class="category-btn" data-category="quan" aria-pressed="false">Quần</button>
+                    <button type="button" class="category-btn" data-category="giay" aria-pressed="false">Giày</button>
+                    <button type="button" class="category-btn" data-category="phukien" aria-pressed="false">Phụ
+                        kiện</button>
                 </div>
 
             </div>
 
-        </section>
+            <p class="result-count" id="resultCount" aria-live="polite">8 sản phẩm</p>
+
+            <p class="empty-state" id="noResults" hidden>
+                Không tìm thấy sản phẩm phù hợp. Thử từ khóa khác hoặc chọn “Tất cả”.
+            </p>
+
+            <!-- PRODUCT LIST -->
+            <div class="product-list" id="productList">
+
+                <article class="product-card" data-id="ao-thun-basic" data-category="ao" data-name="Áo thun basic"
+                    data-price="150000" data-image="image/Ao.jpg">
+                    <div class="product-media">
+                        <img src="image/Ao.jpg" alt="Áo thun đen basic" loading="lazy">
+                    </div>
+                    <div class="product-info">
+                        <h2 class="product-name">Áo thun basic</h2>
+                        <p class="price">150.000đ</p>
+                        <button type="button" class="btn btn-block add-cart">Thêm vào giỏ</button>
+                    </div>
+                </article>
+
+                <article class="product-card" data-id="ao-so-mi" data-category="ao" data-name="Áo sơ mi"
+                    data-price="200000" data-image="image/Aosomi.jpg">
+                    <div class="product-media">
+                        <img src="image/Aosomi.jpg" alt="Áo sơ mi dài tay màu xám" loading="lazy">
+                    </div>
+                    <div class="product-info">
+                        <h2 class="product-name">Áo sơ mi</h2>
+                        <p class="price">200.000đ</p>
+                        <button type="button" class="btn btn-block add-cart">Thêm vào giỏ</button>
+                    </div>
+                </article>
+
+                <article class="product-card" data-id="ao-hoodie" data-category="ao" data-name="Áo hoodie"
+                    data-price="320000" data-image="image/aohoodie.jpg">
+                    <div class="product-media">
+                        <img src="image/aohoodie.jpg" alt="Áo hoodie" loading="lazy">
+                    </div>
+                    <div class="product-info">
+                        <h2 class="product-name">Áo hoodie</h2>
+                        <p class="price">320.000đ</p>
+                        <button type="button" class="btn btn-block add-cart">Thêm vào giỏ</button>
+                    </div>
+                </article>
+
+                <article class="product-card" data-id="quan-jeans" data-category="quan" data-name="Quần jeans"
+                    data-price="250000" data-image="image/Quanjean.jpg">
+                    <div class="product-media">
+                        <img src="image/Quanjean.jpg" alt="Quần jeans màu xám" loading="lazy">
+                    </div>
+                    <div class="product-info">
+                        <h2 class="product-name">Quần jeans</h2>
+                        <p class="price">250.000đ</p>
+                        <button type="button" class="btn btn-block add-cart">Thêm vào giỏ</button>
+                    </div>
+                </article>
+
+                <article class="product-card" data-id="quan-au" data-category="quan" data-name="Quần âu"
+                    data-price="220000" data-image="image/Quanau.jpg">
+                    <div class="product-media">
+                        <img src="image/Quanau.jpg" alt="Quần âu màu đen" loading="lazy">
+                    </div>
+                    <div class="product-info">
+                        <h2 class="product-name">Quần âu</h2>
+                        <p class="price">220.000đ</p>
+                        <button type="button" class="btn btn-block add-cart">Thêm vào giỏ</button>
+                    </div>
+                </article>
+
+                <article class="product-card" data-id="quan-short" data-category="quan" data-name="Quần short"
+                    data-price="180000" data-image="image/quanshort.jpg">
+                    <div class="product-media">
+                        <img src="image/quanshort.jpg" alt="Quần short" loading="lazy">
+                    </div>
+                    <div class="product-info">
+                        <h2 class="product-name">Quần short</h2>
+                        <p class="price">180.000đ</p>
+                        <button type="button" class="btn btn-block add-cart">Thêm vào giỏ</button>
+                    </div>
+                </article>
+
+                <article class="product-card" data-id="giay-sneaker" data-category="giay" data-name="Giày sneaker"
+                    data-price="450000" data-image="image/giaysneaker.webp">
+                    <div class="product-media">
+                        <img src="image/giaysneaker.webp" alt="Giày sneaker" loading="lazy">
+                    </div>
+                    <div class="product-info">
+                        <h2 class="product-name">Giày sneaker</h2>
+                        <p class="price">450.000đ</p>
+                        <button type="button" class="btn btn-block add-cart">Thêm vào giỏ</button>
+                    </div>
+                </article>
+
+                <article class="product-card" data-id="phukien-tui-deo-cheo" data-category="phukien"
+                    data-name="Túi đeo chéo" data-price="220000" data-image="image/tuideocheo.webp">
+                    <div class="product-media">
+                        <img src="image/tuideocheo.webp" alt="Túi đeo chéo" loading="lazy">
+                    </div>
+                    <div class="product-info">
+                        <h2 class="product-name">Túi đeo chéo</h2>
+                        <p class="price">220.000đ</p>
+                        <button type="button" class="btn btn-block add-cart">Thêm vào giỏ</button>
+                    </div>
+                </article>
+
+            </div>
+
+        </div>
 
     </main>
 
     <!-- FOOTER -->
-    <footer>
-        <p>&copy; 2026 Wang Fashion. All rights reserved.</p>
+    <footer class="site-footer">
+        <div class="wrap footer-grid">
+            <div>
+                <h2>WANG FASHION</h2>
+                <p>Thời trang tối giản, mang tinh thần phương Đông.</p>
+            </div>
+            <div>
+                <p>Email: <a href="mailto:fashionstore@gmail.com">fashionstore@gmail.com</a></p>
+                <p>Điện thoại: 0977-xxx-xxx</p>
+            </div>
+        </div>
+        <div class="wrap footer-bottom">
+            <p>&copy; 2026 Wang Fashion. All rights reserved.</p>
+        </div>
     </footer>
 
-    <script src="js/script.js"></script>
+    <script src="js/products.js"></script>
 
 </body>
 

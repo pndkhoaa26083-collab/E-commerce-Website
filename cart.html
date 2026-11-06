@@ -1,117 +1,132 @@
 <!DOCTYPE html>
 <html lang="vi">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Giỏ hàng | Wang Fashion</title>
-    <link rel="stylesheet" href="css/style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600&family=Noto+Serif:wght@600;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/shop.css">
 </head>
 
-<body class="cart-page">
+<body>
+
+    <a class="skip-link" href="#main">Bỏ qua điều hướng</a>
 
     <!-- HEADER -->
-    <header>
-        <div class="container">
-            <h1>Wang Fashion</h1>
+    <header class="site-header">
+        <div class="wrap header-inner">
+            <a class="brand" href="index.html" aria-label="Wang Fashion, về trang chủ">
+                <span class="brand-seal" aria-hidden="true">W</span>
+                <span class="brand-name">WANG FASHION</span>
+            </a>
 
-            <nav>
+            <nav class="main-nav" aria-label="Điều hướng chính">
                 <a href="index.html">Trang chủ</a>
                 <a href="products.html">Sản phẩm</a>
-                <a href="cart.html">Giỏ hàng</a>
+                <a href="cart.html" aria-current="page">Giỏ hàng <span class="cart-count" data-cart-count hidden>0</span></a>
                 <a href="index.html#about">Giới thiệu</a>
                 <a href="index.html#contact">Liên hệ</a>
             </nav>
         </div>
     </header>
 
-    <!-- CART -->
-    <main class="container cart-main">
+    <!-- CART CONTENT -->
+    <main id="main">
 
-        <section class="cart-title">
-            <span>WANG FASHION COLLECTION</span>
-            <h2>GIỎ HÀNG CỦA BẠN</h2>
-            <p>Kiểm tra sản phẩm trước khi thanh toán</p>
+        <section class="wrap page-head">
+            <h1>Giỏ hàng của bạn</h1>
+            <p>Kiểm tra sản phẩm trước khi thanh toán.</p>
+
+            <ol class="steps" aria-label="Các bước đặt hàng">
+                <li aria-current="step"><span class="step-num">1</span>Giỏ hàng</li>
+                <li><span class="step-num">2</span>Thanh toán</li>
+                <li><span class="step-num">3</span>Hoàn tất</li>
+            </ol>
         </section>
 
-        <section class="cart-layout">
+        <div class="wrap page-body">
+            <div class="cart-layout">
 
-            <!-- PRODUCT LIST -->
-            <div class="cart-products">
+                <div class="cart-table">
 
-                <div class="cart-heading">
-                    <h3>Sản phẩm đã chọn</h3>
-                </div>
-
-                <div class="cart-table-responsive">
                     <table>
                         <thead>
                             <tr>
-                                <th>Sản phẩm</th>
-                                <th>Đơn giá</th>
-                                <th>Số lượng</th>
-                                <th>Thành tiền</th>
-                                <th></th>
+                                <th scope="col">Sản phẩm</th>
+                                <th scope="col">Đơn giá</th>
+                                <th scope="col">Số lượng</th>
+                                <th scope="col">Thành tiền</th>
+                                <th scope="col">Xóa</th>
                             </tr>
                         </thead>
 
                         <tbody id="cartItems">
                             <tr>
-                                <td colspan="5" class="empty-cart">
-                                    Giỏ hàng của bạn đang trống.
+                                <td colspan="5" class="cart-empty">
+                                    <p>Giỏ hàng của bạn đang trống.</p>
+                                    <a href="products.html" class="btn btn-primary">Chọn sản phẩm</a>
                                 </td>
                             </tr>
                         </tbody>
+
                     </table>
+
                 </div>
 
-                <a href="products.html" class="continue-shopping">
-                    ← Tiếp tục mua sắm
-                </a>
+                <!-- CART SUMMARY -->
+                <aside class="cart-summary" aria-labelledby="cartSummaryTitle">
+
+                    <h2 id="cartSummaryTitle">Tổng đơn hàng</h2>
+
+                    <div class="summary-row">
+                        <span>Tạm tính</span>
+                        <span id="cartSubtotal">0đ</span>
+                    </div>
+
+                    <div class="summary-row">
+                        <span>Phí vận chuyển</span>
+                        <span id="cartShipping">0đ</span>
+                    </div>
+
+                    <div class="summary-row total">
+                        <span>Tổng cộng</span>
+                        <span id="cartTotal">0đ</span>
+                    </div>
+
+                    <div class="summary-actions">
+                        <a href="checkout.html" class="btn btn-primary btn-block">Tiến hành thanh toán</a>
+                        <a href="products.html" class="btn btn-block">Tiếp tục mua sắm</a>
+                    </div>
+
+                </aside>
 
             </div>
-
-            <!-- ORDER SUMMARY -->
-            <aside class="cart-summary">
-
-                <h3>Tổng đơn hàng</h3>
-
-                <div class="summary-row">
-                    <span>Tạm tính</span>
-                    <span id="cartSubtotal">0đ</span>
-                </div>
-
-                <div class="summary-row">
-                    <span>Phí vận chuyển</span>
-                    <span id="cartShipping">0đ</span>
-                </div>
-
-                <div class="summary-total">
-                    <strong>Tổng cộng</strong>
-                    <strong id="cartTotal">0đ</strong>
-                </div>
-
-                <a href="checkout.html" class="cart-checkout-btn">
-                    TIẾN HÀNH THANH TOÁN
-                </a>
-
-                <p class="cart-note">
-                    Cảm ơn bạn đã lựa chọn Wang Fashion.
-                </p>
-
-            </aside>
-
-        </section>
+        </div>
 
     </main>
 
     <!-- FOOTER -->
-    <footer>
-        <p>&copy; 2026 Wang Fashion. All rights reserved.</p>
+    <footer class="site-footer">
+        <div class="wrap footer-grid">
+            <div>
+                <h2>WANG FASHION</h2>
+                <p>Thời trang tối giản, mang tinh thần phương Đông.</p>
+            </div>
+            <div>
+                <p>Email: <a href="mailto:fashionstore@gmail.com">fashionstore@gmail.com</a></p>
+                <p>Điện thoại: 0977-xxx-xxx</p>
+            </div>
+        </div>
+        <div class="wrap footer-bottom">
+            <p>&copy; 2026 Wang Fashion. All rights reserved.</p>
+        </div>
     </footer>
 
-    <script src="js/script.js"></script>
+    <script src="js/cart.js"></script>
 
 </body>
-
 </html>

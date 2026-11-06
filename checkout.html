@@ -1,24 +1,33 @@
 <!DOCTYPE html>
 <html lang="vi">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thanh toán | Wang Fashion</title>
-    <link rel="stylesheet" href="css/style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600&family=Noto+Serif:wght@600;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/shop.css">
 </head>
 
-<body class="checkout-page">
+<body>
+
+    <a class="skip-link" href="#main">Bỏ qua điều hướng</a>
 
     <!-- HEADER -->
-    <header>
-        <div class="container">
-            <h1>Wang Fashion</h1>
+    <header class="site-header">
+        <div class="wrap header-inner">
+            <a class="brand" href="index.html" aria-label="Wang Fashion, về trang chủ">
+                <span class="brand-seal" aria-hidden="true">W</span>
+                <span class="brand-name">WANG FASHION</span>
+            </a>
 
-            <nav>
+            <nav class="main-nav" aria-label="Điều hướng chính">
                 <a href="index.html">Trang chủ</a>
                 <a href="products.html">Sản phẩm</a>
-                <a href="cart.html">Giỏ hàng</a>
+                <a href="cart.html">Giỏ hàng <span class="cart-count" data-cart-count hidden>0</span></a>
                 <a href="index.html#about">Giới thiệu</a>
                 <a href="index.html#contact">Liên hệ</a>
             </nav>
@@ -26,116 +35,185 @@
     </header>
 
     <!-- CHECKOUT -->
-    <main class="container checkout-main">
+    <main id="main">
 
-        <section class="page-title checkout-title">
-            <p class="checkout-subtitle">WANG FASHION COLLECTION</p>
-            <h2>THANH TOÁN</h2>
-            <p>Hoàn tất đơn hàng của bạn</p>
+        <section class="wrap page-head">
+            <h1>Thanh toán</h1>
+            <p>Điền thông tin nhận hàng để hoàn tất đơn hàng.</p>
+
+            <ol class="steps" aria-label="Các bước đặt hàng">
+                <li><span class="step-num">1</span>Giỏ hàng</li>
+                <li aria-current="step"><span class="step-num">2</span>Thanh toán</li>
+                <li><span class="step-num">3</span>Hoàn tất</li>
+            </ol>
         </section>
 
-        <div class="checkout-container">
+        <div class="wrap page-body">
+            <div class="checkout-layout">
 
-            <!-- CUSTOMER INFORMATION -->
-            <section class="customer-info">
+                <!-- CUSTOMER INFORMATION -->
+                <section class="customer-info" aria-labelledby="infoTitle">
 
-                <h3>01. Thông tin nhận hàng</h3>
+                    <form id="checkoutForm">
 
-                <form id="checkoutForm">
+                        <div class="form-block">
 
-                    <div class="form-group">
-                        <label for="fullname">Họ và tên</label>
-                        <input type="text" id="fullname" name="fullname" placeholder="Nhập họ và tên" required>
+                            <h2 id="infoTitle">Thông tin nhận hàng</h2>
+                            <p class="form-note">Các mục có dấu <span class="req" aria-hidden="true">*</span><span class="visually-hidden">sao</span> là bắt buộc.</p>
+
+                            <div class="field">
+                                <label for="fullname">Họ và tên <span class="req" aria-hidden="true">*</span></label>
+                                <input
+                                    type="text"
+                                    id="fullname"
+                                    name="fullname"
+                                    placeholder="Nguyễn Văn A"
+                                    autocomplete="name"
+                                    required
+                                >
+                            </div>
+
+                            <div class="field">
+                                <label for="phone">Số điện thoại <span class="req" aria-hidden="true">*</span></label>
+                                <input
+                                    type="tel"
+                                    id="phone"
+                                    name="phone"
+                                    placeholder="0912 345 678"
+                                    autocomplete="tel"
+                                    inputmode="tel"
+                                    required
+                                >
+                            </div>
+
+                            <div class="field">
+                                <label for="email">Email (không bắt buộc)</label>
+                                <input
+                                    type="email"
+                                    id="email"
+                                    name="email"
+                                    placeholder="ten@example.com"
+                                    autocomplete="email"
+                                >
+                            </div>
+
+                            <div class="field">
+                                <label for="address">Địa chỉ nhận hàng <span class="req" aria-hidden="true">*</span></label>
+                                <input
+                                    type="text"
+                                    id="address"
+                                    name="address"
+                                    placeholder="Số nhà, đường, phường/xã, quận/huyện, tỉnh/thành phố"
+                                    autocomplete="street-address"
+                                    required
+                                >
+                            </div>
+
+                            <div class="field">
+                                <label for="note">Ghi chú đơn hàng (không bắt buộc)</label>
+                                <textarea
+                                    id="note"
+                                    name="note"
+                                    placeholder="Ví dụ: giao giờ hành chính"
+                                ></textarea>
+                            </div>
+
+                        </div>
+
+                        <div class="form-block">
+
+                            <fieldset>
+                                <legend class="fieldset-title">Phương thức thanh toán</legend>
+
+                                <div class="pay-options">
+
+                                    <label class="pay-option">
+                                        <input
+                                            type="radio"
+                                            name="payment"
+                                            value="cod"
+                                            checked
+                                        >
+                                        <span>Thanh toán khi nhận hàng (COD)</span>
+                                    </label>
+
+                                    <label class="pay-option">
+                                        <input
+                                            type="radio"
+                                            name="payment"
+                                            value="bank"
+                                        >
+                                        <span>Chuyển khoản ngân hàng</span>
+                                    </label>
+
+                                </div>
+                            </fieldset>
+
+                        </div>
+
+                    </form>
+
+                </section>
+
+                <!-- ORDER SUMMARY -->
+                <aside class="order-summary" aria-labelledby="orderTitle">
+
+                    <h2 id="orderTitle">Đơn hàng của bạn</h2>
+
+                    <div id="checkoutItems">
+                        <p class="muted">Chưa có sản phẩm trong đơn hàng. <a href="products.html">Chọn sản phẩm</a></p>
                     </div>
 
-                    <div class="form-group">
-                        <label for="phone">Số điện thoại</label>
-                        <input type="tel" id="phone" name="phone" placeholder="Nhập số điện thoại" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" placeholder="Nhập email">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="address">Địa chỉ nhận hàng</label>
-                        <input type="text" id="address" name="address" placeholder="Số nhà, đường, phường/xã..."
-                            required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="note">Ghi chú đơn hàng</label>
-                        <textarea id="note" name="note" placeholder="Ghi chú thêm cho đơn hàng..."></textarea>
-                    </div>
-
-                    <div class="payment-method">
-                        <h3>02. Phương thức thanh toán</h3>
-
-                        <label class="payment-option">
-                            <input type="radio" name="payment" value="cod" checked>
-                            <span>Thanh toán khi nhận hàng (COD)</span>
-                        </label>
-
-                        <label class="payment-option">
-                            <input type="radio" name="payment" value="bank">
-                            <span>Chuyển khoản ngân hàng</span>
-                        </label>
-                    </div>
-
-                </form>
-
-            </section>
-
-            <!-- ORDER SUMMARY -->
-            <section class="order-summary">
-
-                <h3>03. Đơn hàng của bạn</h3>
-
-                <div id="checkoutItems">
-                    <p>Đang tải sản phẩm...</p>
-                </div>
-
-                <div class="total-price">
-
-                    <div class="price-row">
+                    <div class="summary-row">
                         <span>Tạm tính</span>
                         <span id="subtotal">0đ</span>
                     </div>
 
-                    <div class="price-row">
+                    <div class="summary-row">
                         <span>Phí vận chuyển</span>
                         <span id="shipping">0đ</span>
                     </div>
 
-                    <div class="price-row final-total">
-                        <strong>Tổng thanh toán</strong>
-                        <strong id="total">0đ</strong>
+                    <div class="summary-row total">
+                        <span>Tổng cộng</span>
+                        <span id="total">0đ</span>
                     </div>
 
-                </div>
+                    <button
+                        type="submit"
+                        form="checkoutForm"
+                        class="btn btn-primary btn-block"
+                    >
+                        Xác nhận đặt hàng
+                    </button>
 
-                <button type="submit" form="checkoutForm" class="btn checkout-btn">
-                    XÁC NHẬN ĐẶT HÀNG
-                </button>
+                    <a class="back-link" href="cart.html">Quay lại giỏ hàng</a>
 
-                <p class="back-to-cart">
-                    <a href="cart.html">← Quay lại giỏ hàng</a>
-                </p>
+                </aside>
 
-            </section>
-
+            </div>
         </div>
 
     </main>
 
     <!-- FOOTER -->
-    <footer>
-        <p>&copy; 2026 Wang Fashion. All rights reserved.</p>
+    <footer class="site-footer">
+        <div class="wrap footer-grid">
+            <div>
+                <h2>WANG FASHION</h2>
+                <p>Thời trang tối giản, mang tinh thần phương Đông.</p>
+            </div>
+            <div>
+                <p>Email: <a href="mailto:fashionstore@gmail.com">fashionstore@gmail.com</a></p>
+                <p>Điện thoại: 0977-xxx-xxx</p>
+            </div>
+        </div>
+        <div class="wrap footer-bottom">
+            <p>&copy; 2026 Wang Fashion. All rights reserved.</p>
+        </div>
     </footer>
 
-    <script src="js/script.js"></script>
+    <script src="js/checkout.js"></script>
 
 </body>
-
 </html>
