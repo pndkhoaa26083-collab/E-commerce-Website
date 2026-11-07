@@ -1,416 +1,288 @@
-/* Cai dat chung */
+/* =========================================
+   WANG FASHION
+   CHINESE INK WASH THEME
+   Giấy cổ - Mực tàu - Đỏ son
+========================================= */
+
+/* 1. CAI DAT CHUNG */
+:root {
+    --paper: #f5f0e8;
+    --paper-dark: #e9dfd0;
+    --ink: #211d1a;
+    --ink-light: #5c5148;
+    --red: #8b2028;
+    --red-dark: #65171d;
+    --gold: #b69a6a;
+    --white: #fffdf8;
+    --border: #d8cbbb;
+    --shadow: 0 8px 25px rgba(33, 29, 26, 0.09);
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f5f5f5;
-    color: #333;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.7;
+    overflow-x: hidden;
 }
 
-/* Header */
-header {
-    background-color: #222;
-    color: white;
-    padding: 25px;
-    text-align: center;
-}
-
-header h1 {
-    margin-bottom: 15px;
-}
-
-/* Navigation */
-nav {
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-    padding: 15px;
-    background-color: #444;
-}
-
-nav a {
-    color: white;
+a {
+    color: inherit;
     text-decoration: none;
-    font-weight: bold;
 }
 
-nav a:hover {
-    color: crimson;
+button,
+input,
+textarea {
+    font: inherit;
 }
 
-.login {
-    border: 1px white solid;
-    border-radius: 10px;
-    background-color: red;
-}
-
-.login:hover {
-    color: black;
-}
-
-/* Main */
-main {
-    max-width: 1100px;
-    margin: 30px auto;
-    padding: 20px;
-}
-
-main h2 {
-    text-align: center;
-    margin-bottom: 30px;
-    color: #e91e63;
-}
-
-/* Product list */
-.products {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 25px;
-}
-
-.product {
-    background-color: white;
-    padding: 20px;
-    border-radius: 12px;
-    text-align: center;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-}
-
-.product img {
-    width: 100%;
-    max-width: 200px;
-    height: 200px;
-    object-fit: cover;
-}
-
-.product h3 {
-    margin: 15px 0;
-}
-
-.product p {
-    color: #e91e63;
-    font-weight: bold;
-    margin-bottom: 15px;
-}
-
-/* Button */
 button {
-    background-color: #e91e63;
-    color: white;
-    border: none;
-    padding: 12px 20px;
-    border-radius: 6px;
     cursor: pointer;
 }
 
-button:hover {
-    background-color: #c2185b;
-}
-
-/* Responsive */
-@media (max-width: 600px) {
-    .products {
-        grid-template-columns: 1fr;
-    }
-
-    nav {
-        flex-wrap: wrap;
-        gap: 15px;
-    }
-}
-
-.product-card img {
-    width: 180px;
-    height: 180px;
-    object-fit: contain;
+img {
     display: block;
+    max-width: 100%;
 }
 
-.product-card {
-    width: 200px;
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-.product-card img {
-    width: 100%;
-    height: 200px;
-    object-fit: contain;
-    display: block;
-}
-
-/* HEADER BACKGROUND EFFECT */
-header {
-    background: linear-gradient(120deg,
-            #050505,
-            #1a0000,
-            #080808,
-            #300000);
-    background-size: 300% 300%;
-    animation: darkGlow 8s ease infinite;
-    position: relative;
-    overflow: hidden;
-    padding: 25px;
-    text-align: center;
-}
-
-/* BRAND TEXT */
-.brand-effect {
-    position: relative;
-    z-index: 2;
-    padding: 15px;
-}
-
-.brand-effect h1 {
-    color: white;
-    font-size: 38px;
-    font-weight: 900;
-    letter-spacing: 5px;
-    text-shadow: 0 0 12px #ff0000;
-}
-
-.brand-effect p {
-    color: #ff3333;
-    letter-spacing: 6px;
-    font-size: 12px;
-}
-
-/* RED GLOW */
-@keyframes darkGlow {
-    0% {
-        background-position: 0% 50%;
-    }
-
-    50% {
-        background-position: 100% 50%;
-    }
-
-    100% {
-        background-position: 0% 50%;
-    }
-}
-
-/* HEADER BACKGROUND EFFECT */
+/* 2. HEADER */
+header,
 .header {
-    background: linear-gradient(120deg,
-            #292722,
-            #6b6254,
-            #e4d7bd,
-            #8b2525,
-            #302923);
-
-    background-size: 300% 300%;
-    animation: darkGlow 10s ease infinite;
-
     position: relative;
-    overflow: hidden;
-    padding: 25px;
-    text-align: center;
-
-    border-bottom: 2px solid #9b2929;
+    z-index: 10;
+    background: rgba(245, 240, 232, 0.96);
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 3px 15px rgba(33, 29, 26, 0.06);
 }
 
-/* BRAND TEXT */
-.logo {
-    color: white;
-    font-size: 38px;
-    font-weight: 900;
-    letter-spacing: 5px;
-    text-shadow: 0 0 12px red;
-}
-
-/* ANIMATION */
-@keyframes darkGlow {
-    0% {
-        background-position: 0% 50%;
-    }
-
-    50% {
-        background-position: 100% 50%;
-    }
-
-    100% {
-        background-position: 0% 50%;
-    }
-}
-
-/* ===== WANG FASHION REDESIGN ===== */
-
-* {
-    box-sizing: border-box;
-}
-
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #f5f5f5;
-    color: #171717;
-}
-
-/* HEADER */
 .header {
-    background: #101010;
-    padding: 25px 5%;
-}
-
-.logo {
-    color: white;
-    font-size: 34px;
-    letter-spacing: 4px;
-    text-shadow: 0 0 10px #e00000;
-}
-
-.navbar {
-    background: #222;
-    padding: 18px;
+    min-height: 100px;
     display: flex;
-    justify-content: center;
-    gap: 35px;
-}
-
-.navbar a {
-    padding: 5px;
-}
-
-/* BANNER */
-.banner {
-    min-height: 400px;
-    display: flex;
+    justify-content: space-between;
     align-items: center;
-    padding: 50px 8%;
-    background: linear-gradient(100deg,
-            #080808,
-            #350000,
-            #151515);
-    color: white;
+    gap: 25px;
+    padding: 15px 5%;
 }
 
-.banner-content h2 {
-    font-size: 48px;
-    font-weight: 900;
-    letter-spacing: 2px;
+header .container {
+    min-height: 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 25px;
 }
 
-.banner-content p {
-    font-size: 17px;
-    color: #ddd;
-}
-
-.banner .btn {
-    display: inline-block;
-    background: #c90000;
-    color: white;
-    padding: 14px 28px;
-    text-decoration: none;
-    margin-top: 15px;
-}
-
-/* FEATURED PRODUCTS */
-.featured-products {
-    padding: 55px 5%;
-}
-
-.featured-products h2 {
-    text-align: center;
-    font-size: 30px;
-    margin-bottom: 35px;
-}
-
-.product-list {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 22px;
-}
-
-.product-card {
-    background: white;
-    padding: 15px;
-    border-radius: 5px;
-    text-align: center;
-    transition: 0.3s;
-}
-
-.product-card:hover {
-    transform: translateY(-7px);
-    box-shadow: 0 8px 25px #0002;
-}
-
-.product-card img {
-    width: 100%;
-    height: 260px;
-    object-fit: contain;
-    background: #f7f7f7;
-}
-
-.product-card h3 {
-    font-size: 17px;
-}
-
-.product-card p {
-    color: #c90000;
+header h1,
+.logo {
+    color: var(--red);
+    font-family: Georgia, serif;
+    font-size: 29px;
+    letter-spacing: 3px;
     font-weight: bold;
 }
 
-@media (max-width: 768px) {
-    .product-list {
-        grid-template-columns: repeat(2, 1fr);
+.navbar,
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 25px;
+}
+
+.header .navbar {
+    flex: 1;
+}
+
+nav a {
+    position: relative;
+    color: var(--ink);
+    font-size: 14px;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+nav a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -7px;
+    width: 0;
+    height: 2px;
+    background: var(--red);
+    transition: width 0.3s ease;
+}
+
+nav a:hover {
+    color: var(--red);
+}
+
+nav a:hover::after {
+    width: 100%;
+}
+
+/* 3. NUT DANG NHAP VA DANG KY */
+.auth-links {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+}
+
+.auth-links a {
+    display: inline-block;
+    padding: 9px 15px;
+    border: 1px solid var(--red);
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: bold;
+    transition: 0.3s ease;
+}
+
+.auth-links a:first-child {
+    color: var(--red);
+    background: transparent;
+}
+
+.auth-links a:last-child {
+    color: var(--white);
+    background: var(--red);
+}
+
+.auth-links a:hover {
+    background: var(--red-dark);
+    border-color: var(--red-dark);
+    color: white;
+}
+
+/* 4. BANNER THUY MAC */
+.ink-banner {
+    min-height: 500px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    text-align: center;
+    padding: 60px 8%;
+    background:
+        linear-gradient(rgba(245, 240, 232, 0.35),
+            rgba(245, 240, 232, 0.55)),
+        radial-gradient(ellipse at 80% 25%,
+            rgba(139, 32, 40, 0.13),
+            transparent 35%),
+        linear-gradient(135deg, #e8dece, #f5f0e8 55%, #d8cbbb);
+}
+
+.ink-background {
+    position: absolute;
+    inset: 0;
+    opacity: 0.45;
+    background:
+        radial-gradient(ellipse at 15% 75%,
+            rgba(33, 29, 26, 0.25),
+            transparent 32%),
+        radial-gradient(ellipse at 85% 20%,
+            rgba(33, 29, 26, 0.2),
+            transparent 28%),
+        radial-gradient(ellipse at 50% 100%,
+            rgba(139, 32, 40, 0.12),
+            transparent 35%);
+    filter: blur(18px);
+    animation: inkFlow 9s ease-in-out infinite alternate;
+}
+
+.banner-content {
+    position: relative;
+    z-index: 2;
+    padding: 30px;
+}
+
+.banner-content h2 {
+    font-family: Georgia, serif;
+    font-size: clamp(35px, 7vw, 76px);
+    letter-spacing: 6px;
+    color: var(--ink);
+    margin-bottom: 15px;
+}
+
+.banner-content p {
+    color: var(--red);
+    font-size: 17px;
+    letter-spacing: 3px;
+    margin-bottom: 30px;
+}
+
+@keyframes inkFlow {
+    from {
+        transform: scale(1);
+        opacity: 0.3;
     }
 
-    .banner-content h2 {
-        font-size: 30px;
-    }
-
-    .navbar {
-        flex-wrap: wrap;
-        gap: 15px;
+    to {
+        transform: scale(1.15);
+        opacity: 0.55;
     }
 }
 
+/* 5. HIỆU UNG MUC LOANG MO DAU */
 .ink-intro {
     position: fixed;
     inset: 0;
     z-index: 9999;
-    background: #8e8c89;
     pointer-events: none;
-    animation: introHide 3.5s forwards;
+    animation: introFade 1.8s ease forwards;
 }
 
 .ink-stain {
     position: absolute;
-    width: 150px;
-    height: 150px;
+    width: 300px;
+    height: 300px;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    border-radius: 45% 55% 65% 35%;
+    border-radius: 50%;
     background: radial-gradient(circle,
-            #990909 20%,
-            #333 45%,
-            transparent 72%);
-    filter: blur(2px);
-    animation: inkSpread 2.5s ease-out forwards;
+            rgba(33, 29, 26, 0.2),
+            rgba(33, 29, 26, 0.08) 45%,
+            transparent 70%);
+    filter: blur(20px);
+    animation: stainExpand 1.5s ease-out forwards;
 }
 
-@keyframes inkSpread {
+@keyframes stainExpand {
     from {
-        width: 100px;
-        height: 100px;
-        opacity: 0.9;
+        transform: translate(-50%, -50%) scale(0.1);
+        opacity: 0.8;
     }
 
     to {
-        width: 180vmax;
-        height: 180vmax;
+        transform: translate(-50%, -50%) scale(5);
         opacity: 0;
     }
 }
 
-@keyframes introHide {
+@keyframes introFade {
 
     0%,
-    75% {
+    70% {
         opacity: 1;
     }
 
@@ -420,116 +292,85 @@ body {
     }
 }
 
-/* ===== INK WASH BANNER ===== */
-
-.ink-banner {
-    position: relative;
-    min-height: 450px;
-    overflow: hidden;
-    background: #e9dfca;
-    display: flex;
-    align-items: center;
-    padding: 60px 8%;
-}
-
-/* LỚP MỰC LOANG */
-
-.ink-background {
-    position: absolute;
-    inset: -30%;
-
-    background:
-        radial-gradient(ellipse at 20% 40%,
-            #111 0%,
-            transparent 35%),
-        radial-gradient(ellipse at 80% 60%,
-            #a60016 0%,
-            transparent 25%),
-        radial-gradient(ellipse at 50% 80%,
-            #555 0%,
-            transparent 35%);
-
-    filter: blur(3px);
-    opacity: 0.65;
-
-    animation: inkMove 12s ease-in-out infinite alternate;
-}
-
-/* NỘI DUNG BANNER */
-
-.banner-content {
-    position: relative;
-    z-index: 2;
-    color: #111;
-}
-
-.banner-content h2 {
-    font-size: 45px;
-    font-weight: 900;
-    letter-spacing: 5px;
-}
-
-.banner-content p {
-    font-size: 15px;
-    letter-spacing: 3px;
-}
-
-.banner-content .btn {
+/* 6. NUT BAM CHUNG */
+.btn {
     display: inline-block;
-    padding: 14px 28px;
-    background: #a60016;
-    color: white;
-    text-decoration: none;
-    margin-top: 15px;
+    padding: 12px 27px;
+    border: 1px solid var(--red);
+    border-radius: 3px;
+    background: var(--red);
+    color: var(--white);
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-align: center;
+    transition: all 0.3s ease;
 }
 
-/* CHUYỂN ĐỘNG MỰC */
-
-@keyframes inkMove {
-    0% {
-        transform: translate(-5%, -3%) scale(1);
-    }
-
-    50% {
-        transform: translate(3%, 2%) scale(1.1);
-    }
-
-    100% {
-        transform: translate(5%, 3%) scale(1.15);
-    }
+.btn:hover {
+    background: var(--red-dark);
+    border-color: var(--red-dark);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(139, 32, 40, 0.2);
 }
 
-
-/* =========================================================
-   TRANG CHỦ: các phần bên dưới banner
-   Header và banner giữ nguyên ở các khối phía trên.
-   Dùng class riêng (home-, tile, shelf, item, site-foot)
-   để không bị các luật cũ ở trên chen vào.
-   ========================================================= */
-
-:root {
-    --h-ink: #141414;
-    --h-paper: #f2ece0;
-    --h-seal: #a60016;
-    --h-seal-dark: #82000f;
+/* 7. DANH MUC TRANG CHU */
+.categories,
+.featured-products {
+    padding: 65px 5%;
+    text-align: center;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-    html {
-        scroll-behavior: smooth;
-    }
+.categories>h2,
+.featured-products>h2 {
+    font-family: Georgia, serif;
+    font-size: 30px;
+    color: var(--ink);
+    margin-bottom: 35px;
 }
 
-body {
-    background: var(--h-paper);
-    color: var(--h-ink);
+.category-list {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 20px;
+    width: 100%;
+    max-width: 1200px;
+    margin: auto;
 }
 
-a:focus-visible {
-    outline: 2px solid var(--h-ink);
-    outline-offset: 3px;
+.category-item {
+    min-width: 0;
+    padding: 15px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    text-align: center;
+    transition: transform 0.3s ease;
 }
 
+.category-item:hover {
+    transform: translateY(-7px);
+}
+
+.category-item img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+}
+
+.category-item h3 {
+    margin: 17px 0 8px;
+    font-family: Georgia, serif;
+    font-size: 20px;
+}
+
+.category-item a {
+    color: var(--red);
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* 8. DANH MUC TRANH MUC */
 .home-wrap {
     width: min(1160px, 90%);
     margin-inline: auto;
@@ -559,17 +400,15 @@ a:focus-visible {
 }
 
 .home-link {
-    color: var(--h-seal);
+    color: #a60016;
     font-weight: 700;
     text-underline-offset: 4px;
 }
 
 .home-link:hover {
-    color: var(--h-seal-dark);
+    color: #82000f;
 }
 
-
-/* ----- Danh mục: ba khối tranh mực ----- */
 .tile-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -592,7 +431,6 @@ a:focus-visible {
     text-decoration: none;
 }
 
-/* lớp mực loang */
 .tile::before {
     content: "";
     position: absolute;
@@ -603,13 +441,14 @@ a:focus-visible {
     transition: transform 0.6s ease;
 }
 
-/* lớp tối ở đáy để chữ luôn dễ đọc */
 .tile::after {
     content: "";
     position: absolute;
     inset: 0;
     z-index: -1;
-    background: linear-gradient(to top, rgba(10, 10, 12, 0.75), transparent 62%);
+    background: linear-gradient(to top,
+            rgba(10, 10, 12, 0.75),
+            transparent 62%);
 }
 
 .tile:hover::before {
@@ -619,44 +458,33 @@ a:focus-visible {
 .tile h3 {
     font-size: 1.7rem;
     font-weight: 800;
-    letter-spacing: 0.02em;
 }
 
 .tile span {
     font-size: 0.95rem;
     text-decoration: underline;
-    text-decoration-color: rgba(255, 255, 255, 0.6);
     text-underline-offset: 4px;
-}
-
-.tile:focus-visible {
-    outline: 3px solid var(--h-seal);
-    outline-offset: 3px;
 }
 
 .tile--ao {
     --wash:
         radial-gradient(ellipse 55% 45% at 25% 30%, rgba(235, 230, 215, 0.38), transparent 70%),
-        radial-gradient(circle at 75% 25%, #a60016 0, #a60016 8%, transparent 26%),
-        radial-gradient(ellipse 60% 40% at 70% 85%, rgba(235, 230, 215, 0.2), transparent 70%);
+        radial-gradient(circle at 75% 25%, #a60016 0, #a60016 8%, transparent 26%);
 }
 
 .tile--quan {
     --wash:
         radial-gradient(ellipse 80% 30% at 30% 78%, rgba(235, 230, 215, 0.35), transparent 70%),
-        radial-gradient(ellipse 70% 25% at 75% 58%, rgba(235, 230, 215, 0.22), transparent 70%),
         radial-gradient(circle at 24% 22%, #a60016 0, #a60016 6%, transparent 20%);
 }
 
 .tile--giay {
-
     --wash:
         radial-gradient(ellipse 70% 55% at 65% 35%, rgba(166, 0, 22, 0.9), transparent 70%),
         radial-gradient(ellipse 50% 40% at 25% 80%, rgba(235, 230, 215, 0.25), transparent 70%);
 }
 
-
-/* ----- Sản phẩm nổi bật ----- */
+/* 9. SAN PHAM NOI BAT */
 .shelf {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -688,14 +516,12 @@ a:focus-visible {
     margin-top: 14px;
     font-size: 1.05rem;
     font-weight: 700;
-    line-height: 1.3;
 }
 
 .item-price {
     margin: 4px 0 14px;
-    color: var(--h-seal);
+    color: #a60016;
     font-weight: 700;
-    font-variant-numeric: tabular-nums;
 }
 
 .item-btn {
@@ -704,22 +530,622 @@ a:focus-visible {
     justify-content: center;
     min-height: 44px;
     margin-top: auto;
-    border: 1px solid var(--h-ink);
+    border: 1px solid var(--ink);
     border-radius: 2px;
-    color: var(--h-ink);
+    color: var(--ink);
     font-weight: 600;
-    text-decoration: none;
-    transition: background-color 0.15s, color 0.15s, border-color 0.15s;
+    transition: 0.2s;
 }
 
 .item-btn:hover {
-    background: var(--h-seal);
-    border-color: var(--h-seal);
-    color: #fff;
+    background: #a60016;
+    border-color: #a60016;
+    color: white;
 }
 
+/* 10. DANH SACH SAN PHAM */
+.product-list {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 25px;
+    max-width: 1200px;
+    margin: 25px auto;
+}
 
-/* ----- Footer ----- */
+.product-card {
+    position: relative;
+    padding: 15px;
+    overflow: hidden;
+    background: var(--white);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 14px 30px rgba(33, 29, 26, 0.13);
+}
+
+.product-card img {
+    width: 100%;
+    height: 220px;
+    object-fit: contain;
+    background: var(--paper-dark);
+}
+
+.product-card h3,
+.product-card h4 {
+    color: var(--ink);
+    margin: 15px 0 5px;
+    font-family: Georgia, serif;
+    font-size: 19px;
+}
+
+.product-card p,
+.product-card .price {
+    color: var(--red);
+    font-weight: bold;
+    margin: 8px 0 15px;
+}
+
+.product-card .btn {
+    width: 100%;
+}
+
+.product-image {
+    height: 220px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--paper-dark);
+    color: var(--ink-light);
+    font-family: Georgia, serif;
+    border: 1px dashed var(--gold);
+}
+
+/* 11. TIM KIEM SAN PHAM */
+.search-section {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    gap: 10px;
+    width: 90%;
+    max-width: 650px;
+    margin: 0 auto 35px;
+}
+
+.search-section input {
+    flex: 1;
+    min-width: 0;
+    padding: 13px 16px;
+    border: 1px solid var(--border);
+    outline: none;
+    background: var(--white);
+}
+
+.search-section input:focus {
+    border-color: var(--red);
+    box-shadow: 0 0 0 3px rgba(139, 32, 40, 0.08);
+}
+
+.search-section button {
+    padding: 12px 22px;
+    border: none;
+    background: var(--red);
+    color: white;
+}
+
+.search-section button:hover {
+    background: var(--red-dark);
+}
+
+/* 12. BO LOC DANH MUC */
+.categories:has(.category-btn) {
+    padding: 15px 5% 35px;
+}
+
+.categories:has(.category-btn) h3 {
+    margin-bottom: 18px;
+    font-family: Georgia, serif;
+    font-size: 21px;
+}
+
+.category-btn {
+    margin: 5px;
+    padding: 9px 20px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--ink);
+    transition: all 0.3s ease;
+}
+
+.category-btn:hover,
+.category-btn.active {
+    color: white;
+    background: var(--red);
+    border-color: var(--red);
+}
+
+.products-section {
+    padding: 15px 5% 70px;
+    text-align: center;
+}
+
+.products-section>h3 {
+    font-family: Georgia, serif;
+    font-size: 25px;
+    margin-bottom: 25px;
+}
+
+/* 13. GIOI THIEU */
+.about {
+    padding: 75px 20px;
+    text-align: center;
+    background: var(--paper-dark);
+}
+
+.about h2 {
+    margin-bottom: 20px;
+    color: var(--red);
+    font-family: Georgia, serif;
+    font-size: 30px;
+}
+
+.about p {
+    max-width: 750px;
+    margin: auto;
+    color: var(--ink-light);
+    line-height: 2;
+}
+
+/* 14. TIEU DE CAC TRANG */
+.page-title,
+.cart-title,
+.checkout-title {
+    padding: 65px 15px 35px;
+    text-align: center;
+}
+
+.page-title h2,
+.cart-title h2,
+.checkout-title h2 {
+    color: var(--ink);
+    font-family: Georgia, serif;
+    font-size: clamp(26px, 4vw, 38px);
+    letter-spacing: 3px;
+    margin: 8px 0;
+}
+
+.page-title p,
+.cart-title p,
+.checkout-title>p:last-child {
+    color: var(--ink-light);
+    font-size: 15px;
+}
+
+.cart-title span,
+.checkout-subtitle {
+    color: var(--red);
+    font-size: 12px;
+    letter-spacing: 4px;
+    font-weight: bold;
+}
+
+/* 15. GIO HANG */
+.cart-main {
+    padding-bottom: 70px;
+}
+
+.cart-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.8fr) minmax(280px, 0.9fr);
+    align-items: start;
+    gap: 30px;
+}
+
+.cart-products,
+.cart-summary {
+    padding: 25px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+}
+
+.cart-heading h3,
+.cart-summary h3 {
+    font-family: Georgia, serif;
+    font-size: 21px;
+    margin-bottom: 22px;
+}
+
+.cart-table-responsive {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.cart-table-responsive table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 520px;
+}
+
+.cart-table-responsive th {
+    padding: 14px 10px;
+    color: var(--white);
+    background: var(--ink);
+    font-size: 13px;
+    text-align: left;
+}
+
+.cart-table-responsive td {
+    padding: 16px 10px;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+}
+
+.cart-table-responsive tr:hover td {
+    background: rgba(182, 154, 106, 0.08);
+}
+
+.empty-cart {
+    padding: 35px !important;
+    color: var(--ink-light);
+    text-align: center;
+}
+
+.continue-shopping {
+    display: inline-block;
+    margin-top: 25px;
+    color: var(--red);
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.continue-shopping:hover {
+    text-decoration: underline;
+}
+
+.cart-summary {
+    position: sticky;
+    top: 20px;
+}
+
+.summary-row,
+.summary-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    padding: 13px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+}
+
+.summary-total {
+    margin: 12px 0 20px;
+    border-bottom: none;
+    color: var(--red);
+    font-size: 17px;
+}
+
+.cart-checkout-btn {
+    display: block;
+    padding: 14px 10px;
+    color: white;
+    background: var(--red);
+    text-align: center;
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.cart-checkout-btn:hover {
+    background: var(--red-dark);
+}
+
+.cart-note {
+    margin-top: 18px;
+    color: var(--ink-light);
+    font-size: 12px;
+    text-align: center;
+    font-style: italic;
+}
+
+.quantity-control {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.quantity-btn {
+    width: 28px;
+    height: 28px;
+    border: 1px solid var(--border);
+    background: var(--paper);
+    color: var(--ink);
+    border-radius: 3px;
+}
+
+.quantity-btn:hover {
+    background: var(--red);
+    color: white;
+}
+
+.remove-item {
+    border: none;
+    background: transparent;
+    color: var(--red);
+    font-weight: bold;
+}
+
+.remove-item:hover {
+    text-decoration: underline;
+}
+
+/* 16. THANH TOAN */
+.checkout-main {
+    padding-bottom: 75px;
+}
+
+.checkout-container {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(300px, 0.9fr);
+    align-items: start;
+    gap: 30px;
+}
+
+.customer-info,
+.order-summary {
+    padding: 30px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+}
+
+.customer-info>h3,
+.order-summary>h3,
+.payment-method h3 {
+    margin-bottom: 25px;
+    font-family: Georgia, serif;
+    font-size: 20px;
+    color: var(--ink);
+}
+
+.form-group {
+    margin-bottom: 19px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 7px;
+    color: var(--ink);
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid var(--border);
+    outline: none;
+    background: #fffefa;
+    color: var(--ink);
+}
+
+.form-group textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: var(--red);
+    box-shadow: 0 0 0 3px rgba(139, 32, 40, 0.08);
+}
+
+.payment-method {
+    margin-top: 35px;
+    padding-top: 25px;
+    border-top: 1px solid var(--border);
+}
+
+.payment-option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 13px;
+    padding: 14px;
+    border: 1px solid var(--border);
+    background: #fffefa;
+    cursor: pointer;
+}
+
+.payment-option:hover {
+    border-color: var(--red);
+    background: #faf4ed;
+}
+
+.payment-option input {
+    accent-color: var(--red);
+    width: 17px;
+    height: 17px;
+}
+
+.payment-option span {
+    font-size: 14px;
+}
+
+.order-summary {
+    position: sticky;
+    top: 20px;
+}
+
+#checkoutItems {
+    margin-bottom: 20px;
+}
+
+#checkoutItems p {
+    color: var(--ink-light);
+    font-size: 14px;
+}
+
+.checkout-product-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+}
+
+.checkout-product-row strong {
+    color: var(--red);
+    white-space: nowrap;
+}
+
+.total-price {
+    border-top: 1px solid var(--border);
+    padding-top: 12px;
+}
+
+.price-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 12px 0;
+    font-size: 14px;
+}
+
+.final-total {
+    margin-top: 8px;
+    padding-top: 18px;
+    border-top: 1px solid var(--border);
+    color: var(--red);
+    font-size: 17px;
+}
+
+.checkout-btn {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.checkout-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.back-to-cart {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 13px;
+}
+
+.back-to-cart a {
+    color: var(--red);
+}
+
+.back-to-cart a:hover {
+    text-decoration: underline;
+}
+
+/* 17. TRANG DANG NHAP VA DANG KY */
+.login-page {
+    min-height: 100vh;
+}
+
+.login-container {
+    min-height: 75vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+}
+
+.login-box {
+    width: 100%;
+    max-width: 420px;
+    padding: 35px;
+    background: #fffaf0;
+    border: 1px solid #d8c7a3;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+.login-box h2 {
+    text-align: center;
+    color: #8b1e1e;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+}
+
+.login-box>p {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.login-box label {
+    display: block;
+    margin: 15px 0 7px;
+    font-weight: bold;
+}
+
+.login-box input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #c9b99b;
+    border-radius: 6px;
+    font-size: 15px;
+}
+
+.login-box button {
+    width: 100%;
+    padding: 13px;
+    margin-top: 15px;
+    background: #8b1e1e;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+}
+
+.login-box button:hover {
+    background: #641414;
+}
+
+.login-box button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.login-message {
+    color: #c00000;
+    font-size: 14px;
+    margin-top: 12px;
+}
+
+.login-box .register-link {
+    margin-top: 22px;
+}
+
+.register-link a,
+.back-home {
+    color: #8b1e1e;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.back-home {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* 18. FOOTER */
 .site-foot {
     background: #101010;
     border-top: 2px solid #9b2929;
@@ -736,7 +1162,6 @@ a:focus-visible {
 .site-foot h2 {
     font-size: 1.2rem;
     font-weight: 800;
-    line-height: 1.25;
 }
 
 .site-foot p {
@@ -751,10 +1176,6 @@ a:focus-visible {
     text-underline-offset: 4px;
 }
 
-.site-foot a:focus-visible {
-    outline-color: #ece7db;
-}
-
 .foot-copy {
     padding-block: 18px;
     border-top: 1px solid #2c2c2c;
@@ -766,24 +1187,159 @@ a:focus-visible {
     font-size: 0.85rem;
 }
 
+footer,
+.footer {
+    padding: 35px 20px;
+    background: var(--ink);
+    color: var(--paper);
+    text-align: center;
+}
 
-/* ----- Responsive cho phần mới ----- */
+footer h2,
+.footer h2 {
+    margin-bottom: 15px;
+    color: var(--gold);
+    font-family: Georgia, serif;
+    letter-spacing: 3px;
+}
+
+footer p,
+.footer p {
+    margin: 5px 0;
+    color: #d7cbb9;
+    font-size: 13px;
+}
+
+/* 19. RESPONSIVE */
 @media (max-width: 900px) {
+    .header {
+        flex-direction: column;
+        justify-content: center;
+        padding: 20px 5%;
+    }
+
+    header .container {
+        flex-direction: column;
+        justify-content: center;
+        padding: 20px 0;
+    }
+
+    .product-list,
+    .shelf {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .cart-layout,
+    .checkout-container {
+        grid-template-columns: 1fr;
+    }
+
+    .cart-summary,
+    .order-summary {
+        position: static;
+    }
+
+    .category-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .tile-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .tile:last-child {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 600px) {
+    .container {
+        width: 92%;
+    }
+
+    header h1,
+    .logo {
+        font-size: 24px;
+    }
+
+    nav,
+    .navbar {
+        gap: 12px 18px;
+    }
+
+    nav a {
+        font-size: 12px;
+    }
+
+    .auth-links {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .ink-banner {
+        min-height: 420px;
+    }
+
+    .banner-content h2 {
+        letter-spacing: 3px;
+    }
+
+    .banner-content p {
+        font-size: 13px;
+        letter-spacing: 2px;
+    }
+
+    .category-list,
+    .product-list,
+    .shelf,
     .tile-grid {
         grid-template-columns: 1fr;
     }
 
-    .tile {
-        min-height: 150px;
+    .tile:last-child {
+        grid-column: auto;
     }
 
-    .shelf {
-        grid-template-columns: repeat(2, 1fr);
+    .category-item img {
+        height: 240px;
     }
 
-}
+    .product-card img,
+    .product-image {
+        height: 260px;
+    }
 
-@media (max-width: 600px) {
+    .categories,
+    .featured-products {
+        padding: 45px 5%;
+    }
+
+    .page-title,
+    .cart-title,
+    .checkout-title {
+        padding: 45px 10px 25px;
+    }
+
+    .search-section {
+        width: 100%;
+    }
+
+    .search-section button {
+        padding: 10px 13px;
+    }
+
+    .cart-products,
+    .cart-summary,
+    .customer-info,
+    .order-summary {
+        padding: 18px;
+    }
+
+    .category-btn {
+        padding: 8px 13px;
+        font-size: 13px;
+    }
+
     .foot-grid {
         grid-template-columns: 1fr;
     }
@@ -797,10 +1353,27 @@ a:focus-visible {
     .item-btn {
         font-size: 0.9rem;
     }
+
+    .login-box {
+        padding: 25px 20px;
+    }
+}
+
+/* 20. ACCESSIBILITY */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible {
+    outline: 2px solid var(--red);
+    outline-offset: 3px;
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .tile::before {
-        transition: none;
+
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
     }
 }

@@ -1,6 +1,6 @@
 
 /* =========================================
-   WANG FASHION - MAIN JAVASCRIPT
+   MAIN JAVASCRIPT
    Tim kiem - Loc san pham - Gio hang
    Thanh toan
 ========================================= */
@@ -44,14 +44,28 @@ document.addEventListener("DOMContentLoaded", function () {
         alert(message);
     }
 
+
     // =====================================
-    // 2. TIM KIEM SAN PHAM
+    // 2. TIM KIEM VA LOC SAN PHAM
     // =====================================
 
     const searchInput = document.getElementById("searchInput");
     const searchButton = document.getElementById("searchButton");
 
+    const categoryButtons = document.querySelectorAll(".category-btn");
+    const resultCount = document.getElementById("resultCount");
+    const noResults = document.getElementById("noResults");
+
     let selectedCategory = "all";
+
+    // Chuyen chu co dau thanh khong dau de tim kiem de hon
+    function normalizeText(text) {
+        return String(text)
+            .toLowerCase()
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .replace(/đ/g, "d");
+    }
 
     function filterProducts() {
         const productCards = document.querySelectorAll(
@@ -59,32 +73,53 @@ document.addEventListener("DOMContentLoaded", function () {
         );
 
         const keyword = searchInput
-            ? searchInput.value.trim().toLowerCase()
+            ? normalizeText(searchInput.value.trim())
             : "";
 
-        productCards.forEach(function (card) {
-            const name = card.querySelector("h3, h4");
-            const productName = name
-                ? name.textContent.toLowerCase()
-                : "";
+        let visibleCount = 0;
 
+        productCards.forEach(function (card) {
+            // Lay ten tu data-name hoac class product-name
+            const productName =
+                card.dataset.name ||
+                card.querySelector(".product-name")?.textContent ||
+                "";
+
+            const normalizedName = normalizeText(productName);
             const category = card.dataset.category || "all";
 
             const matchCategory =
                 selectedCategory === "all" ||
                 category === selectedCategory;
 
-            const matchSearch = productName.includes(keyword);
+            const matchSearch = normalizedName.includes(keyword);
 
-            card.style.display =
-                matchCategory && matchSearch ? "" : "none";
+            const isVisible = matchCategory && matchSearch;
+
+            card.style.display = isVisible ? "" : "none";
+
+            if (isVisible) {
+                visibleCount++;
+            }
         });
+
+        // Cap nhat so luong san pham
+        if (resultCount) {
+            resultCount.textContent = visibleCount + " sản phẩm";
+        }
+
+        // Hien thi thong bao neu khong co ket qua
+        if (noResults) {
+            noResults.hidden = visibleCount !== 0;
+        }
     }
 
+    // Nut tim kiem
     if (searchButton) {
         searchButton.addEventListener("click", filterProducts);
     }
 
+    // Tim kiem khi nhap
     if (searchInput) {
         searchInput.addEventListener("input", filterProducts);
 
@@ -99,21 +134,24 @@ document.addEventListener("DOMContentLoaded", function () {
     // 3. LOC DANH MUC
     // =====================================
 
-    const categoryButtons = document.querySelectorAll(".category-btn");
-
     categoryButtons.forEach(function (button) {
         button.addEventListener("click", function () {
+
             selectedCategory = button.dataset.category || "all";
 
+            // Cap nhat nut dang duoc chon
             categoryButtons.forEach(function (item) {
-                item.classList.remove("active");
+                item.classList.remove("is-active");
+                item.setAttribute("aria-pressed", "false");
             });
 
-            button.classList.add("active");
+            button.classList.add("is-active");
+            button.setAttribute("aria-pressed", "true");
 
             filterProducts();
         });
     });
+
 
     // =====================================
     // 4. THEM SAN PHAM VAO GIO HANG
@@ -131,9 +169,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
             if (!card) return;
 
-            const nameElement = card.querySelector("h3, h4");
+            const nameElement = card.querySelector(".product-name");
             const priceElement = card.querySelector(".price");
-
             if (!nameElement || !priceElement) return;
 
             const name = nameElement.textContent.trim();
@@ -165,15 +202,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
             saveCart(cart);
 
+            const originalText = button.textContent;
+
             button.textContent = "Đã thêm vào giỏ";
             button.disabled = true;
 
             setTimeout(function () {
-                button.textContent = "Thêm vào giỏ hàng";
+                button.textContent = originalText;
                 button.disabled = false;
             }, 1000);
-
-            console.log("Giỏ hàng:", cart);
         });
     }
 
@@ -478,6 +515,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // 9. KHOI TAO DU LIEU KHI MO TRANG
     // =====================================
 
+    filterProducts();
     renderCart();
     renderCheckout();
 
