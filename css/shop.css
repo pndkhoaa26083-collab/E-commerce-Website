@@ -219,6 +219,35 @@ textarea {
     display: none;
 }
 
+/* Đăng nhập / đăng xuất trên thanh menu */
+.nav-auth {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0 20px;
+    font-size: 0.95rem;
+}
+
+.nav-auth a {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 2px solid transparent;
+    color: var(--ink-2);
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.nav-auth a:hover {
+    color: var(--ink);
+    border-bottom-color: var(--ink);
+}
+
+.nav-auth .auth-user {
+    color: var(--ink);
+    font-weight: 600;
+}
+
 
 /* ---------- 4. Nút ---------- */
 .btn {
@@ -761,6 +790,12 @@ fieldset {
     }
 
     .main-nav a {
+        font-size: 0.875rem;
+    }
+
+    .nav-auth {
+        justify-content: center;
+        gap: 0 14px;
         font-size: 0.875rem;
     }
 

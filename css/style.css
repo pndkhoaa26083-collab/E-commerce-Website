@@ -29,7 +29,7 @@ html {
 }
 
 body {
-    font-family: "Segoe UI", Arial, sans-serif;
+    font-family: "Be Vietnam Pro", "Segoe UI", Arial, sans-serif;
     background: var(--paper);
     color: var(--ink);
     line-height: 1.7;
@@ -92,7 +92,7 @@ header .container {
 header h1,
 .logo {
     color: var(--red);
-    font-family: Georgia, serif;
+    font-family: "Noto Serif", Georgia, serif;
     font-size: 29px;
     letter-spacing: 3px;
     font-weight: bold;
@@ -172,6 +172,34 @@ nav a:hover::after {
     color: white;
 }
 
+/* Lời chào khi đã đăng nhập */
+.auth-links .auth-user {
+    color: var(--ink);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* Con số trên biểu tượng giỏ hàng */
+.cart-count {
+    display: inline-grid;
+    place-items: center;
+    min-width: 18px;
+    height: 18px;
+    margin-left: 6px;
+    padding: 0 5px;
+    border-radius: 9px;
+    background: var(--red);
+    color: var(--white);
+    font-size: 11px;
+    font-weight: bold;
+    line-height: 1;
+    vertical-align: middle;
+}
+
+.cart-count[hidden] {
+    display: none;
+}
+
 /* 4. BANNER THUY MAC */
 .ink-banner {
     min-height: 500px;
@@ -216,7 +244,7 @@ nav a:hover::after {
 }
 
 .banner-content h2 {
-    font-family: Georgia, serif;
+    font-family: "Noto Serif", Georgia, serif;
     font-size: clamp(35px, 7vw, 76px);
     letter-spacing: 6px;
     color: var(--ink);
@@ -323,7 +351,7 @@ nav a:hover::after {
 
 .categories>h2,
 .featured-products>h2 {
-    font-family: Georgia, serif;
+    font-family: "Noto Serif", Georgia, serif;
     font-size: 30px;
     color: var(--ink);
     margin-bottom: 35px;
@@ -360,7 +388,7 @@ nav a:hover::after {
 
 .category-item h3 {
     margin: 17px 0 8px;
-    font-family: Georgia, serif;
+    font-family: "Noto Serif", Georgia, serif;
     font-size: 20px;
 }
 
@@ -579,7 +607,7 @@ nav a:hover::after {
 .product-card h4 {
     color: var(--ink);
     margin: 15px 0 5px;
-    font-family: Georgia, serif;
+    font-family: "Noto Serif", Georgia, serif;
     font-size: 19px;
 }
 
@@ -601,7 +629,7 @@ nav a:hover::after {
     align-items: center;
     background: var(--paper-dark);
     color: var(--ink-light);
-    font-family: Georgia, serif;
+    font-family: "Noto Serif", Georgia, serif;
     border: 1px dashed var(--gold);
 }
 
@@ -648,7 +676,7 @@ nav a:hover::after {
 
 .categories:has(.category-btn) h3 {
     margin-bottom: 18px;
-    font-family: Georgia, serif;
+    font-family: "Noto Serif", Georgia, serif;
     font-size: 21px;
 }
 
@@ -674,7 +702,7 @@ nav a:hover::after {
 }
 
 .products-section>h3 {
-    font-family: Georgia, serif;
+    font-family: "Noto Serif", Georgia, serif;
     font-size: 25px;
     margin-bottom: 25px;
 }
@@ -689,7 +717,7 @@ nav a:hover::after {
 .about h2 {
     margin-bottom: 20px;
     color: var(--red);
-    font-family: Georgia, serif;
+    font-family: "Noto Serif", Georgia, serif;
     font-size: 30px;
 }
 
@@ -712,7 +740,7 @@ nav a:hover::after {
 .cart-title h2,
 .checkout-title h2 {
     color: var(--ink);
-    font-family: Georgia, serif;
+    font-family: "Noto Serif", Georgia, serif;
     font-size: clamp(26px, 4vw, 38px);
     letter-spacing: 3px;
     margin: 8px 0;
@@ -755,7 +783,7 @@ nav a:hover::after {
 
 .cart-heading h3,
 .cart-summary h3 {
-    font-family: Georgia, serif;
+    font-family: "Noto Serif", Georgia, serif;
     font-size: 21px;
     margin-bottom: 22px;
 }
@@ -909,7 +937,7 @@ nav a:hover::after {
 .order-summary>h3,
 .payment-method h3 {
     margin-bottom: 25px;
-    font-family: Georgia, serif;
+    font-family: "Noto Serif", Georgia, serif;
     font-size: 20px;
     color: var(--ink);
 }
@@ -1199,7 +1227,7 @@ footer h2,
 .footer h2 {
     margin-bottom: 15px;
     color: var(--gold);
-    font-family: Georgia, serif;
+    font-family: "Noto Serif", Georgia, serif;
     letter-spacing: 3px;
 }
 
