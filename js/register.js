@@ -1,5 +1,5 @@
 
-import { auth } from "./firebase.js";
+import { auth, isFirebaseConfigured } from "./firebase.js";
 
 import {
     createUserWithEmailAndPassword,
@@ -19,6 +19,12 @@ form.addEventListener("submit", async function (e) {
     const confirmPassword = document.getElementById("confirmPassword").value;
 
     message.textContent = "";
+
+    if (!isFirebaseConfigured) {
+        message.textContent =
+            "Chưa cấu hình Firebase. Hãy dán cấu hình vào js/firebase.js.";
+        return;
+    }
 
     if (password !== confirmPassword) {
         message.textContent = "Mật khẩu xác nhận không khớp!";
@@ -54,7 +60,19 @@ form.addEventListener("submit", async function (e) {
                 break;
 
             case "auth/weak-password":
-                message.textContent = "Mật khẩu quá yếu!";
+                message.textContent = "Mật khẩu quá yếu (tối thiểu 6 ký tự)!";
+                break;
+
+            case "auth/network-request-failed":
+                message.textContent = "Lỗi mạng, vui lòng kiểm tra kết nối!";
+                break;
+
+            case "auth/invalid-api-key":
+                message.textContent = "API key Firebase không hợp lệ. Kiểm tra lại js/firebase.js!";
+                break;
+
+            case "auth/operation-not-allowed":
+                message.textContent = "Chưa bật đăng nhập Email/Mật khẩu trong Firebase Console!";
                 break;
 
             default:

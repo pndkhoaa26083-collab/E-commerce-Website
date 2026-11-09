@@ -24,6 +24,21 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function saveCart(cart) {
         localStorage.setItem(CART_KEY, JSON.stringify(cart));
+        updateCartCount();
+    }
+
+    // Cap nhat con so tren bieu tuong gio hang o thanh menu
+    function updateCartCount() {
+        const count = getCart().reduce(function (total, item) {
+            return total + (Number(item.quantity) || 0);
+        }, 0);
+
+        document
+            .querySelectorAll("[data-cart-count]")
+            .forEach(function (badge) {
+                badge.textContent = count > 99 ? "99+" : String(count);
+                badge.hidden = count === 0;
+            });
     }
 
     function formatMoney(amount) {
@@ -175,6 +190,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const name = nameElement.textContent.trim();
 
+            // Dung data-id de nhan dien san pham (neu thieu thi dung ten)
+            const id = card.dataset.id || name;
+
             const price = Number(
                 priceElement.textContent.replace(/[^\d]/g, "")
             );
@@ -186,14 +204,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const cart = getCart();
 
+            // Gio hang cu (chua co id) van duoc nhan dien qua ten
             const existingProduct = cart.find(function (item) {
-                return item.name === name;
+                return item.id === id || (!item.id && item.name === name);
             });
 
             if (existingProduct) {
+                existingProduct.id = id;
                 existingProduct.quantity += 1;
             } else {
                 cart.push({
+                    id: id,
                     name: name,
                     price: price,
                     quantity: 1
@@ -411,8 +432,9 @@ document.addEventListener("DOMContentLoaded", function () {
             totalElement.textContent = formatMoney(total);
         }
 
+        // Nut xac nhan nam ngoai form va gan vao form bang thuoc tinh form=""
         const submitButton = document.querySelector(
-            ".checkout-btn"
+            'button[form="checkoutForm"], .checkout-btn'
         );
 
         if (submitButton) {
@@ -515,6 +537,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // 9. KHOI TAO DU LIEU KHI MO TRANG
     // =====================================
 
+    updateCartCount();
     filterProducts();
     renderCart();
     renderCheckout();
