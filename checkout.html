@@ -58,11 +58,11 @@
             <div class="bank-pay">
 
                 <div class="bank-pay-qr">
-                    <div class="bank-qr" id="bankQr"></div>
+                    <div class="bank-qr" data-pay="qr"></div>
                     <p class="bank-pay-hint">
                         Mở app ngân hàng, chọn quét mã QR. Số tiền và nội dung đã được điền sẵn.
                     </p>
-                    <button type="button" class="btn btn-block" id="bankQrDownload">Tải ảnh mã QR</button>
+                    <button type="button" class="btn btn-block" data-pay-download>Tải ảnh mã QR</button>
                 </div>
 
                 <div class="bank-pay-detail">
@@ -70,30 +70,30 @@
 
                     <dl class="bank-info-list">
                         <dt>Mã đơn hàng</dt>
-                        <dd id="payOrderCode"></dd>
+                        <dd data-pay="code"></dd>
 
                         <dt>Ngân hàng</dt>
-                        <dd id="payBank"></dd>
+                        <dd data-pay="bank"></dd>
 
                         <dt>Chủ tài khoản</dt>
-                        <dd id="payHolder"></dd>
+                        <dd data-pay="holder"></dd>
 
                         <dt>Số tài khoản</dt>
                         <dd>
-                            <span id="payNumber"></span>
-                            <button type="button" class="bank-copy" data-copy-from="payNumber">Sao chép</button>
+                            <span data-pay="number"></span>
+                            <button type="button" class="bank-copy" data-copy="number">Sao chép</button>
                         </dd>
 
                         <dt>Số tiền</dt>
                         <dd>
-                            <span id="payAmount"></span>
-                            <button type="button" class="bank-copy" data-copy-from="payAmount" data-copy-digits>Sao chép</button>
+                            <span data-pay="amount"></span>
+                            <button type="button" class="bank-copy" data-copy="amount">Sao chép</button>
                         </dd>
 
                         <dt>Nội dung</dt>
                         <dd>
-                            <span id="payContent"></span>
-                            <button type="button" class="bank-copy" data-copy-from="payContent">Sao chép</button>
+                            <span data-pay="content"></span>
+                            <button type="button" class="bank-copy" data-copy="content">Sao chép</button>
                         </dd>
                     </dl>
 
@@ -210,28 +210,45 @@
 
                                 <!-- Hiện khi chọn "Chuyển khoản ngân hàng" (nội dung điền bằng js/script.js) -->
                                 <div class="bank-info" id="bankInfo" hidden>
-                                    <p class="bank-info-title">Thông tin chuyển khoản</p>
+                                    <p class="bank-info-title">Quét mã QR để chuyển khoản</p>
 
-                                    <dl class="bank-info-list">
-                                        <dt>Ngân hàng</dt>
-                                        <dd id="bankName"></dd>
+                                    <div class="bank-info-body">
+                                        <div class="bank-info-qr">
+                                            <div class="bank-qr" data-pay="qr"></div>
+                                            <button type="button" class="btn btn-sm btn-block" data-pay-download>Tải ảnh mã QR</button>
+                                        </div>
 
-                                        <dt>Chủ tài khoản</dt>
-                                        <dd id="bankHolder"></dd>
+                                        <dl class="bank-info-list">
+                                            <dt>Ngân hàng</dt>
+                                            <dd data-pay="bank"></dd>
 
-                                        <dt>Số tài khoản</dt>
-                                        <dd>
-                                            <span id="bankNumber"></span>
-                                            <button type="button" class="bank-copy" id="bankCopy">Sao chép</button>
-                                        </dd>
+                                            <dt>Chủ tài khoản</dt>
+                                            <dd data-pay="holder"></dd>
 
-                                        <dt>Nội dung</dt>
-                                        <dd>WANG + mã đơn hàng</dd>
-                                    </dl>
+                                            <dt>Số tài khoản</dt>
+                                            <dd>
+                                                <span data-pay="number"></span>
+                                                <button type="button" class="bank-copy" data-copy="number">Sao chép</button>
+                                            </dd>
+
+                                            <dt>Số tiền</dt>
+                                            <dd>
+                                                <span data-pay="amount"></span>
+                                                <button type="button" class="bank-copy" data-copy="amount">Sao chép</button>
+                                            </dd>
+
+                                            <dt>Nội dung</dt>
+                                            <dd>
+                                                <span data-pay="content"></span>
+                                                <button type="button" class="bank-copy" data-copy="content">Sao chép</button>
+                                            </dd>
+                                        </dl>
+                                    </div>
 
                                     <p class="bank-info-note">
-                                        Sau khi bạn bấm <strong>Xác nhận đặt hàng</strong>, trang sẽ hiện
-                                        mã QR có sẵn số tiền và nội dung chuyển khoản để quét cho nhanh.
+                                        Mở app ngân hàng và quét mã: số tiền và nội dung đã điền sẵn.
+                                        Chuyển khoản xong, nhớ bấm <strong>Xác nhận đặt hàng</strong>
+                                        để shop ghi nhận đơn.
                                     </p>
                                 </div>
                             </fieldset>
