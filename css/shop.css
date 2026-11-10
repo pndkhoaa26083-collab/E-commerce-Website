@@ -248,6 +248,76 @@ textarea {
     font-weight: 600;
 }
 
+.nav-auth a.admin-link {
+    color: var(--seal);
+    font-weight: 600;
+}
+
+/* ---------- Trang quản trị ---------- */
+.admin-status {
+    padding: 48px 0;
+    text-align: center;
+    color: var(--ink-2);
+}
+
+.admin-status a {
+    margin-left: 8px;
+    color: var(--seal);
+    font-weight: 600;
+}
+
+.admin-message {
+    min-height: 1.5em;
+    margin-bottom: 12px;
+    color: var(--seal);
+    font-size: 0.9rem;
+}
+
+.admin-message.is-ok {
+    color: #1f6b3a;
+}
+
+.admin-table {
+    overflow-x: auto;
+}
+
+.admin-table table {
+    width: 100%;
+    min-width: 640px;
+    border-collapse: collapse;
+}
+
+.admin-table th {
+    padding: 0 12px 12px;
+    border-bottom: 1px solid var(--ink);
+    color: var(--ink-2);
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-align: left;
+}
+
+.admin-table td {
+    padding: 14px 12px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: middle;
+    overflow-wrap: anywhere;
+}
+
+.admin-table select {
+    min-height: 36px;
+    padding: 0 8px;
+    border: 1px solid var(--ink);
+    border-radius: var(--radius);
+    background: #fff;
+    color: var(--ink);
+    font: inherit;
+}
+
+.admin-table select:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
 
 /* ---------- 4. Nút ---------- */
 .btn {

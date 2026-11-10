@@ -166,6 +166,12 @@ nav a:hover::after {
     background: var(--red);
 }
 
+/* Lien ket Quan tri (chi hien voi admin) */
+.auth-links a.admin-link {
+    color: var(--red);
+    background: transparent;
+}
+
 .auth-links a:hover {
     background: var(--red-dark);
     border-color: var(--red-dark);
@@ -1158,6 +1164,49 @@ nav a:hover::after {
 
 .login-box .register-link {
     margin-top: 22px;
+}
+
+/* Dang nhap bang Google */
+.auth-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 22px 0 4px;
+    color: #8a7f6a;
+    font-size: 13px;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: #d8c7a3;
+}
+
+.google-btn,
+.login-box .google-btn {
+    display: block;
+    width: 100%;
+    padding: 13px;
+    margin-top: 12px;
+    background: #fff;
+    color: #2b2b2b;
+    border: 1px solid #c9b99b;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.google-btn:hover,
+.login-box .google-btn:hover {
+    background: #f3ecdc;
+    color: #2b2b2b;
+}
+
+.google-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
 }
 
 .register-link a,
