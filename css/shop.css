@@ -998,6 +998,23 @@ fieldset {
     font-size: 0.85rem;
 }
 
+/* QR ngay trên form: mã bên trái, thông tin bên phải */
+.bank-info-body {
+    display: grid;
+    grid-template-columns: 190px minmax(0, 1fr);
+    gap: 18px;
+    align-items: start;
+}
+
+.bank-info-qr .bank-qr {
+    max-width: 190px;
+    margin: 0 0 10px;
+}
+
+.bank-info-body .bank-info-list {
+    grid-template-columns: 110px minmax(0, 1fr);
+}
+
 /* Màn hình thanh toán bằng mã QR (hiện sau khi đặt hàng) */
 .bank-pay {
     display: grid;
@@ -1228,6 +1245,21 @@ fieldset {
 
     .footer-grid {
         grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 640px) {
+    .bank-info-body {
+        grid-template-columns: 1fr;
+    }
+
+    .bank-info-qr {
+        max-width: 240px;
+        margin: 0 auto;
+    }
+
+    .bank-info-qr .bank-qr {
+        max-width: none;
     }
 }
 
