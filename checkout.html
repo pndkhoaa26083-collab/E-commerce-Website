@@ -43,17 +43,72 @@
     <main id="main">
 
         <section class="wrap page-head">
-            <h1>Thanh toán</h1>
-            <p>Điền thông tin nhận hàng để hoàn tất đơn hàng.</p>
+            <h1 id="checkoutTitle">Thanh toán</h1>
+            <p id="checkoutLead">Điền thông tin nhận hàng để hoàn tất đơn hàng.</p>
 
-            <ol class="steps" aria-label="Các bước đặt hàng">
+            <ol class="steps" id="checkoutSteps" aria-label="Các bước đặt hàng">
                 <li><span class="step-num">1</span>Giỏ hàng</li>
                 <li aria-current="step"><span class="step-num">2</span>Thanh toán</li>
                 <li><span class="step-num">3</span>Hoàn tất</li>
             </ol>
         </section>
 
-        <div class="wrap page-body">
+        <!-- Hiện sau khi đặt hàng bằng chuyển khoản (điền bằng js/script.js) -->
+        <div class="wrap page-body" id="bankPay" hidden>
+            <div class="bank-pay">
+
+                <div class="bank-pay-qr">
+                    <div class="bank-qr" id="bankQr"></div>
+                    <p class="bank-pay-hint">
+                        Mở app ngân hàng, chọn quét mã QR. Số tiền và nội dung đã được điền sẵn.
+                    </p>
+                    <button type="button" class="btn btn-block" id="bankQrDownload">Tải ảnh mã QR</button>
+                </div>
+
+                <div class="bank-pay-detail">
+                    <h2>Thông tin chuyển khoản</h2>
+
+                    <dl class="bank-info-list">
+                        <dt>Mã đơn hàng</dt>
+                        <dd id="payOrderCode"></dd>
+
+                        <dt>Ngân hàng</dt>
+                        <dd id="payBank"></dd>
+
+                        <dt>Chủ tài khoản</dt>
+                        <dd id="payHolder"></dd>
+
+                        <dt>Số tài khoản</dt>
+                        <dd>
+                            <span id="payNumber"></span>
+                            <button type="button" class="bank-copy" data-copy-from="payNumber">Sao chép</button>
+                        </dd>
+
+                        <dt>Số tiền</dt>
+                        <dd>
+                            <span id="payAmount"></span>
+                            <button type="button" class="bank-copy" data-copy-from="payAmount" data-copy-digits>Sao chép</button>
+                        </dd>
+
+                        <dt>Nội dung</dt>
+                        <dd>
+                            <span id="payContent"></span>
+                            <button type="button" class="bank-copy" data-copy-from="payContent">Sao chép</button>
+                        </dd>
+                    </dl>
+
+                    <p class="bank-info-note">
+                        Đơn hàng đã được ghi nhận. Shop sẽ xác nhận sau khi nhận được tiền,
+                        vui lòng giữ nguyên số tiền và nội dung chuyển khoản.
+                    </p>
+
+                    <a class="btn btn-primary" href="index.html">Về trang chủ</a>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="wrap page-body" id="checkoutBody">
             <div class="checkout-layout">
 
                 <!-- CUSTOMER INFORMATION -->
@@ -171,11 +226,12 @@
                                         </dd>
 
                                         <dt>Nội dung</dt>
-                                        <dd>WANG + mã đơn hàng (hiện sau khi bạn bấm Xác nhận đặt hàng)</dd>
+                                        <dd>WANG + mã đơn hàng</dd>
                                     </dl>
 
                                     <p class="bank-info-note">
-                                        Vui lòng chuyển đúng số tiền tổng cộng và ghi nội dung như trên.
+                                        Sau khi bạn bấm <strong>Xác nhận đặt hàng</strong>, trang sẽ hiện
+                                        mã QR có sẵn số tiền và nội dung chuyển khoản để quét cho nhanh.
                                     </p>
                                 </div>
                             </fieldset>
@@ -244,6 +300,7 @@
         </div>
     </footer>
 
+    <script src="js/vietqr.js"></script>
     <script src="js/script.js"></script>
     <script type="module" src="js/order-service.js"></script>
     <script type="module" src="js/auth-ui.js"></script>
