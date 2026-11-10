@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex">
+    <title>Quản trị | Wang Fashion</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600&family=Noto+Serif:wght@600;800&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="css/shop.css">
+</head>
+
+<body>
+
+    <a class="skip-link" href="#main">Bỏ qua điều hướng</a>
+
+    <!-- HEADER -->
+    <header class="site-header">
+        <div class="wrap header-inner">
+            <a class="brand" href="index.html" aria-label="Wang Fashion, về trang chủ">
+                <span class="brand-seal" aria-hidden="true">W</span>
+                <span class="brand-name">WANG FASHION</span>
+            </a>
+
+            <nav class="main-nav" aria-label="Điều hướng chính">
+                <a href="index.html">Trang chủ</a>
+                <a href="products.html">Sản phẩm</a>
+                <a href="cart.html">Giỏ hàng <span class="cart-count" data-cart-count hidden>0</span></a>
+                <a href="index.html#about">Giới thiệu</a>
+                <a href="index.html#contact">Liên hệ</a>
+            </nav>
+
+            <div class="nav-auth" data-auth>
+                <a href="login.html">Đăng nhập</a>
+                <a href="register.html">Đăng ký</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ADMIN CONTENT -->
+    <main id="main">
+
+        <section class="wrap page-head">
+            <h1>Quản trị</h1>
+            <p>Quản lý tài khoản và phân quyền admin / người dùng.</p>
+        </section>
+
+        <div class="wrap page-body">
+
+            <!-- Trạng thái kiểm tra quyền truy cập -->
+            <p class="admin-status" id="adminStatus" role="status">
+                Đang kiểm tra quyền truy cập...
+            </p>
+
+            <!-- Chỉ hiện khi đăng nhập bằng tài khoản admin -->
+            <div id="adminPanel" hidden>
+
+                <p class="result-count" id="userCount" aria-live="polite"></p>
+
+                <p class="admin-message" id="adminMessage" role="alert"></p>
+
+                <div class="admin-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th scope="col">Tên</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Đăng nhập bằng</th>
+                                <th scope="col">Ngày tạo</th>
+                                <th scope="col">Vai trò</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="userRows"></tbody>
+                    </table>
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <div class="wrap footer-grid">
+            <div>
+                <h2>WANG FASHION</h2>
+                <p>Thời trang tối giản, mang tinh thần phương Đông.</p>
+            </div>
+            <div>
+                <p>Email: <a href="mailto:fashionstore@gmail.com">fashionstore@gmail.com</a></p>
+                <p>Điện thoại: 0977-xxx-xxx</p>
+            </div>
+        </div>
+        <div class="wrap footer-bottom">
+            <p>&copy; 2026 Wang Fashion. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+    <script type="module" src="js/auth-ui.js"></script>
+    <script type="module" src="js/admin.js"></script>
+
+</body>
+
+</html>
