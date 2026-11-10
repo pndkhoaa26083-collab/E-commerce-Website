@@ -998,6 +998,61 @@ fieldset {
     font-size: 0.85rem;
 }
 
+/* Màn hình thanh toán bằng mã QR (hiện sau khi đặt hàng) */
+.bank-pay {
+    display: grid;
+    grid-template-columns: 340px minmax(0, 1fr);
+    gap: 40px;
+    align-items: start;
+}
+
+.bank-pay[hidden],
+.page-body[hidden] {
+    display: none;
+}
+
+.bank-pay-qr {
+    padding: 20px;
+    border: 1px solid var(--ink);
+    border-radius: var(--radius);
+    background: var(--paper-2);
+    text-align: center;
+}
+
+.bank-qr {
+    max-width: 300px;
+    margin: 0 auto 14px;
+    border: 1px solid var(--line);
+    background: #fff;
+    line-height: 0;
+}
+
+.bank-qr svg {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.bank-pay-hint {
+    margin: 0 0 14px;
+    color: var(--ink-2);
+    font-size: 0.9rem;
+}
+
+.bank-pay-detail h2 {
+    margin-bottom: 16px;
+    font-size: var(--step-2);
+}
+
+.bank-pay-detail .bank-info-list {
+    grid-template-columns: 130px minmax(0, 1fr);
+    gap: 10px 14px;
+}
+
+.bank-pay-detail .btn {
+    margin-top: 20px;
+}
+
 
 /* ---------- 10. Giỏ hàng & thanh toán ---------- */
 .cart-layout,
@@ -1162,7 +1217,8 @@ fieldset {
 /* ---------- 13. Responsive ---------- */
 @media (max-width: 900px) {
     .cart-layout,
-    .checkout-layout {
+    .checkout-layout,
+    .bank-pay {
         grid-template-columns: 1fr;
     }
 
