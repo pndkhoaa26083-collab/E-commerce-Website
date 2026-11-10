@@ -10,6 +10,13 @@ document.addEventListener("DOMContentLoaded", function () {
     const CART_KEY = "wangFashionCart";
     const SHIPPING_FEE = 30000;
 
+    // Tai khoan nhan tien khi khach chon "Chuyen khoan ngan hang"
+    const BANK_INFO = {
+        bank: "MB Bank",
+        holder: "CAO NGOC TRI",
+        number: "0337675709"
+    };
+
     // =====================================
     // 1. CAC HAM DUNG CHUNG
     // =====================================
@@ -128,6 +135,9 @@ document.addEventListener("DOMContentLoaded", function () {
             noResults.hidden = visibleCount !== 0;
         }
     }
+
+    // Trang san pham dung the tu Firestore xong thi loc lai (cap nhat so luong)
+    document.addEventListener("products:rendered", filterProducts);
 
     // Nut tim kiem
     if (searchButton) {
@@ -443,13 +453,63 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // =====================================
+    // 7B. THONG TIN CHUYEN KHOAN
+    // Hien khung thong tin khi khach chon "Chuyen khoan ngan hang"
+    // =====================================
+
+    const bankInfoBox = document.getElementById("bankInfo");
+
+    if (bankInfoBox) {
+        document.getElementById("bankName").textContent = BANK_INFO.bank;
+        document.getElementById("bankHolder").textContent = BANK_INFO.holder;
+        document.getElementById("bankNumber").textContent = BANK_INFO.number;
+
+        const paymentInputs = document.querySelectorAll(
+            'input[name="payment"]'
+        );
+
+        function updateBankInfo() {
+            const selected = document.querySelector(
+                'input[name="payment"]:checked'
+            );
+
+            bankInfoBox.hidden = !selected || selected.value !== "bank";
+        }
+
+        paymentInputs.forEach(function (input) {
+            input.addEventListener("change", updateBankInfo);
+        });
+
+        updateBankInfo();
+
+        // Nut sao chep so tai khoan
+        const copyButton = document.getElementById("bankCopy");
+
+        if (copyButton) {
+            copyButton.addEventListener("click", async function () {
+                try {
+                    await navigator.clipboard.writeText(BANK_INFO.number);
+                    copyButton.textContent = "Đã sao chép";
+                } catch (error) {
+                    // Trinh duyet khong cho phep: de khach tu chep
+                    copyButton.textContent = "Hãy chép thủ công";
+                }
+
+                setTimeout(function () {
+                    copyButton.textContent = "Sao chép";
+                }, 1500);
+            });
+        }
+    }
+
+    // =====================================
     // 8. XAC NHAN DAT HANG
     // =====================================
 
     const checkoutForm = document.getElementById("checkoutForm");
 
     if (checkoutForm) {
-        checkoutForm.addEventListener("submit", function (event) {
+        checkoutForm.addEventListener("submit", async function (event) {
             event.preventDefault();
 
             const cart = getCart();
@@ -507,7 +567,39 @@ document.addEventListener("DOMContentLoaded", function () {
                 createdAt: new Date().toISOString()
             };
 
-            // Luu don hang demo tren trinh duyet
+            // Neu da cau hinh Firebase: gui don len Firestore de admin nhin thay.
+            // Gui loi thi giu nguyen gio hang va cho khach thu lai.
+            let orderCode = "";
+
+            if (typeof window.saveOrderRemote === "function") {
+                const submitButton = document.querySelector(
+                    'button[form="checkoutForm"], .checkout-btn'
+                );
+
+                if (submitButton) {
+                    submitButton.disabled = true;
+                }
+
+                try {
+                    const orderId = await window.saveOrderRemote(order);
+                    orderCode = String(orderId).slice(0, 6).toUpperCase();
+                } catch (error) {
+                    console.error(error);
+
+                    showMessage(
+                        "Không gửi được đơn hàng. " +
+                        "Vui lòng kiểm tra kết nối và thử lại."
+                    );
+
+                    if (submitButton) {
+                        submitButton.disabled = false;
+                    }
+
+                    return;
+                }
+            }
+
+            // Luu ban sao don hang tren trinh duyet
             const orders = JSON.parse(
                 localStorage.getItem("wangFashionOrders") || "[]"
             );
@@ -522,11 +614,26 @@ document.addEventListener("DOMContentLoaded", function () {
             // Xoa gio hang sau khi dat hang
             localStorage.removeItem(CART_KEY);
 
+            // Chuyen khoan: nhac lai thong tin, noi dung = ma don (hoac SDT neu chua co ma)
+            let bankText = "";
+
+            if (payment === "bank") {
+                bankText =
+                    "\n\nVui lòng chuyển khoản:\n" +
+                    "Ngân hàng: " + BANK_INFO.bank + "\n" +
+                    "Chủ tài khoản: " + BANK_INFO.holder + "\n" +
+                    "Số tài khoản: " + BANK_INFO.number + "\n" +
+                    "Số tiền: " + formatMoney(total) + "\n" +
+                    "Nội dung: WANG " + (orderCode || phone);
+            }
+
             showMessage(
                 "Đặt hàng thành công!\n\n" +
+                (orderCode ? "Mã đơn hàng: " + orderCode + "\n" : "") +
                 "Cảm ơn " + fullname +
                 " đã mua sắm tại Wang Fashion.\n" +
-                "Tổng thanh toán: " + formatMoney(total)
+                "Tổng thanh toán: " + formatMoney(total) +
+                bankText
             );
 
             window.location.href = "index.html";
