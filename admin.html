@@ -48,7 +48,7 @@
 
         <section class="wrap page-head">
             <h1>Quản trị</h1>
-            <p>Quản lý tài khoản và phân quyền admin / người dùng.</p>
+            <p>Quản lý đơn hàng, sản phẩm và tài khoản.</p>
         </section>
 
         <div class="wrap page-body">
@@ -61,31 +61,222 @@
             <!-- Chỉ hiện khi đăng nhập bằng tài khoản admin -->
             <div id="adminPanel" hidden>
 
-                <p class="result-count" id="userCount" aria-live="polite"></p>
+                <nav class="chips admin-tabs" aria-label="Mục quản trị">
+                    <button type="button" class="category-btn is-active" data-tab="overview"
+                        aria-pressed="true">Tổng quan</button>
+                    <button type="button" class="category-btn" data-tab="orders" aria-pressed="false">Đơn hàng</button>
+                    <button type="button" class="category-btn" data-tab="products" aria-pressed="false">Sản
+                        phẩm</button>
+                    <button type="button" class="category-btn" data-tab="users" aria-pressed="false">Tài khoản</button>
+                </nav>
 
                 <p class="admin-message" id="adminMessage" role="alert"></p>
 
-                <div class="admin-table">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th scope="col">Tên</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Đăng nhập bằng</th>
-                                <th scope="col">Ngày tạo</th>
-                                <th scope="col">Vai trò</th>
-                            </tr>
-                        </thead>
+                <!-- TỔNG QUAN -->
+                <section class="admin-section" id="tab-overview" aria-label="Tổng quan">
 
-                        <tbody id="userRows"></tbody>
-                    </table>
-                </div>
+                    <div class="stat-grid" id="statGrid"></div>
+
+                    <h2 class="admin-block-title">Đơn hàng theo trạng thái</h2>
+                    <ul class="badge-list" id="statusBreakdown"></ul>
+
+                    <h2 class="admin-block-title">Đơn hàng gần nhất</h2>
+                    <div class="admin-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Mã đơn</th>
+                                    <th scope="col">Thời gian</th>
+                                    <th scope="col">Khách hàng</th>
+                                    <th scope="col">Tổng tiền</th>
+                                    <th scope="col">Trạng thái</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recentOrderRows"></tbody>
+                        </table>
+                    </div>
+
+                    <h2 class="admin-block-title">Sản phẩm hết hàng</h2>
+                    <ul class="plain-list" id="outOfStockList"></ul>
+
+                </section>
+
+                <!-- ĐƠN HÀNG -->
+                <section class="admin-section" id="tab-orders" aria-label="Đơn hàng" hidden>
+
+                    <div class="admin-toolbar">
+                        <input type="text" id="orderSearch" placeholder="Tìm theo mã đơn, tên, số điện thoại"
+                            aria-label="Tìm đơn hàng" autocomplete="off">
+
+                        <select id="orderStatusFilter" aria-label="Lọc theo trạng thái">
+                            <option value="">Tất cả trạng thái</option>
+                        </select>
+
+                        <button type="button" class="btn btn-sm spacer" id="orderExportButton">Xuất CSV</button>
+                    </div>
+
+                    <p class="result-count" id="orderCount" aria-live="polite"></p>
+
+                    <div class="admin-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Mã đơn</th>
+                                    <th scope="col">Thời gian</th>
+                                    <th scope="col">Khách hàng</th>
+                                    <th scope="col">Tổng tiền</th>
+                                    <th scope="col">Thanh toán</th>
+                                    <th scope="col">Trạng thái</th>
+                                    <th scope="col">Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody id="orderRows"></tbody>
+                        </table>
+                    </div>
+
+                </section>
+
+                <!-- SẢN PHẨM -->
+                <section class="admin-section" id="tab-products" aria-label="Sản phẩm" hidden>
+
+                    <div class="admin-toolbar">
+                        <input type="text" id="productSearch" placeholder="Tìm theo tên sản phẩm"
+                            aria-label="Tìm sản phẩm" autocomplete="off">
+
+                        <select id="productCategoryFilter" aria-label="Lọc theo danh mục">
+                            <option value="">Tất cả danh mục</option>
+                        </select>
+
+                        <button type="button" class="btn btn-sm" id="productSeedButton" hidden>Nạp sản phẩm
+                            mẫu</button>
+                        <button type="button" class="btn btn-primary btn-sm spacer" id="productAddButton">Thêm sản
+                            phẩm</button>
+                    </div>
+
+                    <p class="result-count" id="productCount" aria-live="polite"></p>
+
+                    <div class="admin-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Ảnh</th>
+                                    <th scope="col">Tên</th>
+                                    <th scope="col">Danh mục</th>
+                                    <th scope="col">Giá</th>
+                                    <th scope="col">Hiển thị</th>
+                                    <th scope="col">Còn hàng</th>
+                                    <th scope="col">Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody id="productRows"></tbody>
+                        </table>
+                    </div>
+
+                </section>
+
+                <!-- TÀI KHOẢN -->
+                <section class="admin-section" id="tab-users" aria-label="Tài khoản" hidden>
+
+                    <div class="admin-toolbar">
+                        <input type="text" id="userSearch" placeholder="Tìm theo tên hoặc email"
+                            aria-label="Tìm tài khoản" autocomplete="off">
+
+                        <select id="userRoleFilter" aria-label="Lọc theo vai trò">
+                            <option value="">Tất cả vai trò</option>
+                            <option value="user">Người dùng (user)</option>
+                            <option value="admin">Quản trị (admin)</option>
+                        </select>
+                    </div>
+
+                    <p class="result-count" id="userCount" aria-live="polite"></p>
+
+                    <div class="admin-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Tên</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Đăng nhập bằng</th>
+                                    <th scope="col">Ngày tạo</th>
+                                    <th scope="col">Vai trò</th>
+                                </tr>
+                            </thead>
+                            <tbody id="userRows"></tbody>
+                        </table>
+                    </div>
+
+                </section>
 
             </div>
 
         </div>
 
     </main>
+
+    <!-- HỘP THOẠI THÊM / SỬA SẢN PHẨM -->
+    <dialog class="admin-dialog" id="productDialog" aria-labelledby="productDialogTitle">
+        <form id="productForm" novalidate>
+            <div class="dialog-head">
+                <h2 id="productDialogTitle">Thêm sản phẩm</h2>
+            </div>
+
+            <div class="dialog-body">
+
+                <div class="field">
+                    <label for="productName">Tên sản phẩm <span class="req" aria-hidden="true">*</span></label>
+                    <input type="text" id="productName" maxlength="120" required>
+                </div>
+
+                <div class="field">
+                    <label for="productCategory">Danh mục</label>
+                    <select id="productCategory"></select>
+                </div>
+
+                <div class="field">
+                    <label for="productPrice">Giá (đồng) <span class="req" aria-hidden="true">*</span></label>
+                    <input type="number" id="productPrice" min="0" step="1000" inputmode="numeric" required>
+                </div>
+
+                <div class="field">
+                    <label for="productImage">Ảnh sản phẩm</label>
+                    <input type="text" id="productImage" placeholder="image/ten-anh.jpg hoặc https://..."
+                        autocomplete="off">
+                    <img class="admin-preview" id="productPreview" alt="Xem trước ảnh sản phẩm" hidden>
+                </div>
+
+                <label class="check-row">
+                    <input type="checkbox" id="productActive" checked>
+                    <span>Hiển thị trên cửa hàng</span>
+                </label>
+
+                <label class="check-row">
+                    <input type="checkbox" id="productInStock" checked>
+                    <span>Còn hàng</span>
+                </label>
+
+                <p class="admin-message" id="productFormError" role="alert"></p>
+
+            </div>
+
+            <div class="dialog-actions">
+                <button type="button" class="btn btn-sm" id="productCancel">Hủy</button>
+                <button type="submit" class="btn btn-primary btn-sm" id="productSave">Lưu</button>
+            </div>
+        </form>
+    </dialog>
+
+    <!-- HỘP THOẠI CHI TIẾT ĐƠN HÀNG -->
+    <dialog class="admin-dialog" id="orderDialog" aria-labelledby="orderDialogTitle">
+        <div class="dialog-head">
+            <h2 id="orderDialogTitle">Chi tiết đơn hàng</h2>
+        </div>
+
+        <div class="dialog-body" id="orderDetail"></div>
+
+        <div class="dialog-actions">
+            <button type="button" class="btn btn-sm" id="orderDialogClose">Đóng</button>
+        </div>
+    </dialog>
 
     <!-- FOOTER -->
     <footer class="site-footer">
