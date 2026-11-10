@@ -454,41 +454,159 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // =====================================
-    // 7B. THONG TIN CHUYEN KHOAN
-    // Hien khung thong tin khi khach chon "Chuyen khoan ngan hang"
+    // 7B. THANH TOAN CHUYEN KHOAN BANG MA QR
+    // Hien QR VietQR (co san so tien + noi dung) ngay khi khach chon
+    // "Chuyen khoan ngan hang", va hien lai o man hinh sau khi dat hang.
     // =====================================
 
-    const bankInfoBox = document.getElementById("bankInfo");
+    // Ma don hang duoc tao truoc de noi dung chuyen khoan khop voi don.
+    // Co Firebase: dung ma do Firestore cap. Khong co: tao ngau nhien tren trinh duyet.
+    let pendingOrderId = "";
 
-    if (bankInfoBox) {
-        document.getElementById("bankName").textContent = BANK_INFO.bank;
-        document.getElementById("bankHolder").textContent = BANK_INFO.holder;
-        document.getElementById("bankNumber").textContent = BANK_INFO.number;
-
-        const paymentInputs = document.querySelectorAll(
-            'input[name="payment"]'
-        );
-
-        function updateBankInfo() {
-            const selected = document.querySelector(
-                'input[name="payment"]:checked'
-            );
-
-            bankInfoBox.hidden = !selected || selected.value !== "bank";
+    function getPendingOrderId() {
+        if (pendingOrderId) {
+            return pendingOrderId;
         }
 
-        paymentInputs.forEach(function (input) {
-            input.addEventListener("change", updateBankInfo);
+        if (typeof window.newOrderId === "function") {
+            try {
+                pendingOrderId = String(window.newOrderId());
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        if (!pendingOrderId) {
+            const chars =
+                "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            const random = new Uint8Array(20);
+
+            crypto.getRandomValues(random);
+
+            pendingOrderId = Array.from(random, function (n) {
+                return chars[n % chars.length];
+            }).join("");
+        }
+
+        return pendingOrderId;
+    }
+
+    // Ma hien thi cho khach: 6 ky tu dau cua ma don, viet hoa
+    function orderCodeOf(orderId) {
+        return String(orderId).slice(0, 6).toUpperCase();
+    }
+
+    function paymentState(orderId, total) {
+        const code = orderCodeOf(orderId);
+        const content = "WANG " + code;
+
+        let payload = "";
+
+        if (window.WangQR) {
+            payload = window.WangQR.vietQrPayload({
+                bin: BANK_INFO.bin,
+                account: BANK_INFO.number,
+                amount: total,
+                content: content
+            });
+        }
+
+        return {
+            code: code,
+            content: content,
+            total: total,
+            payload: payload
+        };
+    }
+
+    // Dien thong tin va ve QR vao mot khung (cac phan tu co data-pay="...")
+    function renderPayment(root, state) {
+        const values = {
+            bank: BANK_INFO.bank,
+            holder: BANK_INFO.holder,
+            number: BANK_INFO.number,
+            amount: formatMoney(state.total),
+            content: state.content,
+            code: state.code
+        };
+
+        root.querySelectorAll("[data-pay]").forEach(function (node) {
+            const key = node.getAttribute("data-pay");
+
+            if (key === "qr") {
+                node.textContent = "";
+
+                if (state.payload) {
+                    node.appendChild(
+                        window.WangQR.toSvg(
+                            state.payload,
+                            "Mã QR chuyển khoản " + formatMoney(state.total)
+                        )
+                    );
+                }
+            } else if (key in values) {
+                node.textContent = values[key];
+            }
         });
 
-        updateBankInfo();
+        const downloadButton = root.querySelector("[data-pay-download]");
 
-        // Nut sao chep so tai khoan
-        const copyButton = document.getElementById("bankCopy");
+        if (downloadButton) {
+            downloadButton.hidden = !state.payload;
+        }
 
-        if (copyButton) {
-            copyButton.addEventListener("click", function () {
-                copyText(BANK_INFO.number, copyButton);
+        root.payState = state;      // nut sao chep / tai anh doc trang thai nay
+    }
+
+    // Gan su kien cho nut Sao chep va Tai anh (chi goi mot lan cho moi khung)
+    function bindPayment(root) {
+        root.querySelectorAll("[data-copy]").forEach(function (button) {
+            button.addEventListener("click", function () {
+                const state = root.payState;
+
+                if (!state) {
+                    return;
+                }
+
+                const texts = {
+                    number: BANK_INFO.number,
+                    amount: String(Math.round(state.total)),   // chi chu so, dan thang vao app
+                    content: state.content
+                };
+
+                copyText(texts[button.getAttribute("data-copy")], button);
+            });
+        });
+
+        // Khach dung dien thoai khong quet duoc man hinh cua chinh minh,
+        // nen cho tai anh ve de chon trong app ngan hang
+        const downloadButton = root.querySelector("[data-pay-download]");
+
+        if (downloadButton) {
+            downloadButton.addEventListener("click", async function () {
+                const state = root.payState;
+
+                if (!state || !state.payload) {
+                    return;
+                }
+
+                try {
+                    const blob = await window.WangQR.toPngBlob(state.payload, 720);
+                    const link = document.createElement("a");
+
+                    link.href = URL.createObjectURL(blob);
+                    link.download = "wang-fashion-qr-" + state.code + ".png";
+                    document.body.appendChild(link);
+                    link.click();
+                    link.remove();
+
+                    setTimeout(function () {
+                        URL.revokeObjectURL(link.href);
+                    }, 1000);
+                } catch (error) {
+                    console.error(error);
+                    showMessage("Không tải được ảnh. Bạn hãy chụp màn hình mã QR.");
+                }
             });
         }
     }
@@ -508,95 +626,73 @@ document.addEventListener("DOMContentLoaded", function () {
         }, 1500);
     }
 
-    // =====================================
-    // 7C. MA QR THANH TOAN (sau khi dat hang)
-    // Hien QR VietQR co san so tien va noi dung chuyen khoan.
-    // Tra ve false neu khong ve duoc (khi do dung thong bao thuong).
-    // =====================================
+    // ---- Khung QR ngay tren form thanh toan ----
+    const bankInfoBox = document.getElementById("bankInfo");
 
-    function showBankPayment(orderCode, phone, total) {
-        const panel = document.getElementById("bankPay");
-        const body = document.getElementById("checkoutBody");
-        const qrBox = document.getElementById("bankQr");
-
-        if (!panel || !body || !qrBox || !window.WangQR) {
-            return false;
+    function refreshBankInfo() {
+        if (!bankInfoBox) {
+            return;
         }
 
-        const content = "WANG " + (orderCode || phone);
+        const selected = document.querySelector(
+            'input[name="payment"]:checked'
+        );
 
-        let svg;
-        let payload;
+        const cart = getCart();
+        const show = !!selected && selected.value === "bank" && cart.length > 0;
+
+        bankInfoBox.hidden = !show;
+
+        if (!show) {
+            return;
+        }
+
+        const subtotal = getSubtotal(cart);
+        const total = subtotal + getShipping(subtotal);
 
         try {
-            payload = window.WangQR.vietQrPayload({
-                bin: BANK_INFO.bin,
-                account: BANK_INFO.number,
-                amount: total,
-                content: content
-            });
-
-            svg = window.WangQR.toSvg(
-                payload,
-                "Mã QR chuyển khoản " + formatMoney(total)
+            renderPayment(
+                bankInfoBox,
+                paymentState(getPendingOrderId(), total)
             );
         } catch (error) {
             console.error(error);
+            bankInfoBox.hidden = true;
+        }
+    }
+
+    if (bankInfoBox) {
+        bindPayment(bankInfoBox);
+
+        document
+            .querySelectorAll('input[name="payment"]')
+            .forEach(function (input) {
+                input.addEventListener("change", refreshBankInfo);
+            });
+
+        refreshBankInfo();
+    }
+
+    // ---- Man hinh sau khi dat hang bang chuyen khoan ----
+    // Tra ve false neu khong hien duoc (khi do dung thong bao thuong).
+    const bankPanel = document.getElementById("bankPay");
+
+    if (bankPanel) {
+        bindPayment(bankPanel);
+    }
+
+    function showBankPayment(orderId, total) {
+        const body = document.getElementById("checkoutBody");
+
+        if (!bankPanel || !body) {
             return false;
         }
 
-        qrBox.textContent = "";
-        qrBox.appendChild(svg);
-
-        document.getElementById("payOrderCode").textContent =
-            orderCode || "(chưa có)";
-        document.getElementById("payBank").textContent = BANK_INFO.bank;
-        document.getElementById("payHolder").textContent = BANK_INFO.holder;
-        document.getElementById("payNumber").textContent = BANK_INFO.number;
-        document.getElementById("payAmount").textContent = formatMoney(total);
-        document.getElementById("payContent").textContent = content;
-
-        // Nut sao chep: so tien chi chep chu so de dan vao app ngan hang
-        panel.querySelectorAll("[data-copy-from]").forEach(function (button) {
-            button.addEventListener("click", function () {
-                const source = document.getElementById(
-                    button.getAttribute("data-copy-from")
-                );
-
-                let text = source.textContent;
-
-                if (button.hasAttribute("data-copy-digits")) {
-                    text = String(Math.round(total));
-                }
-
-                copyText(text, button);
-            });
-        });
-
-        // Khach dung dien thoai khong quet duoc man hinh cua chinh minh,
-        // nen cho tai anh ve de chon trong app ngan hang
-        const downloadButton = document.getElementById("bankQrDownload");
-
-        if (downloadButton) {
-            downloadButton.addEventListener("click", async function () {
-                try {
-                    const blob = await window.WangQR.toPngBlob(payload, 720);
-                    const link = document.createElement("a");
-
-                    link.href = URL.createObjectURL(blob);
-                    link.download = "wang-fashion-qr-" + (orderCode || "thanh-toan") + ".png";
-                    document.body.appendChild(link);
-                    link.click();
-                    link.remove();
-
-                    setTimeout(function () {
-                        URL.revokeObjectURL(link.href);
-                    }, 1000);
-                } catch (error) {
-                    console.error(error);
-                    showMessage("Không tải được ảnh. Bạn hãy chụp màn hình mã QR.");
-                }
-            });
+        try {
+            renderPayment(bankPanel, paymentState(orderId, total));
+        } catch (error) {
+            console.error(error);
+            return false;
         }
 
         // Doi tieu de, buoc 3 "Hoan tat" va an form
@@ -616,7 +712,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         body.hidden = true;
-        panel.hidden = false;
+        bankPanel.hidden = false;
         window.scrollTo(0, 0);
 
         return true;
@@ -670,7 +766,13 @@ document.addEventListener("DOMContentLoaded", function () {
             const shipping = getShipping(subtotal);
             const total = subtotal + shipping;
 
+            // Ma don da tao san (trung voi noi dung trong ma QR chuyen khoan)
+            const orderId = getPendingOrderId();
+            const orderCode = orderCodeOf(orderId);
+
             const order = {
+                code: orderCode,
+
                 customer: {
                     fullname: fullname,
                     phone: phone,
@@ -689,8 +791,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // Neu da cau hinh Firebase: gui don len Firestore de admin nhin thay.
             // Gui loi thi giu nguyen gio hang va cho khach thu lai.
-            let orderCode = "";
-
             if (typeof window.saveOrderRemote === "function") {
                 const submitButton = document.querySelector(
                     'button[form="checkoutForm"], .checkout-btn'
@@ -701,10 +801,16 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
                 try {
-                    const orderId = await window.saveOrderRemote(order);
-                    orderCode = String(orderId).slice(0, 6).toUpperCase();
+                    await window.saveOrderRemote(order, orderId);
                 } catch (error) {
                     console.error(error);
+
+                    // Ma da ton tai tren may chu (hoac bi tu choi): lan sau dung ma moi,
+                    // roi lam moi ma QR de khop voi ma moi
+                    if (error && error.code === "permission-denied") {
+                        pendingOrderId = "";
+                        refreshBankInfo();
+                    }
 
                     showMessage(
                         "Không gửi được đơn hàng. " +
@@ -736,9 +842,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
             updateCartCount();
 
-            // Chuyen khoan: hien ma QR co san so tien + noi dung ngay tren trang.
-            // Noi dung = ma don (hoac SDT neu chua co ma).
-            if (payment === "bank" && showBankPayment(orderCode, phone, total)) {
+            // Chuyen khoan: hien ma QR co san so tien + noi dung ngay tren trang
+            if (payment === "bank" && showBankPayment(orderId, total)) {
                 return;
             }
 
@@ -752,12 +857,12 @@ document.addEventListener("DOMContentLoaded", function () {
                     "Chủ tài khoản: " + BANK_INFO.holder + "\n" +
                     "Số tài khoản: " + BANK_INFO.number + "\n" +
                     "Số tiền: " + formatMoney(total) + "\n" +
-                    "Nội dung: WANG " + (orderCode || phone);
+                    "Nội dung: WANG " + orderCode;
             }
 
             showMessage(
                 "Đặt hàng thành công!\n\n" +
-                (orderCode ? "Mã đơn hàng: " + orderCode + "\n" : "") +
+                "Mã đơn hàng: " + orderCode + "\n" +
                 "Cảm ơn " + fullname +
                 " đã mua sắm tại Wang Fashion.\n" +
                 "Tổng thanh toán: " + formatMoney(total) +

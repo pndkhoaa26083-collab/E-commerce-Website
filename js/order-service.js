@@ -1,24 +1,36 @@
 /* =========================================
    GUI DON HANG LEN FIRESTORE
-   Nap tren trang thanh toan. Tao ra window.saveOrderRemote(order)
-   de script.js goi khi khach bam "Xac nhan dat hang".
-   Chua cau hinh Firebase thi ham nay khong ton tai va
-   script.js chi luu don tren trinh duyet nhu truoc.
+   Nap tren trang thanh toan. Tao ra:
+   - window.newOrderId()                 : cap truoc ma don (dung cho ma QR chuyen khoan)
+   - window.saveOrderRemote(order, id)   : luu don voi ma do, goi khi khach
+                                           bam "Xac nhan dat hang"
+   Chua cau hinh Firebase thi cac ham nay khong ton tai va
+   script.js tu tao ma tren trinh duyet, chi luu don tren trinh duyet nhu truoc.
 ========================================= */
 
 import { auth, db } from "./firebase.js";
 
 import {
     collection,
-    addDoc,
+    doc,
+    setDoc,
     serverTimestamp
 } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-firestore.js";
 
 if (db) {
-    window.saveOrderRemote = async function (order) {
+    // Cap ma don ngau nhien ngay tren may khach, chua gui gi len may chu
+    window.newOrderId = function () {
+        return doc(collection(db, "orders")).id;
+    };
+
+    window.saveOrderRemote = async function (order, orderId) {
         const user = auth ? auth.currentUser : null;
 
-        const reference = await addDoc(collection(db, "orders"), {
+        const reference = orderId
+            ? doc(db, "orders", String(orderId))
+            : doc(collection(db, "orders"));
+
+        await setDoc(reference, {
             // Khach chua dang nhap: uid de trong
             uid: user ? user.uid : "",
 
