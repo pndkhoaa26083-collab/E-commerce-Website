@@ -1,38 +1,45 @@
 /* =========================================
-   TRANG QUAN TRI
+   TRANG QUAN TRI - KHUNG CHINH
    Chi tai khoan co vai tro "admin" moi xem duoc.
    Luu y: viec chan truy cap that su do quy tac bao mat
    Firestore dam nhiem (xem firestore.rules); doan kiem tra
    o day chi de hien thi giao dien.
+
+   Cac tab: Tong quan, Don hang, San pham, Tai khoan
+   (moi tab nam trong mot file admin-*.js rieng)
 ========================================= */
 
 import { auth, db } from "./firebase.js";
 
-import {
-    ensureUserProfile,
-    ROLE_ADMIN,
-    ROLE_USER
-} from "./auth-service.js";
+import { ensureUserProfile, ROLE_ADMIN } from "./auth-service.js";
 
 import {
     onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-auth.js";
 
-import {
-    collection,
-    getDocs,
-    doc,
-    updateDoc
-} from "https://www.gstatic.com/firebasejs/13.2.0/firebase-firestore.js";
+import { setMessage } from "./admin-common.js";
+import { loadOverview } from "./admin-overview.js";
+import { loadOrders } from "./admin-orders.js";
+import { loadProducts } from "./admin-products.js";
+import { loadUsers } from "./admin-users.js";
 
 const statusElement = document.getElementById("adminStatus");
 const panel = document.getElementById("adminPanel");
-const userRows = document.getElementById("userRows");
-const userCount = document.getElementById("userCount");
-const messageElement = document.getElementById("adminMessage");
+const tabButtons = document.querySelectorAll("[data-tab]");
+const sections = document.querySelectorAll(".admin-section");
+
+const loaders = {
+    overview: loadOverview,
+    orders: loadOrders,
+    products: loadProducts,
+    users: loadUsers
+};
+
+let currentUser = null;
+let tabsBound = false;
 
 // =====================================
-// 1. HIEN THI TRANG THAI / THONG BAO
+// 1. HIEN THI TRANG THAI
 // =====================================
 
 function showStatus(text, linkHref, linkText) {
@@ -47,146 +54,43 @@ function showStatus(text, linkHref, linkText) {
     }
 }
 
-function setMessage(text, isOk) {
-    messageElement.textContent = text;
-    messageElement.classList.toggle("is-ok", Boolean(isOk));
-}
-
 // =====================================
-// 2. BANG DANH SACH TAI KHOAN
+// 2. CHUYEN TAB
 // =====================================
 
-function providerLabel(provider) {
-    if (provider === "google.com") return "Google";
-    if (provider === "password") return "Email";
-    return provider || "—";
-}
-
-function formatDate(value) {
-    const date = value && typeof value.toDate === "function"
-        ? value.toDate()
-        : null;
-
-    return date ? date.toLocaleDateString("vi-VN") : "—";
-}
-
-function createCell(text) {
-    const cell = document.createElement("td");
-    cell.textContent = text;
-    return cell;
-}
-
-function createRoleSelect(account, currentUser) {
-    const select = document.createElement("select");
-
-    select.setAttribute(
-        "aria-label",
-        "Vai trò của " + (account.email || account.id)
-    );
-
-    [
-        { value: ROLE_USER, label: "Người dùng (user)" },
-        { value: ROLE_ADMIN, label: "Quản trị (admin)" }
-    ].forEach(function (item) {
-        const option = document.createElement("option");
-        option.value = item.value;
-        option.textContent = item.label;
-        select.appendChild(option);
-    });
-
-    const role = account.role === ROLE_ADMIN ? ROLE_ADMIN : ROLE_USER;
-
-    select.value = role;
-    select.dataset.role = role;
-
-    // Khong cho admin tu doi vai tro cua chinh minh (tranh mat quyen quan tri)
-    if (account.id === currentUser.uid) {
-        select.disabled = true;
-        select.title = "Bạn không thể tự đổi vai trò của mình";
-        return select;
+function showTab(name) {
+    if (!loaders[name]) {
+        name = "overview";
     }
 
-    select.addEventListener("change", async function () {
-        const newRole = select.value;
-        const previousRole = select.dataset.role;
-        const label = account.displayName || account.email || account.id;
+    tabButtons.forEach(function (button) {
+        const isActive = button.dataset.tab === name;
 
-        const confirmed = window.confirm(
-            "Đổi vai trò của " + label + " thành \"" + newRole + "\"?"
-        );
-
-        if (!confirmed) {
-            select.value = previousRole;
-            return;
-        }
-
-        select.disabled = true;
-
-        try {
-            await updateDoc(doc(db, "users", account.id), { role: newRole });
-
-            select.dataset.role = newRole;
-            setMessage("Đã cập nhật vai trò của " + label + ".", true);
-        } catch (error) {
-            console.error(error);
-
-            select.value = previousRole;
-            setMessage(
-                "Không đổi được vai trò. Kiểm tra quy tắc bảo mật Firestore.",
-                false
-            );
-        } finally {
-            select.disabled = false;
-        }
+        button.classList.toggle("is-active", isActive);
+        button.setAttribute("aria-pressed", String(isActive));
     });
 
-    return select;
+    sections.forEach(function (section) {
+        section.hidden = section.id !== "tab-" + name;
+    });
+
+    setMessage("");
+
+    history.replaceState(null, "", "#" + name);
+
+    // Moi lan mo tab deu tai lai du lieu moi nhat
+    loaders[name]({ user: currentUser });
 }
 
-function createRow(account, currentUser) {
-    const row = document.createElement("tr");
+function bindTabs() {
+    if (tabsBound) return;
 
-    row.appendChild(createCell(account.displayName || "—"));
-    row.appendChild(createCell(account.email || "—"));
-    row.appendChild(createCell(providerLabel(account.provider)));
-    row.appendChild(createCell(formatDate(account.createdAt)));
+    tabsBound = true;
 
-    const roleCell = document.createElement("td");
-    roleCell.appendChild(createRoleSelect(account, currentUser));
-    row.appendChild(roleCell);
-
-    return row;
-}
-
-async function loadUsers(currentUser) {
-    setMessage("", false);
-    userRows.replaceChildren();
-
-    let snapshot;
-
-    try {
-        snapshot = await getDocs(collection(db, "users"));
-    } catch (error) {
-        console.error(error);
-        setMessage("Không tải được danh sách tài khoản.", false);
-        return;
-    }
-
-    const accounts = snapshot.docs.map(function (item) {
-        return Object.assign({ id: item.id }, item.data());
-    });
-
-    // Tai khoan moi nhat o tren cung
-    accounts.sort(function (a, b) {
-        const timeA = a.createdAt && a.createdAt.toMillis ? a.createdAt.toMillis() : 0;
-        const timeB = b.createdAt && b.createdAt.toMillis ? b.createdAt.toMillis() : 0;
-        return timeB - timeA;
-    });
-
-    userCount.textContent = accounts.length + " tài khoản";
-
-    accounts.forEach(function (account) {
-        userRows.appendChild(createRow(account, currentUser));
+    tabButtons.forEach(function (button) {
+        button.addEventListener("click", function () {
+            showTab(button.dataset.tab);
+        });
     });
 }
 
@@ -196,6 +100,7 @@ async function loadUsers(currentUser) {
 
 async function handleAuth(user) {
     panel.hidden = true;
+    currentUser = null;
 
     if (!user) {
         showStatus(
@@ -229,10 +134,15 @@ async function handleAuth(user) {
         return;
     }
 
+    currentUser = user;
+
     statusElement.hidden = true;
     panel.hidden = false;
 
-    await loadUsers(user);
+    bindTabs();
+
+    // Mo tab theo dia chi (vi du admin.html#orders), mac dinh la Tong quan
+    showTab(window.location.hash.slice(1) || "overview");
 }
 
 if (!auth || !db) {

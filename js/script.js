@@ -10,13 +10,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const CART_KEY = "wangFashionCart";
     const SHIPPING_FEE = 30000;
 
-    // Tai khoan nhan tien khi khach chon "Chuyen khoan ngan hang"
-    const BANK_INFO = {
-        bank: "MB Bank",
-        holder: "CAO NGOC TRI",
-        number: "0337675709"
-    };
-
     // =====================================
     // 1. CAC HAM DUNG CHUNG
     // =====================================
@@ -453,56 +446,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // =====================================
-    // 7B. THONG TIN CHUYEN KHOAN
-    // Hien khung thong tin khi khach chon "Chuyen khoan ngan hang"
-    // =====================================
-
-    const bankInfoBox = document.getElementById("bankInfo");
-
-    if (bankInfoBox) {
-        document.getElementById("bankName").textContent = BANK_INFO.bank;
-        document.getElementById("bankHolder").textContent = BANK_INFO.holder;
-        document.getElementById("bankNumber").textContent = BANK_INFO.number;
-
-        const paymentInputs = document.querySelectorAll(
-            'input[name="payment"]'
-        );
-
-        function updateBankInfo() {
-            const selected = document.querySelector(
-                'input[name="payment"]:checked'
-            );
-
-            bankInfoBox.hidden = !selected || selected.value !== "bank";
-        }
-
-        paymentInputs.forEach(function (input) {
-            input.addEventListener("change", updateBankInfo);
-        });
-
-        updateBankInfo();
-
-        // Nut sao chep so tai khoan
-        const copyButton = document.getElementById("bankCopy");
-
-        if (copyButton) {
-            copyButton.addEventListener("click", async function () {
-                try {
-                    await navigator.clipboard.writeText(BANK_INFO.number);
-                    copyButton.textContent = "Đã sao chép";
-                } catch (error) {
-                    // Trinh duyet khong cho phep: de khach tu chep
-                    copyButton.textContent = "Hãy chép thủ công";
-                }
-
-                setTimeout(function () {
-                    copyButton.textContent = "Sao chép";
-                }, 1500);
-            });
-        }
-    }
-
-    // =====================================
     // 8. XAC NHAN DAT HANG
     // =====================================
 
@@ -614,26 +557,12 @@ document.addEventListener("DOMContentLoaded", function () {
             // Xoa gio hang sau khi dat hang
             localStorage.removeItem(CART_KEY);
 
-            // Chuyen khoan: nhac lai thong tin, noi dung = ma don (hoac SDT neu chua co ma)
-            let bankText = "";
-
-            if (payment === "bank") {
-                bankText =
-                    "\n\nVui lòng chuyển khoản:\n" +
-                    "Ngân hàng: " + BANK_INFO.bank + "\n" +
-                    "Chủ tài khoản: " + BANK_INFO.holder + "\n" +
-                    "Số tài khoản: " + BANK_INFO.number + "\n" +
-                    "Số tiền: " + formatMoney(total) + "\n" +
-                    "Nội dung: WANG " + (orderCode || phone);
-            }
-
             showMessage(
                 "Đặt hàng thành công!\n\n" +
                 (orderCode ? "Mã đơn hàng: " + orderCode + "\n" : "") +
                 "Cảm ơn " + fullname +
                 " đã mua sắm tại Wang Fashion.\n" +
-                "Tổng thanh toán: " + formatMoney(total) +
-                bankText
+                "Tổng thanh toán: " + formatMoney(total)
             );
 
             window.location.href = "index.html";
