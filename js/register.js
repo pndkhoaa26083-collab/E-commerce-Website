@@ -1,6 +1,8 @@
 
 import { auth, isFirebaseConfigured } from "./firebase.js";
 
+import { loadRole, bindGoogleButton } from "./auth-service.js";
+
 import {
     createUserWithEmailAndPassword,
     updateProfile
@@ -9,6 +11,9 @@ import {
 const form = document.getElementById("registerForm");
 const message = document.getElementById("message");
 const button = document.getElementById("registerButton");
+
+// Nut "Tiep tuc voi Google" (tai khoan moi se duoc tao neu chua co)
+bindGoogleButton(document.getElementById("googleButton"), message);
 
 form.addEventListener("submit", async function (e) {
     e.preventDefault();
@@ -44,6 +49,9 @@ form.addEventListener("submit", async function (e) {
         await updateProfile(result.user, {
             displayName: fullname
         });
+
+        // Tao ho so Firestore voi vai tro mac dinh "user"
+        await loadRole(result.user);
 
         alert("Đăng ký tài khoản thành công!");
 

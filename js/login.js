@@ -2,12 +2,21 @@
 import { auth, isFirebaseConfigured } from "./firebase.js";
 
 import {
+    loadRole,
+    homeFor,
+    bindGoogleButton
+} from "./auth-service.js";
+
+import {
     signInWithEmailAndPassword
 } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-auth.js";
 
 const form = document.getElementById("loginForm");
 const message = document.getElementById("message");
 const button = document.getElementById("loginButton");
+
+// Nut "Tiep tuc voi Google"
+bindGoogleButton(document.getElementById("googleButton"), message);
 
 form.addEventListener("submit", async function (e) {
     e.preventDefault();
@@ -27,15 +36,18 @@ form.addEventListener("submit", async function (e) {
     button.textContent = "ĐANG ĐĂNG NHẬP...";
 
     try {
-        await signInWithEmailAndPassword(
+        const result = await signInWithEmailAndPassword(
             auth,
             email,
             password
         );
 
+        // Admin vao trang quan tri, nguoi dung thuong ve trang chu
+        const role = await loadRole(result.user);
+
         alert("Đăng nhập thành công!");
 
-        window.location.href = "index.html";
+        window.location.href = homeFor(role);
 
     } catch (error) {
 
