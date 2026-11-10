@@ -156,15 +156,10 @@ textarea {
     text-decoration: none;
 }
 
-.brand-seal {
-    display: grid;
-    place-items: center;
-    width: 32px;
-    height: 32px;
-    background: var(--seal);
-    color: #fff;
-    border-radius: var(--radius);
-    font: 800 1rem/1 var(--font-display);
+.brand-logo {
+    display: block;
+    width: auto;
+    height: 52px;
 }
 
 .brand-name {
