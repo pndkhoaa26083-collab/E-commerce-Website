@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Tai khoan nhan tien khi khach chon "Chuyen khoan ngan hang"
     const BANK_INFO = {
         bank: "MB Bank",
+        bin: "970422",              // ma ngan hang dung cho VietQR (MB Bank)
         holder: "CAO NGOC TRI",
         number: "0337675709"
     };
@@ -486,20 +487,139 @@ document.addEventListener("DOMContentLoaded", function () {
         const copyButton = document.getElementById("bankCopy");
 
         if (copyButton) {
-            copyButton.addEventListener("click", async function () {
-                try {
-                    await navigator.clipboard.writeText(BANK_INFO.number);
-                    copyButton.textContent = "Đã sao chép";
-                } catch (error) {
-                    // Trinh duyet khong cho phep: de khach tu chep
-                    copyButton.textContent = "Hãy chép thủ công";
-                }
-
-                setTimeout(function () {
-                    copyButton.textContent = "Sao chép";
-                }, 1500);
+            copyButton.addEventListener("click", function () {
+                copyText(BANK_INFO.number, copyButton);
             });
         }
+    }
+
+    // Chep chu vao bo nho tam; nut doi chu de bao ket qua
+    async function copyText(text, button) {
+        try {
+            await navigator.clipboard.writeText(text);
+            button.textContent = "Đã sao chép";
+        } catch (error) {
+            // Trinh duyet khong cho phep: de khach tu chep
+            button.textContent = "Hãy chép thủ công";
+        }
+
+        setTimeout(function () {
+            button.textContent = "Sao chép";
+        }, 1500);
+    }
+
+    // =====================================
+    // 7C. MA QR THANH TOAN (sau khi dat hang)
+    // Hien QR VietQR co san so tien va noi dung chuyen khoan.
+    // Tra ve false neu khong ve duoc (khi do dung thong bao thuong).
+    // =====================================
+
+    function showBankPayment(orderCode, phone, total) {
+        const panel = document.getElementById("bankPay");
+        const body = document.getElementById("checkoutBody");
+        const qrBox = document.getElementById("bankQr");
+
+        if (!panel || !body || !qrBox || !window.WangQR) {
+            return false;
+        }
+
+        const content = "WANG " + (orderCode || phone);
+
+        let svg;
+        let payload;
+
+        try {
+            payload = window.WangQR.vietQrPayload({
+                bin: BANK_INFO.bin,
+                account: BANK_INFO.number,
+                amount: total,
+                content: content
+            });
+
+            svg = window.WangQR.toSvg(
+                payload,
+                "Mã QR chuyển khoản " + formatMoney(total)
+            );
+        } catch (error) {
+            console.error(error);
+            return false;
+        }
+
+        qrBox.textContent = "";
+        qrBox.appendChild(svg);
+
+        document.getElementById("payOrderCode").textContent =
+            orderCode || "(chưa có)";
+        document.getElementById("payBank").textContent = BANK_INFO.bank;
+        document.getElementById("payHolder").textContent = BANK_INFO.holder;
+        document.getElementById("payNumber").textContent = BANK_INFO.number;
+        document.getElementById("payAmount").textContent = formatMoney(total);
+        document.getElementById("payContent").textContent = content;
+
+        // Nut sao chep: so tien chi chep chu so de dan vao app ngan hang
+        panel.querySelectorAll("[data-copy-from]").forEach(function (button) {
+            button.addEventListener("click", function () {
+                const source = document.getElementById(
+                    button.getAttribute("data-copy-from")
+                );
+
+                let text = source.textContent;
+
+                if (button.hasAttribute("data-copy-digits")) {
+                    text = String(Math.round(total));
+                }
+
+                copyText(text, button);
+            });
+        });
+
+        // Khach dung dien thoai khong quet duoc man hinh cua chinh minh,
+        // nen cho tai anh ve de chon trong app ngan hang
+        const downloadButton = document.getElementById("bankQrDownload");
+
+        if (downloadButton) {
+            downloadButton.addEventListener("click", async function () {
+                try {
+                    const blob = await window.WangQR.toPngBlob(payload, 720);
+                    const link = document.createElement("a");
+
+                    link.href = URL.createObjectURL(blob);
+                    link.download = "wang-fashion-qr-" + (orderCode || "thanh-toan") + ".png";
+                    document.body.appendChild(link);
+                    link.click();
+                    link.remove();
+
+                    setTimeout(function () {
+                        URL.revokeObjectURL(link.href);
+                    }, 1000);
+                } catch (error) {
+                    console.error(error);
+                    showMessage("Không tải được ảnh. Bạn hãy chụp màn hình mã QR.");
+                }
+            });
+        }
+
+        // Doi tieu de, buoc 3 "Hoan tat" va an form
+        document.getElementById("checkoutTitle").textContent =
+            "Đặt hàng thành công";
+        document.getElementById("checkoutLead").textContent =
+            "Quét mã QR bên dưới để thanh toán " + formatMoney(total) + ".";
+
+        const steps = document.querySelectorAll("#checkoutSteps li");
+
+        steps.forEach(function (step, index) {
+            if (index === steps.length - 1) {
+                step.setAttribute("aria-current", "step");
+            } else {
+                step.removeAttribute("aria-current");
+            }
+        });
+
+        body.hidden = true;
+        panel.hidden = false;
+        window.scrollTo(0, 0);
+
+        return true;
     }
 
     // =====================================
@@ -614,7 +734,15 @@ document.addEventListener("DOMContentLoaded", function () {
             // Xoa gio hang sau khi dat hang
             localStorage.removeItem(CART_KEY);
 
-            // Chuyen khoan: nhac lai thong tin, noi dung = ma don (hoac SDT neu chua co ma)
+            updateCartCount();
+
+            // Chuyen khoan: hien ma QR co san so tien + noi dung ngay tren trang.
+            // Noi dung = ma don (hoac SDT neu chua co ma).
+            if (payment === "bank" && showBankPayment(orderCode, phone, total)) {
+                return;
+            }
+
+            // Neu khong ve duoc QR thi nhac thong tin chuyen khoan bang thong bao
             let bankText = "";
 
             if (payment === "bank") {
