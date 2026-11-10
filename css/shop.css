@@ -318,6 +318,272 @@ textarea {
     cursor: not-allowed;
 }
 
+/* --- Tab, thanh công cụ, nút nhỏ --- */
+.admin-tabs {
+    margin-bottom: 20px;
+}
+
+.admin-section[hidden] {
+    display: none;
+}
+
+.admin-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.admin-toolbar input[type="text"] {
+    flex: 1 1 220px;
+    width: auto;
+    max-width: 360px;
+    min-height: 40px;
+}
+
+.admin-toolbar select,
+.field select,
+.field input[type="number"] {
+    min-height: 40px;
+    padding: 0 10px;
+    border: 1px solid var(--field);
+    border-radius: var(--radius);
+    background: var(--paper-2);
+    color: var(--ink);
+    font: inherit;
+}
+
+.field select,
+.field input[type="number"] {
+    width: 100%;
+    min-height: 46px;
+    padding: 10px 12px;
+}
+
+.admin-toolbar .spacer {
+    margin-left: auto;
+}
+
+.btn-sm {
+    min-height: 36px;
+    padding: 0 14px;
+    font-size: 0.85rem;
+}
+
+.btn-danger {
+    border-color: var(--seal);
+    color: var(--seal);
+}
+
+.btn-danger:hover {
+    border-color: var(--seal);
+    background: var(--seal);
+    color: #fff;
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.btn[hidden] {
+    display: none;
+}
+
+.admin-actions {
+    white-space: nowrap;
+}
+
+.admin-actions .btn + .btn {
+    margin-left: 6px;
+}
+
+/* --- Thống kê tổng quan --- */
+.stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+    gap: 14px;
+    margin-bottom: 28px;
+}
+
+.stat-card {
+    padding: 16px 18px;
+    border: 1px solid var(--line);
+    background: var(--paper-2);
+}
+
+.stat-label {
+    color: var(--ink-2);
+    font-size: 0.85rem;
+}
+
+.stat-value {
+    margin-top: 4px;
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 800;
+    overflow-wrap: anywhere;
+}
+
+.stat-note {
+    margin-top: 2px;
+    color: var(--ink-2);
+    font-size: 0.8rem;
+}
+
+.admin-block-title {
+    margin: 28px 0 12px;
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+}
+
+.badge-list,
+.plain-list {
+    margin: 0 0 8px;
+    padding: 0;
+    list-style: none;
+}
+
+.badge-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.plain-list li {
+    padding: 4px 0;
+}
+
+.badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border: 1px solid var(--ink-2);
+    font-size: 0.85rem;
+}
+
+.badge.is-pending {
+    border-color: var(--seal);
+    color: var(--seal);
+}
+
+.badge.is-done {
+    border-color: #1f6b3a;
+    color: #1f6b3a;
+}
+
+.badge.is-cancelled {
+    border-color: var(--field);
+    color: var(--ink-2);
+    text-decoration: line-through;
+}
+
+/* --- Ảnh sản phẩm --- */
+.admin-thumb {
+    display: block;
+    width: 48px;
+    height: 48px;
+    border: 1px solid var(--line);
+    background: var(--mist);
+    object-fit: cover;
+}
+
+.admin-preview {
+    width: 96px;
+    height: 96px;
+    margin-top: 8px;
+    border: 1px solid var(--line);
+    background: var(--mist);
+    object-fit: cover;
+}
+
+.admin-preview[hidden] {
+    display: none;
+}
+
+/* --- Hộp thoại --- */
+.admin-dialog {
+    width: min(560px, calc(100vw - 32px));
+    max-height: calc(100vh - 32px);
+    padding: 0;
+    border: 1px solid var(--ink);
+    background: var(--paper);
+    color: var(--ink);
+    overflow: auto;
+}
+
+.admin-dialog::backdrop {
+    background: rgba(21, 22, 26, 0.55);
+}
+
+.dialog-head {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--line);
+}
+
+.dialog-head h2 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+}
+
+.dialog-body {
+    padding: 20px;
+}
+
+.dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 16px 20px;
+    border-top: 1px solid var(--line);
+}
+
+.check-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.detail-grid {
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    gap: 6px 16px;
+    margin: 0 0 16px;
+}
+
+.detail-grid dt {
+    color: var(--ink-2);
+    font-size: 0.9rem;
+}
+
+.detail-grid dd {
+    margin: 0;
+    overflow-wrap: anywhere;
+}
+
+.detail-items {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+.detail-items th {
+    padding: 0 8px 8px;
+    border-bottom: 1px solid var(--ink);
+    text-align: left;
+}
+
+.detail-items td {
+    padding: 8px;
+    border-bottom: 1px solid var(--line);
+}
+
+.detail-spacer {
+    height: 12px;
+}
+
 
 /* ---------- 4. Nút ---------- */
 .btn {
@@ -670,6 +936,66 @@ fieldset {
 .pay-option:has(input:focus-visible) {
     outline: 2px solid var(--ink);
     outline-offset: 3px;
+}
+
+/* Thông tin chuyển khoản */
+.bank-info {
+    margin-top: 12px;
+    padding: 16px;
+    border: 1px solid var(--ink);
+    border-radius: var(--radius);
+    background: var(--paper-2);
+}
+
+.bank-info[hidden] {
+    display: none;
+}
+
+.bank-info-title {
+    margin: 0 0 10px;
+    font-weight: 600;
+}
+
+.bank-info-list {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 6px 14px;
+    margin: 0;
+}
+
+.bank-info-list dt {
+    color: var(--ink-2);
+    font-size: 0.9rem;
+}
+
+.bank-info-list dd {
+    margin: 0;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+}
+
+.bank-copy {
+    margin-left: 8px;
+    padding: 2px 10px;
+    border: 1px solid var(--ink);
+    border-radius: var(--radius);
+    background: transparent;
+    color: var(--ink);
+    font: inherit;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.bank-copy:hover {
+    background: var(--ink);
+    color: var(--paper);
+}
+
+.bank-info-note {
+    margin: 12px 0 0;
+    color: var(--ink-2);
+    font-size: 0.85rem;
 }
 
 
