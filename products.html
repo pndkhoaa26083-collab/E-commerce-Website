@@ -74,111 +74,17 @@
 
             </div>
 
-            <p class="result-count" id="resultCount" aria-live="polite">8 sản phẩm</p>
+            <p class="result-count" id="resultCount" aria-live="polite"></p>
 
             <p class="empty-state" id="noResults" hidden>
                 Không tìm thấy sản phẩm phù hợp. Thử từ khóa khác hoặc chọn “Tất cả”.
             </p>
 
-            <!-- PRODUCT LIST -->
+            <!-- Dang tai / chua co san pham / loi (js/products-live.js dieu khien) -->
+            <p class="empty-state" id="productStatus" role="status">Đang tải sản phẩm…</p>
+
+            <!-- PRODUCT LIST (san pham do quan tri them tren Firestore) -->
             <div class="product-list" id="productList">
-
-                <article class="product-card" data-id="ao-thun-basic" data-category="ao" data-name="Áo thun basic"
-                    data-price="150000" data-image="image/Ao.jpg">
-                    <div class="product-media">
-                        <img src="image/Ao.jpg" alt="Áo thun đen basic" loading="lazy">
-                    </div>
-                    <div class="product-info">
-                        <h2 class="product-name">Áo thun basic</h2>
-                        <p class="price">150.000đ</p>
-                        <button type="button" class="btn btn-block add-cart">Thêm vào giỏ</button>
-                    </div>
-                </article>
-
-                <article class="product-card" data-id="ao-so-mi" data-category="ao" data-name="Áo sơ mi"
-                    data-price="200000" data-image="image/Aosomi.jpg">
-                    <div class="product-media">
-                        <img src="image/Aosomi.jpg" alt="Áo sơ mi dài tay màu xám" loading="lazy">
-                    </div>
-                    <div class="product-info">
-                        <h2 class="product-name">Áo sơ mi</h2>
-                        <p class="price">200.000đ</p>
-                        <button type="button" class="btn btn-block add-cart">Thêm vào giỏ</button>
-                    </div>
-                </article>
-
-                <article class="product-card" data-id="ao-hoodie" data-category="ao" data-name="Áo hoodie"
-                    data-price="320000" data-image="image/aohoodie.jpg">
-                    <div class="product-media">
-                        <img src="image/aohoodie.jpg" alt="Áo hoodie" loading="lazy">
-                    </div>
-                    <div class="product-info">
-                        <h2 class="product-name">Áo hoodie</h2>
-                        <p class="price">320.000đ</p>
-                        <button type="button" class="btn btn-block add-cart">Thêm vào giỏ</button>
-                    </div>
-                </article>
-
-                <article class="product-card" data-id="quan-jeans" data-category="quan" data-name="Quần jeans"
-                    data-price="250000" data-image="image/Quanjean.jpg">
-                    <div class="product-media">
-                        <img src="image/Quanjean.jpg" alt="Quần jeans màu xám" loading="lazy">
-                    </div>
-                    <div class="product-info">
-                        <h2 class="product-name">Quần jeans</h2>
-                        <p class="price">250.000đ</p>
-                        <button type="button" class="btn btn-block add-cart">Thêm vào giỏ</button>
-                    </div>
-                </article>
-
-                <article class="product-card" data-id="quan-au" data-category="quan" data-name="Quần âu"
-                    data-price="220000" data-image="image/Quanau.jpg">
-                    <div class="product-media">
-                        <img src="image/Quanau.jpg" alt="Quần âu màu đen" loading="lazy">
-                    </div>
-                    <div class="product-info">
-                        <h2 class="product-name">Quần âu</h2>
-                        <p class="price">220.000đ</p>
-                        <button type="button" class="btn btn-block add-cart">Thêm vào giỏ</button>
-                    </div>
-                </article>
-
-                <article class="product-card" data-id="quan-short" data-category="quan" data-name="Quần short"
-                    data-price="180000" data-image="image/quanshort.jpg">
-                    <div class="product-media">
-                        <img src="image/quanshort.jpg" alt="Quần short" loading="lazy">
-                    </div>
-                    <div class="product-info">
-                        <h2 class="product-name">Quần short</h2>
-                        <p class="price">180.000đ</p>
-                        <button type="button" class="btn btn-block add-cart">Thêm vào giỏ</button>
-                    </div>
-                </article>
-
-                <article class="product-card" data-id="giay-sneaker" data-category="giay" data-name="Giày sneaker"
-                    data-price="450000" data-image="image/giaysneaker.webp">
-                    <div class="product-media">
-                        <img src="image/giaysneaker.webp" alt="Giày sneaker" loading="lazy">
-                    </div>
-                    <div class="product-info">
-                        <h2 class="product-name">Giày sneaker</h2>
-                        <p class="price">450.000đ</p>
-                        <button type="button" class="btn btn-block add-cart">Thêm vào giỏ</button>
-                    </div>
-                </article>
-
-                <article class="product-card" data-id="phukien-tui-deo-cheo" data-category="phukien"
-                    data-name="Túi đeo chéo" data-price="220000" data-image="image/tuideocheo.webp">
-                    <div class="product-media">
-                        <img src="image/tuideocheo.webp" alt="Túi đeo chéo" loading="lazy">
-                    </div>
-                    <div class="product-info">
-                        <h2 class="product-name">Túi đeo chéo</h2>
-                        <p class="price">220.000đ</p>
-                        <button type="button" class="btn btn-block add-cart">Thêm vào giỏ</button>
-                    </div>
-                </article>
-
             </div>
 
         </div>

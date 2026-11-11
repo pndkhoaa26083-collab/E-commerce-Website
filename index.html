@@ -63,7 +63,7 @@
     </section>
 
     <!-- SẢN PHẨM NỔI BẬT -->
-    <section style="margin-top: 50px;" class="home-section home-section--flush">
+    <section style="margin-top: 50px;" class="home-section home-section--flush" id="featuredSection" hidden>
 
         <div class="home-wrap">
 
@@ -72,45 +72,7 @@
                 <a class="home-link" href="products.html">Xem tất cả sản phẩm</a>
             </div>
 
-            <div class="shelf">
-
-                <article class="item">
-                    <div class="item-media">
-                        <img src="image/Ao.jpg" alt="Áo thun đen basic" loading="lazy">
-                    </div>
-                    <h3>Áo thun basic</h3>
-                    <p class="item-price">150.000đ</p>
-                    <a href="products.html" class="item-btn">Xem sản phẩm</a>
-                </article>
-
-                <article class="item">
-                    <div class="item-media">
-                        <img src="image/Quanjean.jpg" alt="Quần jeans màu xám" loading="lazy">
-                    </div>
-                    <h3>Quần jeans</h3>
-                    <p class="item-price">250.000đ</p>
-                    <a href="products.html" class="item-btn">Xem sản phẩm</a>
-                </article>
-
-                <article class="item">
-                    <div class="item-media">
-                        <img src="image/Aosomi.jpg" alt="Áo sơ mi dài tay màu xám" loading="lazy">
-                    </div>
-                    <h3>Áo sơ mi</h3>
-                    <p class="item-price">200.000đ</p>
-                    <a href="products.html" class="item-btn">Xem sản phẩm</a>
-                </article>
-
-                <article class="item">
-                    <div class="item-media">
-                        <img src="image/Quanau.jpg" alt="Quần âu màu đen" loading="lazy">
-                    </div>
-                    <h3>Quần âu</h3>
-                    <p class="item-price">220.000đ</p>
-                    <a href="products.html" class="item-btn">Xem sản phẩm</a>
-                </article>
-
-            </div>
+            <div class="shelf" id="featuredList"></div>
 
         </div>
 
@@ -146,6 +108,7 @@
     </footer>
 
     <script src="js/script.js"></script>
+    <script type="module" src="js/home-products.js"></script>
     <script type="module" src="js/auth-ui.js"></script>
 
 </body>
