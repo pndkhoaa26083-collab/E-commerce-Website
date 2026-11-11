@@ -1243,6 +1243,93 @@ fieldset {
     }
 }
 
+/* Bảng sản phẩm ở trang quản trị: trên điện thoại hiện từng sản phẩm thành một thẻ,
+   không phải kéo ngang mới thấy nút Sửa / Xóa */
+@media (max-width: 720px) {
+    .admin-table--stack table {
+        min-width: 0;
+    }
+
+    .admin-table--stack thead {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+    }
+
+    .admin-table--stack table,
+    .admin-table--stack tbody {
+        display: block;
+    }
+
+    .admin-table--stack tr {
+        display: grid;
+        grid-template-columns: 64px minmax(0, 1fr);
+        gap: 6px 14px;
+        padding: 16px 0;
+        border-bottom: 1px solid var(--line);
+    }
+
+    .admin-table--stack td {
+        display: block;
+        padding: 0;
+        border: 0;
+    }
+
+    .admin-table--stack .cell-thumb {
+        grid-column: 1;
+        grid-row: 1 / span 5;
+    }
+
+    .admin-table--stack .cell-thumb .admin-thumb {
+        width: 64px;
+        height: 64px;
+    }
+
+    .admin-table--stack .cell-name,
+    .admin-table--stack .cell-meta,
+    .admin-table--stack .cell-toggle,
+    .admin-table--stack .admin-actions {
+        grid-column: 2;
+    }
+
+    .admin-table--stack .cell-name {
+        font-weight: 600;
+    }
+
+    .admin-table--stack .cell-meta::before {
+        content: attr(data-label) ": ";
+        color: var(--ink-2);
+    }
+
+    .admin-table--stack .cell-toggle {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .admin-table--stack .cell-toggle::after {
+        content: attr(data-label);
+    }
+
+    .admin-table--stack .admin-actions {
+        display: flex;
+        gap: 8px;
+        padding-top: 6px;
+        white-space: normal;
+    }
+
+    .admin-table--stack .admin-actions .btn + .btn {
+        margin-left: 0;
+    }
+
+    /* Dòng "chưa có sản phẩm" chiếm cả chiều ngang */
+    .admin-table--stack td[colspan] {
+        grid-column: 1 / -1;
+    }
+}
+
 @media (max-width: 640px) {
     .bank-info-body {
         grid-template-columns: 1fr;
