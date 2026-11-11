@@ -1,7 +1,7 @@
 /* =========================================
    TAB SAN PHAM
-   Danh sach, them, sua, xoa, an/hien, het hang,
-   va nap 8 san pham mau (lay tu danh sach san pham hien co).
+   Danh sach, them, sua, xoa, an/hien, het hang.
+   San pham cua cua hang chi gom nhung san pham duoc them o day.
 ========================================= */
 
 import { db } from "./firebase.js";
@@ -12,7 +12,6 @@ import {
     doc,
     updateDoc,
     deleteDoc,
-    writeBatch,
     serverTimestamp
 } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-firestore.js";
 
@@ -28,24 +27,11 @@ import {
     setMessage
 } from "./admin-common.js";
 
-// San pham mau: giong 8 san pham viet san trong products.html
-const SAMPLE_PRODUCTS = [
-    { id: "ao-thun-basic", name: "Áo thun basic", category: "ao", price: 150000, image: "image/Ao.jpg" },
-    { id: "ao-so-mi", name: "Áo sơ mi", category: "ao", price: 200000, image: "image/Aosomi.jpg" },
-    { id: "ao-hoodie", name: "Áo hoodie", category: "ao", price: 320000, image: "image/aohoodie.jpg" },
-    { id: "quan-jeans", name: "Quần jeans", category: "quan", price: 250000, image: "image/Quanjean.jpg" },
-    { id: "quan-au", name: "Quần âu", category: "quan", price: 220000, image: "image/Quanau.jpg" },
-    { id: "quan-short", name: "Quần short", category: "quan", price: 180000, image: "image/quanshort.jpg" },
-    { id: "giay-sneaker", name: "Giày sneaker", category: "giay", price: 450000, image: "image/giaysneaker.webp" },
-    { id: "phukien-tui-deo-cheo", name: "Túi đeo chéo", category: "phukien", price: 220000, image: "image/tuideocheo.webp" }
-];
-
 const productRows = document.getElementById("productRows");
 const productCount = document.getElementById("productCount");
 const productSearch = document.getElementById("productSearch");
 const categoryFilter = document.getElementById("productCategoryFilter");
 const addButton = document.getElementById("productAddButton");
-const seedButton = document.getElementById("productSeedButton");
 
 const dialog = document.getElementById("productDialog");
 const form = document.getElementById("productForm");
@@ -188,8 +174,19 @@ function renderProducts() {
     productCount.textContent =
         shown.length + " / " + products.length + " sản phẩm";
 
-    // Chua co san pham nao: cho phep nap san pham mau
-    seedButton.hidden = products.length > 0;
+    if (shown.length === 0) {
+        const empty = cell(
+            products.length === 0
+                ? "Chưa có sản phẩm nào. Bấm “Thêm sản phẩm” để tạo sản phẩm đầu tiên."
+                : "Không có sản phẩm phù hợp với bộ lọc."
+        );
+
+        empty.colSpan = 7;
+
+        const row = el("tr");
+        row.appendChild(empty);
+        productRows.appendChild(row);
+    }
 }
 
 export async function loadProducts() {
@@ -347,50 +344,6 @@ async function removeProduct(product) {
     await refresh();
 }
 
-async function seedProducts() {
-    const confirmed = window.confirm(
-        "Nạp " + SAMPLE_PRODUCTS.length + " sản phẩm mẫu vào Firestore?\n" +
-        "Sau đó trang Sản phẩm của cửa hàng sẽ đọc dữ liệu từ đây."
-    );
-
-    if (!confirmed) return;
-
-    seedButton.disabled = true;
-
-    try {
-        const batch = writeBatch(db);
-
-        SAMPLE_PRODUCTS.forEach(function (sample, index) {
-            batch.set(doc(db, "products", sample.id), {
-                name: sample.name,
-                category: sample.category,
-                price: sample.price,
-                image: sample.image,
-                active: true,
-                inStock: true,
-                order: index + 1,
-                createdAt: serverTimestamp(),
-                updatedAt: serverTimestamp()
-            });
-        });
-
-        await batch.commit();
-
-        setMessage("Đã nạp " + SAMPLE_PRODUCTS.length + " sản phẩm mẫu.", true);
-    } catch (error) {
-        console.error(error);
-        setMessage(
-            "Không nạp được sản phẩm mẫu. Hãy kiểm tra quy tắc bảo mật Firestore.",
-            false
-        );
-        return;
-    } finally {
-        seedButton.disabled = false;
-    }
-
-    await refresh();
-}
-
 // =====================================
 // 4. GAN SU KIEN (chi mot lan)
 // =====================================
@@ -416,8 +369,6 @@ function bindOnce() {
     addButton.addEventListener("click", function () {
         openForm(null);
     });
-
-    seedButton.addEventListener("click", seedProducts);
 
     imageInput.addEventListener("input", updatePreview);
     form.addEventListener("submit", saveProduct);

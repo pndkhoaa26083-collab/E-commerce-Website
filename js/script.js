@@ -95,6 +95,12 @@ document.addEventListener("DOMContentLoaded", function () {
             "#productList .product-card"
         );
 
+        // Chua co san pham nao (dang tai, trong hoac loi): giu nguyen thong bao
+        // trang thai do products-live.js hien, khong bao "khong tim thay"
+        if (productCards.length === 0) {
+            return;
+        }
+
         const keyword = searchInput
             ? normalizeText(searchInput.value.trim())
             : "";

@@ -1,31 +1,19 @@
 /* =========================================
    SAN PHAM TU FIRESTORE (trang san pham)
-   - Co san pham dang hien thi trong Firestore: dung chung de thay danh sach tinh.
-   - Chua cau hinh Firebase, chua nap san pham hoac loi mang: giu nguyen danh sach
-     san pham viet san trong products.html.
+   Danh sach san pham chi gom san pham do quan tri them tren Firestore.
+   Chua co san pham, chua cau hinh Firebase hoac loi mang thi hien thong bao.
    Viec them vao gio hang, tim kiem, loc danh muc do script.js dam nhiem.
 ========================================= */
 
-import { db } from "./firebase.js";
-
 import {
-    collection,
-    getDocs,
-    query,
-    where
-} from "https://www.gstatic.com/firebasejs/13.2.0/firebase-firestore.js";
+    fetchActiveProducts,
+    formatMoney,
+    safeImage
+} from "./products-data.js";
 
 const list = document.getElementById("productList");
-
-function formatMoney(amount) {
-    return Number(amount).toLocaleString("vi-VN") + "đ";
-}
-
-// Chi nhan anh trong thu muc image/ hoac duong dan https
-function safeImage(source) {
-    const value = String(source || "").trim();
-    return /^(image\/|https:\/\/)/i.test(value) ? value : "";
-}
+const statusBox = document.getElementById("productStatus");
+const resultCount = document.getElementById("resultCount");
 
 function createCard(product) {
     const card = document.createElement("article");
@@ -80,31 +68,44 @@ function createCard(product) {
     return card;
 }
 
-async function renderLiveProducts() {
-    if (!db || !list) return;
+// Hien mot dong thong bao thay cho danh sach (dang tai / trong / loi)
+function showStatus(text) {
+    if (statusBox) {
+        statusBox.textContent = text;
+        statusBox.hidden = !text;
+    }
 
-    let snapshot;
+    if (resultCount) {
+        resultCount.textContent = "";
+    }
+}
+
+async function renderLiveProducts() {
+    if (!list) return;
+
+    showStatus("Đang tải sản phẩm…");
+
+    let products;
 
     try {
-        snapshot = await getDocs(
-            query(collection(db, "products"), where("active", "==", true))
-        );
+        products = await fetchActiveProducts();
     } catch (error) {
         console.error("Không tải được sản phẩm từ Firestore:", error);
+        showStatus("Không tải được sản phẩm. Vui lòng tải lại trang sau ít phút.");
         return;
     }
 
-    // Chua nap san pham: giu danh sach tinh
-    if (snapshot.empty) return;
+    if (products === null) {
+        showStatus("Cửa hàng đang cập nhật sản phẩm. Vui lòng quay lại sau.");
+        return;
+    }
 
-    const products = snapshot.docs
-        .map(function (item) {
-            return Object.assign({ id: item.id }, item.data());
-        })
-        .sort(function (a, b) {
-            return (Number(a.order) || 0) - (Number(b.order) || 0);
-        });
+    if (products.length === 0) {
+        showStatus("Chưa có sản phẩm nào. Vui lòng quay lại sau.");
+        return;
+    }
 
+    showStatus("");
     list.replaceChildren(...products.map(createCard));
 
     // Doi script.js gan xong su kien (DOMContentLoaded) roi moi bao loc lai
