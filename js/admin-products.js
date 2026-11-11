@@ -16,6 +16,7 @@ import {
 } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-firestore.js";
 
 import { fetchProducts } from "./admin-data.js";
+import { guessCategory } from "./product-category.js";
 
 import {
     CATEGORIES,
@@ -38,7 +39,7 @@ const dialog = document.getElementById("productDialog");
 const form = document.getElementById("productForm");
 const dialogTitle = document.getElementById("productDialogTitle");
 const nameInput = document.getElementById("productName");
-const categorySelect = document.getElementById("productCategory");
+const categoryHint = document.getElementById("productCategoryHint");
 const priceInput = document.getElementById("productPrice");
 const imageInput = document.getElementById("productImage");
 const preview = document.getElementById("productPreview");
@@ -219,6 +220,26 @@ export async function loadProducts() {
 // 2. THEM / SUA
 // =====================================
 
+// Danh muc cua san pham dang nhap: tu nhan theo ten.
+// Dang sua ma ten khong co tu khoa nao thi giu danh muc cu.
+function categoryFor(name) {
+    const current = editingId
+        ? (products.find(function (item) { return item.id === editingId; }) || {}).category
+        : "";
+
+    return guessCategory(name, current);
+}
+
+function updateCategoryHint() {
+    if (!nameInput.value.trim()) {
+        categoryHint.textContent = "Danh mục sẽ được tự nhận theo tên sản phẩm.";
+        return;
+    }
+
+    categoryHint.textContent =
+        "Danh mục (tự nhận theo tên): " + categoryLabel(categoryFor(nameInput.value));
+}
+
 function updatePreview() {
     const value = imageInput.value.trim();
 
@@ -237,7 +258,6 @@ function openForm(product) {
     dialogTitle.textContent = product ? "Sửa sản phẩm" : "Thêm sản phẩm";
 
     nameInput.value = product ? product.name || "" : "";
-    categorySelect.value = product ? product.category : CATEGORIES[0].value;
     priceInput.value = product ? String(product.price || 0) : "";
     imageInput.value = product ? product.image || "" : "";
     activeInput.checked = product ? product.active !== false : true;
@@ -245,6 +265,7 @@ function openForm(product) {
 
     formError.textContent = "";
     updatePreview();
+    updateCategoryHint();
 
     dialog.showModal();
     nameInput.focus();
@@ -286,7 +307,7 @@ async function saveProduct(event) {
 
     const data = {
         name: name,
-        category: categorySelect.value,
+        category: categoryFor(name),
         price: price,
         image: image,
         active: activeInput.checked,
@@ -363,14 +384,12 @@ function bindOnce() {
     bound = true;
 
     CATEGORIES.forEach(function (category) {
-        categorySelect.appendChild(
-            el("option", "", category.label)
-        ).value = category.value;
-
         categoryFilter.appendChild(
             el("option", "", category.label)
         ).value = category.value;
     });
+
+    nameInput.addEventListener("input", updateCategoryHint);
 
     productSearch.addEventListener("input", renderProducts);
     categoryFilter.addEventListener("change", renderProducts);
