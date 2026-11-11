@@ -85,6 +85,38 @@ export function cell(text) {
     return el("td", "", text);
 }
 
+// Giai thich loi Firebase bang tieng Viet (kem ma loi de de tim nguyen nhan)
+export function errorReason(error) {
+    const code = error && error.code
+        ? String(error.code).replace("firestore/", "")
+        : "";
+
+    const reasons = {
+        "permission-denied":
+            "Không có quyền ghi dữ liệu. Hãy kiểm tra tài khoản đang có vai trò admin " +
+            "và quy tắc Firestore mới nhất đã được đăng (Publish).",
+        "unauthenticated":
+            "Phiên đăng nhập đã hết hạn. Hãy đăng nhập lại.",
+        "unavailable":
+            "Mất kết nối mạng hoặc Firebase tạm thời không phản hồi. Hãy thử lại.",
+        "not-found":
+            "Không tìm thấy dữ liệu (có thể đã bị xóa).",
+        "resource-exhausted":
+            "Đã vượt hạn mức miễn phí của Firebase trong ngày.",
+        "failed-precondition":
+            "Firestore chưa sẵn sàng. Hãy kiểm tra đã tạo cơ sở dữ liệu Firestore trong Firebase Console."
+    };
+
+    const reason = reasons[code];
+
+    if (reason) {
+        return reason + " (" + code + ")";
+    }
+
+    return "Chi tiết lỗi: " +
+        (code || (error && error.message) || "không rõ");
+}
+
 // Thong bao chung o dau trang quan tri
 export function setMessage(text, isOk) {
     const element = document.getElementById("adminMessage");

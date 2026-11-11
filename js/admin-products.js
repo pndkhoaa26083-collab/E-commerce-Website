@@ -24,6 +24,7 @@ import {
     el,
     cell,
     normalizeText,
+    errorReason,
     setMessage
 } from "./admin-common.js";
 
@@ -92,10 +93,7 @@ function createToggle(product, field, label, okText) {
             console.error(error);
 
             input.checked = !input.checked;
-            setMessage(
-                "Không cập nhật được. Kiểm tra quy tắc bảo mật Firestore.",
-                false
-            );
+            setMessage("Không cập nhật được. " + errorReason(error), false);
         } finally {
             input.disabled = false;
         }
@@ -106,6 +104,7 @@ function createToggle(product, field, label, okText) {
 
 function createThumb(product) {
     const wrapper = document.createElement("td");
+    wrapper.className = "cell-thumb";
 
     if (product.image && isValidImage(product.image)) {
         const image = el("img", "admin-thumb");
@@ -123,21 +122,32 @@ function createThumb(product) {
 function createRow(product) {
     const row = document.createElement("tr");
 
+    // Cac o co data-label de bang doi thanh the tren man hinh nho (xem shop.css)
+    function labelled(td, className, label) {
+        td.className = className;
+        td.dataset.label = label;
+        return td;
+    }
+
     row.appendChild(createThumb(product));
     row.append(
-        cell(product.name || "—"),
-        cell(categoryLabel(product.category)),
-        cell(formatMoney(product.price))
+        labelled(cell(product.name || "—"), "cell-name", "Tên"),
+        labelled(cell(categoryLabel(product.category)), "cell-meta", "Danh mục"),
+        labelled(cell(formatMoney(product.price)), "cell-meta", "Giá")
     );
 
-    const activeCell = document.createElement("td");
+    const activeCell = labelled(
+        document.createElement("td"), "cell-toggle", "Hiển thị trên cửa hàng"
+    );
     activeCell.appendChild(
         createToggle(product, "active", "Hiển thị", function (on) {
             return on ? "Đã hiển thị" : "Đã ẩn";
         })
     );
 
-    const stockCell = document.createElement("td");
+    const stockCell = labelled(
+        document.createElement("td"), "cell-toggle", "Còn hàng"
+    );
     stockCell.appendChild(
         createToggle(product, "inStock", "Còn hàng", function (on) {
             return on ? "Đã đặt còn hàng" : "Đã đặt hết hàng";
@@ -198,7 +208,7 @@ export async function loadProducts() {
         products = await fetchProducts();
     } catch (error) {
         console.error(error);
-        setMessage("Không tải được danh sách sản phẩm.", false);
+        setMessage("Không tải được danh sách sản phẩm. " + errorReason(error), false);
         return;
     }
 
@@ -297,8 +307,7 @@ async function saveProduct(event) {
         }
     } catch (error) {
         console.error(error);
-        formError.textContent =
-            "Không lưu được. Hãy kiểm tra quy tắc bảo mật Firestore.";
+        formError.textContent = "Không lưu được. " + errorReason(error);
         return;
     } finally {
         saveButton.disabled = false;
@@ -320,7 +329,7 @@ async function refresh() {
         renderProducts();
     } catch (error) {
         console.error(error);
-        setMessage("Không tải lại được danh sách sản phẩm.", false);
+        setMessage("Không tải lại được danh sách sản phẩm. " + errorReason(error), false);
     }
 }
 
@@ -337,7 +346,7 @@ async function removeProduct(product) {
         setMessage("Đã xóa sản phẩm: " + product.name, true);
     } catch (error) {
         console.error(error);
-        setMessage("Không xóa được sản phẩm.", false);
+        setMessage("Không xóa được sản phẩm. " + errorReason(error), false);
         return;
     }
 
