@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi tiết sản phẩm | Wang Fashion</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600&family=Noto+Serif:wght@600;800&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="css/shop.css">
+    <link rel="icon" type="image/png" href="image/favicon.png">
+</head>
+
+<body>
+
+    <a class="skip-link" href="#main">Bỏ qua điều hướng</a>
+
+    <!-- HEADER -->
+    <header class="site-header">
+        <div class="wrap header-inner">
+            <a class="brand" href="index.html" aria-label="Wang Fashion, về trang chủ">
+                <img class="brand-logo" src="image/logo.png" alt="" width="61" height="52">
+                <span class="brand-name">WANG FASHION</span>
+            </a>
+
+            <nav class="main-nav" aria-label="Điều hướng chính">
+                <a href="index.html">Trang chủ</a>
+                <a href="products.html">Sản phẩm</a>
+                <a href="cart.html">Giỏ hàng <span class="cart-count" data-cart-count hidden>0</span></a>
+                <a href="index.html#about">Giới thiệu</a>
+                <a href="index.html#contact">Liên hệ</a>
+            </nav>
+
+            <div class="nav-auth" data-auth>
+                <a href="login.html">Đăng nhập</a>
+                <a href="register.html">Đăng ký</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main id="main">
+
+        <div class="wrap page-body pd-page">
+
+            <nav class="pd-crumbs" aria-label="Đường dẫn">
+                <a href="index.html">Trang chủ</a>
+                <span aria-hidden="true">/</span>
+                <a href="products.html">Sản phẩm</a>
+                <span aria-hidden="true">/</span>
+                <span id="crumbName" aria-current="page">Chi tiết</span>
+            </nav>
+
+            <!-- Đang tải / không tìm thấy / lỗi (js/product-detail.js điều khiển) -->
+            <p class="empty-state" id="detailStatus" role="status">Đang tải sản phẩm…</p>
+
+            <article class="pd" id="detail" hidden>
+
+                <!-- ẢNH -->
+                <div class="pd-gallery">
+                    <div class="pd-main" id="detailMain"></div>
+                    <div class="pd-thumbs" id="detailThumbs" role="group" aria-label="Ảnh sản phẩm" hidden></div>
+                </div>
+
+                <!-- THÔNG TIN + MUA HÀNG -->
+                <div class="pd-info">
+                    <p class="pd-category" id="detailCategory"></p>
+                    <h1 id="detailName"></h1>
+                    <p class="pd-price" id="detailPrice"></p>
+                    <p class="pd-stock" id="detailStock"></p>
+                    <p class="pd-note" id="detailHiddenNote" hidden>
+                        Sản phẩm này đang ẩn với khách hàng. Chỉ quản trị viên xem được trang này.
+                    </p>
+
+                    <dl class="pd-specs" id="detailSpecs" hidden></dl>
+
+                    <form class="pd-buy" id="buyForm" novalidate>
+
+                        <fieldset class="pd-group" id="sizeGroup" hidden>
+                            <legend class="fieldset-title">Size</legend>
+                            <div class="pd-options" id="sizeList"></div>
+                        </fieldset>
+
+                        <fieldset class="pd-group" id="colorGroup" hidden>
+                            <legend class="fieldset-title">Màu sắc</legend>
+                            <div class="pd-options" id="colorList"></div>
+                        </fieldset>
+
+                        <div class="pd-group">
+                            <label class="fieldset-title" for="detailQty">Số lượng</label>
+                            <div class="pd-qty">
+                                <button type="button" class="pd-qty-btn" id="qtyMinus" aria-label="Giảm số lượng">−</button>
+                                <input type="number" id="detailQty" value="1" min="1" max="99" inputmode="numeric">
+                                <button type="button" class="pd-qty-btn" id="qtyPlus" aria-label="Tăng số lượng">+</button>
+                            </div>
+                        </div>
+
+                        <p class="pd-error" id="detailError" role="alert"></p>
+
+                        <button type="submit" class="btn btn-primary btn-block" id="addButton">Thêm vào giỏ</button>
+
+                        <p class="pd-added" id="detailAdded" role="status" hidden>
+                            Đã thêm vào giỏ hàng.
+                            <a href="cart.html">Xem giỏ hàng</a>
+                            ·
+                            <a href="products.html">Tiếp tục mua sắm</a>
+                        </p>
+                    </form>
+                </div>
+
+                <!-- MÔ TẢ -->
+                <section class="pd-desc" id="detailDescSection" hidden>
+                    <h2>Mô tả sản phẩm</h2>
+                    <p id="detailDesc"></p>
+                </section>
+
+            </article>
+
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <div class="wrap footer-grid">
+            <div>
+                <h2>WANG FASHION</h2>
+                <p>Thời trang tối giản, mang tinh thần phương Đông.</p>
+            </div>
+            <div>
+                <p>Email: <a href="mailto:fashionstore@gmail.com">fashionstore@gmail.com</a></p>
+                <p>Điện thoại: 0977-xxx-xxx</p>
+            </div>
+        </div>
+        <div class="wrap footer-bottom">
+            <p>&copy; 2026 Wang Fashion. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+    <script type="module" src="js/product-detail.js"></script>
+    <script type="module" src="js/auth-ui.js"></script>
+
+</body>
+
+</html>

@@ -241,6 +241,42 @@
                     <img class="admin-preview" id="productPreview" alt="Xem trước ảnh sản phẩm" hidden>
                 </div>
 
+                <!-- Chi tiết hiển thị ở trang xem sản phẩm (không bắt buộc) -->
+                <fieldset class="form-section">
+                    <legend class="fieldset-title">Chi tiết sản phẩm (không bắt buộc)</legend>
+
+                    <div class="field">
+                        <label for="productDescription">Mô tả</label>
+                        <textarea id="productDescription" rows="5" maxlength="2000"
+                            placeholder="Giới thiệu kiểu dáng, cách phối đồ, hướng dẫn giặt…"></textarea>
+                    </div>
+
+                    <div class="field">
+                        <label for="productMaterial">Chất liệu</label>
+                        <input type="text" id="productMaterial" maxlength="120" placeholder="Ví dụ: Cotton 100%"
+                            autocomplete="off">
+                    </div>
+
+                    <div class="field">
+                        <label for="productSizes">Size</label>
+                        <input type="text" id="productSizes" placeholder="S, M, L, XL" autocomplete="off">
+                        <p class="field-hint">Cách nhau bằng dấu phẩy. Để trống nếu sản phẩm không có size.</p>
+                    </div>
+
+                    <div class="field">
+                        <label for="productColors">Màu sắc</label>
+                        <input type="text" id="productColors" placeholder="Đen, Trắng, Be" autocomplete="off">
+                        <p class="field-hint">Cách nhau bằng dấu phẩy. Để trống nếu chỉ có một màu.</p>
+                    </div>
+
+                    <div class="field">
+                        <label for="productImages">Ảnh thêm</label>
+                        <textarea id="productImages" rows="3"
+                            placeholder="image/ten-anh-2.jpg&#10;https://..."></textarea>
+                        <p class="field-hint">Mỗi dòng một đường dẫn (image/… hoặc https://…), tối đa 5 ảnh.</p>
+                    </div>
+                </fieldset>
+
                 <label class="check-row">
                     <input type="checkbox" id="productActive" checked>
                     <span>Hiển thị trên cửa hàng</span>
