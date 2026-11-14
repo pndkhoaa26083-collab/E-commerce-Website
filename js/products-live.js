@@ -15,6 +15,13 @@ const list = document.getElementById("productList");
 const statusBox = document.getElementById("productStatus");
 const resultCount = document.getElementById("resultCount");
 
+// San pham co size hoac mau thi phai chon o trang chi tiet truoc khi mua
+function hasVariants(product) {
+    return ["sizes", "colors"].some(function (field) {
+        return Array.isArray(product[field]) && product[field].length > 0;
+    });
+}
+
 function createCard(product) {
     const card = document.createElement("article");
     card.className = "product-card";
@@ -23,8 +30,15 @@ function createCard(product) {
     card.dataset.name = product.name || "";
     card.dataset.price = String(product.price || 0);
 
-    const media = document.createElement("div");
+    const detailUrl = "product.html?id=" + encodeURIComponent(product.id);
+
+    // Anh dan toi trang chi tiet (ten san pham ben duoi da co lien ket nen
+    // bo qua lien ket anh doi voi ban phim va trinh doc man hinh)
+    const media = document.createElement("a");
     media.className = "product-media";
+    media.href = detailUrl;
+    media.tabIndex = -1;
+    media.setAttribute("aria-hidden", "true");
 
     const imageSource = safeImage(product.image);
 
@@ -43,22 +57,35 @@ function createCard(product) {
 
     const name = document.createElement("h2");
     name.className = "product-name";
-    name.textContent = product.name || "";
+
+    const nameLink = document.createElement("a");
+    nameLink.href = detailUrl;
+    nameLink.textContent = product.name || "";
+    name.appendChild(nameLink);
 
     const price = document.createElement("p");
     price.className = "price";
     price.textContent = formatMoney(product.price || 0);
 
-    const button = document.createElement("button");
-    button.type = "button";
-    button.className = "btn btn-block";
+    let button;
 
     if (product.inStock === false) {
         // Het hang: khong co class add-cart nen script.js bo qua
+        button = document.createElement("button");
+        button.type = "button";
+        button.className = "btn btn-block";
         button.textContent = "Hết hàng";
         button.disabled = true;
+    } else if (hasVariants(product)) {
+        // Can chon size / mau: chuyen sang trang chi tiet
+        button = document.createElement("a");
+        button.className = "btn btn-block";
+        button.href = detailUrl;
+        button.textContent = "Chọn size / màu";
     } else {
-        button.classList.add("add-cart");
+        button = document.createElement("button");
+        button.type = "button";
+        button.className = "btn btn-block add-cart";
         button.textContent = "Thêm vào giỏ";
     }
 

@@ -252,6 +252,45 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
+    // Cho trang khac (trang chi tiet san pham) them hang vao cung gio hang.
+    // item: { id, name, price, quantity }. Tra ve true neu them duoc.
+    window.WangCart = {
+        add: function (item) {
+            const id = String((item && item.id) || "");
+            const name = String((item && item.name) || "").trim();
+            const price = Number(item && item.price);
+            const quantity = Math.floor(Number(item && item.quantity)) || 1;
+
+            if (!id || !name || !price || price < 0 || quantity < 1) {
+                return false;
+            }
+
+            const cart = getCart();
+
+            const existingProduct = cart.find(function (entry) {
+                return entry.id === id;
+            });
+
+            if (existingProduct) {
+                existingProduct.quantity = Math.min(
+                    99,
+                    (Number(existingProduct.quantity) || 0) + quantity
+                );
+            } else {
+                cart.push({
+                    id: id,
+                    name: name,
+                    price: price,
+                    quantity: Math.min(99, quantity)
+                });
+            }
+
+            saveCart(cart);
+
+            return true;
+        }
+    };
+
     // =====================================
     // 5. HIEN THI GIO HANG
     // =====================================

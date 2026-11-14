@@ -43,6 +43,11 @@ const categoryHint = document.getElementById("productCategoryHint");
 const priceInput = document.getElementById("productPrice");
 const imageInput = document.getElementById("productImage");
 const preview = document.getElementById("productPreview");
+const descriptionInput = document.getElementById("productDescription");
+const materialInput = document.getElementById("productMaterial");
+const sizesInput = document.getElementById("productSizes");
+const colorsInput = document.getElementById("productColors");
+const imagesInput = document.getElementById("productImages");
 const activeInput = document.getElementById("productActive");
 const inStockInput = document.getElementById("productInStock");
 const formError = document.getElementById("productFormError");
@@ -56,6 +61,39 @@ let bound = false;
 // Chi nhan anh trong thu muc image/ hoac duong dan https
 function isValidImage(value) {
     return /^(image\/|https:\/\/)/i.test(value);
+}
+
+// Gioi han chi tiet san pham (khop voi firestore.rules)
+const LIMITS = {
+    description: 2000,
+    material: 120,
+    image: 500,
+    sizes: 12,
+    sizeLength: 20,
+    colors: 12,
+    colorLength: 30,
+    images: 5
+};
+
+// Tach o nhap thanh danh sach: bo khoang trang, bo muc rong va muc trung nhau
+function splitList(text, separator) {
+    const seen = new Set();
+
+    return String(text)
+        .split(separator)
+        .map(function (item) { return item.trim(); })
+        .filter(function (item) {
+            const key = item.toLowerCase();
+
+            if (!item || seen.has(key)) return false;
+
+            seen.add(key);
+            return true;
+        });
+}
+
+function listToText(value, separator) {
+    return Array.isArray(value) ? value.join(separator) : "";
 }
 
 // =====================================
@@ -260,6 +298,11 @@ function openForm(product) {
     nameInput.value = product ? product.name || "" : "";
     priceInput.value = product ? String(product.price || 0) : "";
     imageInput.value = product ? product.image || "" : "";
+    descriptionInput.value = product ? product.description || "" : "";
+    materialInput.value = product ? product.material || "" : "";
+    sizesInput.value = product ? listToText(product.sizes, ", ") : "";
+    colorsInput.value = product ? listToText(product.colors, ", ") : "";
+    imagesInput.value = product ? listToText(product.images, "\n") : "";
     activeInput.checked = product ? product.active !== false : true;
     inStockInput.checked = product ? product.inStock !== false : true;
 
@@ -305,11 +348,76 @@ async function saveProduct(event) {
         return;
     }
 
+    if (image.length > LIMITS.image) {
+        formError.textContent = "Đường dẫn ảnh quá dài (tối đa " + LIMITS.image + " ký tự).";
+        imageInput.focus();
+        return;
+    }
+
+    // Chi tiet san pham
+    const description = descriptionInput.value.trim();
+    const material = materialInput.value.trim();
+    const sizes = splitList(sizesInput.value, /[,;\n]+/);
+    const colors = splitList(colorsInput.value, /[,;\n]+/);
+    const images = splitList(imagesInput.value, /\r?\n/);
+
+    function fail(message, input) {
+        formError.textContent = message;
+        input.focus();
+    }
+
+    if (description.length > LIMITS.description) {
+        return fail("Mô tả tối đa " + LIMITS.description + " ký tự.", descriptionInput);
+    }
+
+    if (
+        sizes.length > LIMITS.sizes ||
+        sizes.some(function (item) { return item.length > LIMITS.sizeLength; })
+    ) {
+        return fail(
+            "Size: tối đa " + LIMITS.sizes + " size, mỗi size không quá " +
+            LIMITS.sizeLength + " ký tự.",
+            sizesInput
+        );
+    }
+
+    if (
+        colors.length > LIMITS.colors ||
+        colors.some(function (item) { return item.length > LIMITS.colorLength; })
+    ) {
+        return fail(
+            "Màu sắc: tối đa " + LIMITS.colors + " màu, mỗi màu không quá " +
+            LIMITS.colorLength + " ký tự.",
+            colorsInput
+        );
+    }
+
+    if (images.length > LIMITS.images) {
+        return fail("Ảnh thêm: tối đa " + LIMITS.images + " ảnh.", imagesInput);
+    }
+
+    const badImage = images.find(function (item) {
+        return !isValidImage(item) || item.length > LIMITS.image;
+    });
+
+    if (badImage) {
+        return fail(
+            "Ảnh thêm phải bắt đầu bằng image/ hoặc https:// (dòng: " +
+            badImage.slice(0, 40) + ").",
+            imagesInput
+        );
+    }
+
     const data = {
         name: name,
         category: categoryFor(name),
         price: price,
         image: image,
+        description: description,
+        material: material,
+        sizes: sizes,
+        colors: colors,
+        images: images,
         active: activeInput.checked,
         inStock: inStockInput.checked,
         updatedAt: serverTimestamp()

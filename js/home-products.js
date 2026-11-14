@@ -19,8 +19,15 @@ function createItem(product) {
     const item = document.createElement("article");
     item.className = "item";
 
-    const media = document.createElement("div");
+    const detailUrl = "product.html?id=" + encodeURIComponent(product.id);
+
+    // Anh dan toi trang chi tiet (nut "Xem san pham" ben duoi da co lien ket
+    // nen bo qua lien ket anh doi voi ban phim va trinh doc man hinh)
+    const media = document.createElement("a");
     media.className = "item-media";
+    media.href = detailUrl;
+    media.tabIndex = -1;
+    media.setAttribute("aria-hidden", "true");
 
     const imageSource = safeImage(product.image);
 
@@ -41,7 +48,7 @@ function createItem(product) {
 
     const link = document.createElement("a");
     link.className = "item-btn";
-    link.href = "products.html";
+    link.href = detailUrl;
     link.textContent = "Xem sản phẩm";
 
     item.append(media, name, price, link);
