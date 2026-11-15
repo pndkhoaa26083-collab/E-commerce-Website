@@ -15,6 +15,7 @@
         rel="stylesheet">
 
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/header.css">
     <link rel="icon" type="image/png" href="image/favicon.png">
 </head>
 
@@ -30,17 +31,29 @@
 
         <h1 class="logo"><img class="logo-img" src="image/logo.png" alt="" width="75" height="64"><span>WANG FASHION</span></h1>
 
-        <nav class="navbar">
-            <a href="index.html">Trang chủ</a>
-            <a href="products.html">Sản phẩm</a>
-            <a href="cart.html">Giỏ hàng <span class="cart-count" data-cart-count hidden>0</span></a>
-            <a href="#about">Giới thiệu</a>
-            <a href="#contact">Liên hệ</a>
-        </nav>
+        <div class="header-tools">
+            <a class="header-cart" href="cart.html" aria-label="Giỏ hàng">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 8h12l-1 12H7L6 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
+                <span class="cart-count" data-cart-count hidden>0</span>
+            </a>
+            <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="siteMenu" aria-label="Mở menu">
+                <span class="nav-toggle-bars" aria-hidden="true"></span>
+            </button>
+        </div>
 
-        <div class="auth-links" data-auth>
-            <a href="login.html">Đăng nhập</a>
-            <a href="register.html">Đăng ký</a>
+        <div class="site-menu" id="siteMenu">
+            <nav class="navbar">
+                <a href="index.html">Trang chủ</a>
+                <a href="products.html">Sản phẩm</a>
+                <a class="nav-cart" href="cart.html">Giỏ hàng <span class="cart-count" data-cart-count hidden>0</span></a>
+                <a href="#about">Giới thiệu</a>
+                <a href="#contact">Liên hệ</a>
+            </nav>
+
+            <div class="auth-links" data-auth>
+                <a href="login.html">Đăng nhập</a>
+                <a href="register.html">Đăng ký</a>
+            </div>
         </div>
 
     </header>
@@ -106,6 +119,8 @@
         </div>
 
     </footer>
+
+    <script src="js/nav-toggle.js" defer></script>
 
     <script src="js/script.js"></script>
     <script type="module" src="js/home-products.js"></script>
