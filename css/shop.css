@@ -205,7 +205,7 @@ textarea {
     border-radius: 10px;
     background: var(--seal);
     color: #fff;
-    font-size: 0.72rem;
+    font-size: 0.75rem;
     font-weight: 600;
     line-height: 1;
 }
@@ -395,11 +395,34 @@ textarea {
 }
 
 /* --- Thống kê tổng quan --- */
+/* 6 thẻ: 2 cột trên điện thoại, 3 cột (2 hàng đều) trên máy tính bảng / laptop, 6 cột trên màn hình lớn */
 .stat-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 14px;
     margin-bottom: 28px;
+}
+
+@media (min-width: 760px) {
+    .stat-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (min-width: 1500px) {
+    .stat-grid {
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 480px) {
+    .stat-card {
+        padding: 14px;
+    }
+
+    .stat-value {
+        font-size: 1.25rem;
+    }
 }
 
 .stat-card {
@@ -813,11 +836,46 @@ textarea {
     font-size: 1.05rem;
 }
 
-.product-card:hover .product-name {
+.product-name a {
+    text-decoration: none;
+}
+
+.product-card:hover .product-name a {
     text-decoration: underline;
     text-decoration-color: var(--seal);
     text-underline-offset: 4px;
     text-decoration-thickness: 2px;
+}
+
+/* Cả thẻ sản phẩm bấm được (liên kết ở tên phủ kín thẻ), riêng nút mua nằm trên cùng */
+.product-card {
+    position: relative;
+}
+
+.product-name a::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+}
+
+.product-name a:focus-visible {
+    outline: none;
+}
+
+.product-name a:focus-visible::after {
+    outline: 2px solid var(--ink);
+    outline-offset: 4px;
+}
+
+.product-card .btn {
+    position: relative;
+    z-index: 2;
+}
+
+/* Nút "Hết hàng" không bấm được: để cú chạm rơi xuống thẻ và mở trang chi tiết */
+.product-card .btn:disabled {
+    pointer-events: none;
 }
 
 .price {
@@ -849,6 +907,12 @@ a.product-media {
     margin-bottom: 24px;
     color: var(--ink-2);
     font-size: 0.875rem;
+}
+
+.pd-crumbs a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 24px;
 }
 
 .pd-crumbs a:hover {
@@ -1451,6 +1515,51 @@ fieldset {
     text-align: right;
 }
 
+.quantity-control {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid var(--field);
+    border-radius: var(--radius);
+    background: var(--paper-2);
+}
+
+.quantity-control span {
+    min-width: 36px;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+}
+
+.quantity-btn {
+    width: 36px;
+    min-height: 36px;
+    border: 0;
+    background: transparent;
+    font-size: 1.1rem;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.quantity-btn:hover {
+    background: var(--mist);
+}
+
+.remove-item {
+    min-height: 36px;
+    padding: 0 14px;
+    border: 1px solid var(--field);
+    border-radius: var(--radius);
+    background: transparent;
+    color: var(--ink);
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.remove-item:hover {
+    border-color: var(--seal);
+    background: var(--seal);
+    color: #fff;
+}
+
 .cart-table td.cart-empty {
     padding: 64px 16px;
     text-align: center;
@@ -1573,6 +1682,60 @@ fieldset {
 
 
 /* ---------- 13. Responsive ---------- */
+
+/* Màn hình rộng: nội dung rộng và chữ lớn hơn một chút */
+@media (min-width: 1600px) {
+    :root {
+        --wrap: 1320px;
+    }
+
+    html {
+        font-size: 106.25%;
+    }
+}
+
+/* Ô tích trong bảng quản trị và form: đủ lớn để bấm trúng trên mọi thiết bị */
+.admin-table input[type="checkbox"],
+.check-row input[type="checkbox"] {
+    width: 24px;
+    height: 24px;
+    accent-color: var(--ink);
+}
+
+/* Thiết bị cảm ứng (điện thoại, máy tính bảng): mọi vùng bấm cao tối thiểu 44px */
+@media (pointer: coarse) {
+    .category-btn,
+    .btn-sm,
+    .remove-item,
+    .bank-copy,
+    .admin-toolbar select,
+    .admin-toolbar input[type="text"],
+    .admin-table select {
+        min-height: 44px;
+    }
+
+    .quantity-btn {
+        width: 44px;
+        min-height: 44px;
+    }
+
+    .quantity-control span {
+        min-width: 40px;
+    }
+
+    .back-link,
+    .pd-crumbs a {
+        display: inline-flex;
+        align-items: center;
+        min-height: 44px;
+        margin-top: 0;
+    }
+
+    .check-row {
+        min-height: 44px;
+    }
+}
+
 @media (max-width: 900px) {
     .cart-layout,
     .checkout-layout,
@@ -1676,6 +1839,161 @@ fieldset {
     }
 }
 
+/* Bảng đơn hàng / tài khoản / đơn gần nhất: trên điện thoại mỗi dòng là một thẻ
+   (tên cột lấy từ data-label do labelCells() ghi vào), không phải kéo ngang */
+@media (max-width: 720px) {
+    .admin-table--cards table {
+        min-width: 0;
+    }
+
+    .admin-table--cards thead {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+    }
+
+    .admin-table--cards table,
+    .admin-table--cards tbody {
+        display: block;
+    }
+
+    .admin-table--cards tr {
+        display: block;
+        padding: 14px 0;
+        border-bottom: 1px solid var(--line);
+    }
+
+    .admin-table--cards td {
+        position: relative;
+        display: block;
+        min-height: 28px;
+        padding: 3px 0 3px 8.5em;
+        border: 0;
+    }
+
+    .admin-table--cards td::before {
+        content: attr(data-label);
+        position: absolute;
+        top: 3px;
+        left: 0;
+        width: 8em;
+        color: var(--ink-2);
+        font-size: 0.85rem;
+        line-height: 1.9;
+    }
+
+    .admin-table--cards td[colspan] {
+        padding-left: 0;
+    }
+
+    .admin-table--cards td[colspan]::before {
+        content: none;
+    }
+
+    .admin-table--cards td.admin-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        padding: 8px 0 0;
+        white-space: normal;
+    }
+
+    .admin-table--cards td.admin-actions::before {
+        content: none;
+    }
+
+    .admin-table--cards td.admin-actions .btn + .btn {
+        margin-left: 0;
+    }
+
+    .admin-table--cards select {
+        max-width: 100%;
+    }
+}
+
+/* Giỏ hàng: trên điện thoại mỗi sản phẩm là một thẻ, thấy đủ giá, số lượng, thành tiền và nút xóa */
+@media (max-width: 720px) {
+    .cart-table table {
+        min-width: 0;
+    }
+
+    .cart-table thead {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+    }
+
+    .cart-table table,
+    .cart-table tbody {
+        display: block;
+    }
+
+    .cart-table tr {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        grid-template-areas:
+            "name name"
+            "price total"
+            "qty remove";
+        align-items: center;
+        gap: 10px 16px;
+        padding: 16px 0;
+        border-bottom: 1px solid var(--line);
+    }
+
+    .cart-table td {
+        display: block;
+        padding: 0;
+        border: 0;
+    }
+
+    .cart-table td:last-child,
+    .cart-table th:last-child {
+        text-align: left;
+    }
+
+    .cart-table .cart-name {
+        grid-area: name;
+        font-weight: 600;
+        overflow-wrap: anywhere;
+    }
+
+    .cart-table .cart-price {
+        grid-area: price;
+        color: var(--ink-2);
+        font-size: 0.9rem;
+    }
+
+    .cart-table .cart-total {
+        grid-area: total;
+        font-weight: 600;
+        text-align: right;
+    }
+
+    .cart-table .cart-qty {
+        grid-area: qty;
+    }
+
+    .cart-table .cart-remove {
+        grid-area: remove;
+        justify-self: end;
+    }
+
+    /* Dòng "giỏ hàng trống" chiếm cả chiều ngang */
+    .cart-table tr:has(td.cart-empty) {
+        display: block;
+    }
+
+    .cart-table td.cart-empty {
+        padding: 48px 8px;
+        text-align: center;
+    }
+}
+
 @media (max-width: 640px) {
     .bank-info-body {
         grid-template-columns: 1fr;
@@ -1692,25 +2010,6 @@ fieldset {
 }
 
 @media (max-width: 520px) {
-    .header-inner {
-        justify-content: center;
-    }
-
-    .main-nav {
-        justify-content: center;
-        gap: 0 14px;
-    }
-
-    .main-nav a {
-        font-size: 0.875rem;
-    }
-
-    .nav-auth {
-        justify-content: center;
-        gap: 0 14px;
-        font-size: 0.875rem;
-    }
-
     .steps {
         font-size: 0.8rem;
         gap: 8px;

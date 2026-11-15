@@ -78,7 +78,8 @@ header,
     justify-content: space-between;
     align-items: center;
     gap: 25px;
-    padding: 15px 5%;
+    /* Màn hình rộng: thanh đầu trang thẳng hàng với phần nội dung (.home-wrap, tối đa 1160px) */
+    padding: 15px max(5%, calc((100% - 1160px) / 2));
 }
 
 header .container {
@@ -535,8 +536,25 @@ nav a:hover::after {
 }
 
 .item {
+    position: relative;
     display: flex;
     flex-direction: column;
+}
+
+/* Cả thẻ sản phẩm bấm được: vùng bấm của nút "Xem sản phẩm" phủ kín thẻ */
+.item-btn::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+}
+
+.item-btn:focus-visible {
+    outline: none;
+}
+
+.item-btn:focus-visible::after {
+    outline: 2px solid var(--red);
+    outline-offset: 4px;
 }
 
 .item-media {
@@ -1139,14 +1157,16 @@ nav a:hover::after {
 
 .login-box input {
     width: 100%;
+    min-height: 46px;
     padding: 12px;
     border: 1px solid #c9b99b;
     border-radius: 6px;
-    font-size: 15px;
+    font-size: 16px;
 }
 
 .login-box button {
     width: 100%;
+    min-height: 46px;
     padding: 13px;
     margin-top: 15px;
     background: #8b1e1e;
@@ -1293,7 +1313,7 @@ footer p,
 .footer p {
     margin: 5px 0;
     color: #d7cbb9;
-    font-size: 13px;
+    font-size: 0.9rem;
 }
 
 /* 19. RESPONSIVE */
@@ -1446,6 +1466,38 @@ footer p,
 
     .login-box {
         padding: 25px 20px;
+    }
+}
+
+/* Thiết bị cảm ứng: liên kết đứng riêng cao tối thiểu 44px */
+@media (pointer: coarse) {
+    .home-link,
+    .back-home {
+        display: inline-flex;
+        align-items: center;
+        min-height: 44px;
+    }
+
+    .back-home {
+        display: flex;
+        justify-content: center;
+    }
+
+    .auth-links a {
+        display: inline-flex;
+        align-items: center;
+        min-height: 44px;
+    }
+}
+
+/* Màn hình rộng: nội dung rộng hơn một chút */
+@media (min-width: 1600px) {
+    .home-wrap {
+        width: min(1320px, 90%);
+    }
+
+    .header {
+        padding-inline: max(5%, calc((100% - 1320px) / 2));
     }
 }
 

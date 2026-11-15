@@ -1,0 +1,286 @@
+/* =========================================================
+   WANG FASHION — header.css
+   Thanh đầu trang thu gọn cho điện thoại và máy tính bảng.
+   Dùng chung cho trang chủ (style.css) và các trang cửa hàng (shop.css),
+   nên phải được nạp SAU file CSS chính.
+
+   - Màn hình rộng (> 1200px): khung #siteMenu là "display: contents",
+     menu và nút đăng nhập nằm ngay trên thanh như trước.
+   - Màn hình hẹp (<= 1200px): thanh chỉ còn logo + giỏ hàng + nút ba gạch;
+     menu mở ra thành một danh sách dọc, các dòng cao 48px dễ chạm.
+   Điểm gấp 1200px phải khớp với js/nav-toggle.js.
+   ========================================================= */
+
+.site-menu {
+    display: contents;
+}
+
+.header-tools {
+    display: none;
+}
+
+
+/* Màn hình rộng: thanh đầu trang luôn một hàng, lời chào dài thì rút gọn bằng "…" */
+@media (min-width: 1201px) {
+    .header-inner {
+        flex-wrap: nowrap;
+    }
+
+    .brand {
+        flex-shrink: 0;
+    }
+
+    .nav-auth,
+    .auth-links {
+        flex-wrap: nowrap;
+        flex-shrink: 0;
+        white-space: nowrap;
+    }
+
+    .nav-auth .auth-user,
+    .auth-links .auth-user {
+        max-width: 16ch;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+@media (max-width: 1200px) {
+
+    /* ---------- Thanh trên cùng ---------- */
+    .header-inner,
+    .header {
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 8px;
+        min-height: 64px;
+        padding-block: 8px;
+    }
+
+    .brand {
+        min-height: 44px;
+    }
+
+    .brand-logo,
+    .logo-img {
+        width: auto;
+        height: 40px;
+    }
+
+    .brand-name {
+        font-size: 1rem;
+        letter-spacing: 0.1em;
+        white-space: nowrap;
+    }
+
+    .logo {
+        gap: 8px;
+        font-size: 20px;
+        letter-spacing: 2px;
+        white-space: nowrap;
+    }
+
+    /* ---------- Giỏ hàng + nút ba gạch ---------- */
+    .header-tools {
+        display: flex;
+        align-items: center;
+        gap: 2px;
+        margin-left: auto;
+    }
+
+    .header-cart,
+    .nav-toggle {
+        position: relative;
+        display: grid;
+        place-items: center;
+        width: 44px;
+        height: 44px;
+        padding: 0;
+        border: 0;
+        border-radius: 2px;
+        background: transparent;
+        color: var(--ink);
+        cursor: pointer;
+    }
+
+    .header-cart:hover,
+    .nav-toggle:hover {
+        background: rgba(21, 22, 26, 0.07);
+    }
+
+    .header-cart .cart-count {
+        position: absolute;
+        top: 2px;
+        right: -2px;
+        min-width: 18px;
+        height: 18px;
+        margin: 0;
+        font-size: 0.75rem;
+    }
+
+    .header-cart[aria-current="page"] {
+        box-shadow: inset 0 -2px 0 var(--seal, var(--red));
+    }
+
+    .nav-toggle-bars,
+    .nav-toggle-bars::before,
+    .nav-toggle-bars::after {
+        display: block;
+        width: 22px;
+        height: 2px;
+        background: currentColor;
+        transition: transform 0.2s, background-color 0.2s;
+    }
+
+    .nav-toggle-bars {
+        position: relative;
+    }
+
+    .nav-toggle-bars::before,
+    .nav-toggle-bars::after {
+        content: "";
+        position: absolute;
+        left: 0;
+    }
+
+    .nav-toggle-bars::before {
+        top: -7px;
+    }
+
+    .nav-toggle-bars::after {
+        top: 7px;
+    }
+
+    .nav-toggle[aria-expanded="true"] .nav-toggle-bars {
+        background: transparent;
+    }
+
+    .nav-toggle[aria-expanded="true"] .nav-toggle-bars::before {
+        transform: translateY(7px) rotate(45deg);
+    }
+
+    .nav-toggle[aria-expanded="true"] .nav-toggle-bars::after {
+        transform: translateY(-7px) rotate(-45deg);
+    }
+
+    /* ---------- Khung menu thả xuống ---------- */
+    .site-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        max-height: calc(100vh - 64px);
+        max-height: calc(100dvh - 64px);
+        overflow-y: auto;
+        padding: 4px max(5%, 16px) 20px;
+        background: var(--paper);
+        border-bottom: 1px solid var(--line, var(--border));
+        box-shadow: 0 14px 28px rgba(21, 22, 26, 0.14);
+    }
+
+    .site-menu.is-open {
+        display: block;
+    }
+
+    .site-menu .main-nav,
+    .site-menu .navbar {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: flex-start;
+        gap: 0;
+    }
+
+    .site-menu .main-nav a,
+    .site-menu .navbar a {
+        display: flex;
+        align-items: center;
+        min-height: 48px;
+        padding: 0;
+        border-bottom: 1px solid var(--line, var(--border));
+        color: var(--ink);
+        font-size: 1rem;
+        font-weight: 500;
+    }
+
+    .site-menu .main-nav a:hover,
+    .site-menu .navbar a:hover {
+        background: rgba(21, 22, 26, 0.05);
+        border-bottom-color: var(--line, var(--border));
+        color: var(--ink);
+    }
+
+    .site-menu .navbar a::after {
+        display: none;
+    }
+
+    .site-menu .main-nav a[aria-current="page"],
+    .site-menu .navbar a[aria-current="page"] {
+        padding-left: 14px;
+        border-bottom-color: var(--line, var(--border));
+        box-shadow: inset 3px 0 0 var(--seal, var(--red));
+        font-weight: 600;
+    }
+
+    /* Giỏ hàng đã có biểu tượng riêng trên thanh nên bỏ khỏi danh sách */
+    .site-menu .main-nav a.nav-cart,
+    .site-menu .navbar a.nav-cart {
+        display: none;
+    }
+
+    /* Đăng nhập / đăng ký / đăng xuất: các nút lớn dưới danh sách */
+    .site-menu .nav-auth,
+    .site-menu .auth-links {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 8px 12px;
+        padding-top: 16px;
+    }
+
+    .site-menu .nav-auth a,
+    .site-menu .auth-links a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 44px;
+        padding: 0 18px;
+        border: 1px solid var(--ink);
+        border-radius: 2px;
+        font-size: 0.95rem;
+    }
+
+    .site-menu .nav-auth a:hover {
+        background: var(--ink);
+        color: var(--paper);
+    }
+
+    .site-menu .nav-auth .auth-user,
+    .site-menu .auth-links .auth-user {
+        flex: 1 0 100%;
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 420px) {
+    .logo {
+        font-size: 17px;
+        letter-spacing: 1px;
+    }
+
+    .brand-name {
+        font-size: 0.95rem;
+        letter-spacing: 0.08em;
+    }
+}
+
+/* Điện thoại nằm ngang: màn hình rất thấp, không để thanh đầu trang đứng cố định */
+@media (max-height: 500px) {
+    .site-header {
+        position: relative;
+    }
+}
