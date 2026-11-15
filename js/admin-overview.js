@@ -9,6 +9,7 @@ import {
     ORDER_STATUSES,
     el,
     cell,
+    labelCells,
     formatMoney,
     formatDate,
     statusLabel,
@@ -159,6 +160,8 @@ export async function loadOverview() {
         row.appendChild(empty);
         recentOrderRows.appendChild(row);
     }
+
+    labelCells(recentOrderRows);
 
     // San pham het hang
     const outOfStock = products.filter(function (product) {

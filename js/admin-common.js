@@ -52,6 +52,26 @@ export function formatDate(value, withTime) {
         : date.toLocaleDateString("vi-VN");
 }
 
+// Ghi ten cot vao tung o (data-label) de bang doi thanh the tren man hinh nho
+// (xem .admin-table--cards trong css/shop.css). Goi sau moi lan ve lai bang.
+export function labelCells(body) {
+    const table = body.closest("table");
+
+    if (!table) return;
+
+    const heads = Array.from(table.querySelectorAll("thead th")).map(function (th) {
+        return th.textContent.trim();
+    });
+
+    body.querySelectorAll("tr").forEach(function (row) {
+        Array.from(row.children).forEach(function (item, index) {
+            if (item.colSpan > 1 || !heads[index] || item.dataset.label) return;
+
+            item.dataset.label = heads[index];
+        });
+    });
+}
+
 // Bo dau, viet thuong de tim kiem de hon
 export function normalizeText(text) {
     return String(text || "")

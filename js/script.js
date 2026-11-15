@@ -305,8 +305,9 @@ document.addEventListener("DOMContentLoaded", function () {
         if (cart.length === 0) {
             cartItems.innerHTML = `
                 <tr>
-                    <td colspan="5" class="empty-cart">
-                        Giỏ hàng của bạn đang trống.
+                    <td colspan="5" class="cart-empty">
+                        <p>Giỏ hàng của bạn đang trống.</p>
+                        <a href="products.html" class="btn btn-primary">Chọn sản phẩm</a>
                     </td>
                 </tr>
             `;
@@ -314,17 +315,18 @@ document.addEventListener("DOMContentLoaded", function () {
             cartItems.innerHTML = cart.map(function (item, index) {
                 return `
                     <tr>
-                        <td>${escapeHTML(item.name)}</td>
+                        <td class="cart-name">${escapeHTML(item.name)}</td>
 
-                        <td>${formatMoney(item.price)}</td>
+                        <td class="cart-price" data-label="Đơn giá">${formatMoney(item.price)}</td>
 
-                        <td>
+                        <td class="cart-qty">
                             <div class="quantity-control">
                                 <button
                                     type="button"
                                     class="quantity-btn"
                                     data-action="decrease"
                                     data-index="${index}"
+                                    aria-label="Giảm số lượng: ${escapeHTML(item.name)}"
                                 >−</button>
 
                                 <span>${item.quantity}</span>
@@ -334,20 +336,22 @@ document.addEventListener("DOMContentLoaded", function () {
                                     class="quantity-btn"
                                     data-action="increase"
                                     data-index="${index}"
+                                    aria-label="Tăng số lượng: ${escapeHTML(item.name)}"
                                 >+</button>
                             </div>
                         </td>
 
-                        <td>
+                        <td class="cart-total" data-label="Thành tiền">
                             ${formatMoney(item.price * item.quantity)}
                         </td>
 
-                        <td>
+                        <td class="cart-remove">
                             <button
                                 type="button"
                                 class="remove-item"
                                 data-action="remove"
                                 data-index="${index}"
+                                aria-label="Xóa khỏi giỏ: ${escapeHTML(item.name)}"
                             >Xóa</button>
                         </td>
                     </tr>

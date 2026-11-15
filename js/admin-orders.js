@@ -19,6 +19,7 @@ import {
     ORDER_STATUSES,
     el,
     cell,
+    labelCells,
     formatMoney,
     formatDate,
     statusLabel,
@@ -175,6 +176,7 @@ function renderOrders() {
     const shown = filteredOrders();
 
     orderRows.replaceChildren(...shown.map(createRow));
+    labelCells(orderRows);
 
     orderCount.textContent =
         shown.length + " / " + orders.length + " đơn hàng";

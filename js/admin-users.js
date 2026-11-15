@@ -16,6 +16,7 @@ import { fetchUsers } from "./admin-data.js";
 
 import {
     cell,
+    labelCells,
     formatDate,
     normalizeText,
     setMessage
@@ -138,6 +139,7 @@ function renderUsers() {
     const shown = accounts.filter(matches);
 
     userRows.replaceChildren(...shown.map(createRow));
+    labelCells(userRows);
 
     userCount.textContent =
         shown.length + " / " + accounts.length + " tài khoản";
