@@ -35,9 +35,21 @@ function renderLoggedIn(slot, user, role) {
     const name = user.displayName || user.email || "bạn";
     const isAdmin = role === ROLE_ADMIN;
 
+    // "Xin chào, " và "(Admin)" nằm trong thẻ riêng: màn hình laptop nhỏ ẩn bớt để thanh menu không bị chật
+    const greeting = document.createElement("span");
+    greeting.className = "auth-hello";
+    greeting.textContent = "Xin chào, ";
+
     const hello = document.createElement("span");
     hello.className = "auth-user";
-    hello.textContent = "Xin chào, " + name + (isAdmin ? " (Admin)" : "");
+    hello.append(greeting, name);
+
+    if (isAdmin) {
+        const role = document.createElement("span");
+        role.className = "auth-role";
+        role.textContent = " (Admin)";
+        hello.append(role);
+    }
 
     const logout = createLink("#", "Đăng xuất");
 

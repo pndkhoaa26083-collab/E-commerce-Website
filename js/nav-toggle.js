@@ -15,7 +15,7 @@
     if (!toggle || !menu) return;
 
     // Phai trung voi diem gap trong css/header.css
-    const wide = window.matchMedia("(min-width: 1201px)");
+    const wide = window.matchMedia("(min-width: 1281px)");
 
     function setOpen(open) {
         menu.classList.toggle("is-open", open);
