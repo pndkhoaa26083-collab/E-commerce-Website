@@ -4,11 +4,11 @@
    Dùng chung cho trang chủ (style.css) và các trang cửa hàng (shop.css),
    nên phải được nạp SAU file CSS chính.
 
-   - Màn hình rộng (> 1200px): khung #siteMenu là "display: contents",
+   - Màn hình rộng (> 1280px): khung #siteMenu là "display: contents",
      menu và nút đăng nhập nằm ngay trên thanh như trước.
-   - Màn hình hẹp (<= 1200px): thanh chỉ còn logo + giỏ hàng + nút ba gạch;
+   - Màn hình hẹp (<= 1280px): thanh chỉ còn logo + giỏ hàng + nút ba gạch;
      menu mở ra thành một danh sách dọc, các dòng cao 48px dễ chạm.
-   Điểm gấp 1200px phải khớp với js/nav-toggle.js.
+   Điểm gấp 1280px phải khớp với js/nav-toggle.js.
    ========================================================= */
 
 .site-menu {
@@ -21,7 +21,7 @@
 
 
 /* Màn hình rộng: thanh đầu trang luôn một hàng, lời chào dài thì rút gọn bằng "…" */
-@media (min-width: 1201px) {
+@media (min-width: 1281px) {
     .header-inner {
         flex-wrap: nowrap;
     }
@@ -43,9 +43,81 @@
         overflow: hidden;
         text-overflow: ellipsis;
     }
+
+    /* Các mục menu không bao giờ tự xuống hàng (thanh dài thì thu gọn bằng dải bên dưới) */
+    .main-nav,
+    .header .navbar {
+        flex-wrap: nowrap;
+    }
+
+    .main-nav {
+        flex-shrink: 0;
+    }
+
+    .main-nav a,
+    .navbar a {
+        white-space: nowrap;
+    }
 }
 
-@media (max-width: 1200px) {
+/* Laptop và màn hình vừa (1281–1599px): thanh đầu trang chật vì có logo + 5 mục + tài khoản
+   (nội dung tối đa 1160px), nên thu gọn khoảng cách, logo và lời chào để mọi thứ vẫn nằm trên một hàng. */
+@media (min-width: 1281px) and (max-width: 1599px) {
+    .header {
+        gap: 16px;
+    }
+
+    .header .navbar {
+        gap: 16px;
+    }
+
+    .logo {
+        gap: 10px;
+        font-size: 24px;
+        letter-spacing: 2px;
+    }
+
+    .logo-img {
+        height: 52px;
+    }
+
+    .auth-links {
+        gap: 8px;
+    }
+
+    .auth-links a {
+        padding: 9px 12px;
+    }
+
+    .header-inner {
+        gap: 4px 16px;
+    }
+
+    .brand-name {
+        font-size: 1.05rem;
+        letter-spacing: 0.1em;
+    }
+
+    .main-nav {
+        gap: 0 16px;
+    }
+
+    .nav-auth {
+        gap: 0 14px;
+    }
+
+    .auth-hello,
+    .auth-role {
+        display: none;
+    }
+
+    .nav-auth .auth-user,
+    .auth-links .auth-user {
+        max-width: 13ch;
+    }
+}
+
+@media (max-width: 1280px) {
 
     /* ---------- Thanh trên cùng ---------- */
     .header-inner,
