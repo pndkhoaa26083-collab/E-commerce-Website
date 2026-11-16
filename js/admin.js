@@ -68,6 +68,11 @@ function showTab(name) {
 
         button.classList.toggle("is-active", isActive);
         button.setAttribute("aria-pressed", String(isActive));
+
+        // Thanh tab có thể cuộn ngang trên màn hình rất hẹp: giữ tab đang chọn trong tầm nhìn
+        if (isActive && button.scrollIntoView) {
+            button.scrollIntoView({ block: "nearest", inline: "nearest" });
+        }
     });
 
     sections.forEach(function (section) {
