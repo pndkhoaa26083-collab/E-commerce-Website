@@ -4,9 +4,6 @@ import { getAuth } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-auth
 
 import { getFirestore } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-firestore.js";
 
-// =====================================================
-// CẤU HÌNH FIREBASE (dự án wang-fashion)
-// =====================================================
 const firebaseConfig = {
     apiKey: "AIzaSyBTZUcfc9CkrMlABkDigaqOvkIKGi_Mygs",
     authDomain: "wang-fashion.firebaseapp.com",
@@ -17,7 +14,6 @@ const firebaseConfig = {
     measurementId: "G-8L1RJR2DJC"
 };
 
-// Cấu hình đã được thay chưa? (các trang dùng biến này để báo lỗi dễ hiểu)
 export const isFirebaseConfigured =
     !String(firebaseConfig.apiKey).startsWith("YOUR_");
 
