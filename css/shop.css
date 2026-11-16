@@ -314,8 +314,60 @@ textarea {
 }
 
 /* --- Tab, thanh công cụ, nút nhỏ --- */
-.admin-tabs {
-    margin-bottom: 20px;
+/* Thanh tab quản trị: luôn một hàng. Màn hình quá hẹp thì cuộn ngang thay vì xuống dòng */
+/* ".chips" được khai báo phía dưới với flex-wrap: wrap, nên cần chọn kép để thắng */
+.chips.admin-tabs {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+    /* chừa chỗ để viền focus không bị cắt */
+    padding: 4px;
+    margin: -4px -4px 16px;
+}
+
+.admin-tabs::-webkit-scrollbar {
+    display: none;
+}
+
+.admin-tabs .category-btn {
+    flex: 0 0 auto;
+    white-space: nowrap;
+}
+
+@media (max-width: 720px) {
+    .chips.admin-tabs {
+        gap: 6px;
+    }
+
+    /* Các tab dàn đều hết chiều rộng; chữ và đệm thu nhỏ dần theo màn hình */
+    .chips.admin-tabs .category-btn {
+        flex: 1 0 auto;
+        padding: 0 8px;
+        font-size: 0.875rem;
+    }
+}
+
+@media (max-width: 520px) {
+    .chips.admin-tabs {
+        gap: 4px;
+    }
+
+    .chips.admin-tabs .category-btn {
+        padding: 0 5px;
+        font-size: 0.8125rem;
+    }
+}
+
+@media (max-width: 359px) {
+    .chips.admin-tabs {
+        gap: 3px;
+    }
+
+    .chips.admin-tabs .category-btn {
+        padding: 0 3px;
+        font-size: 0.75rem;
+    }
 }
 
 .admin-section[hidden] {
